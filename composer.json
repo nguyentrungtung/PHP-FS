@@ -1,0 +1,17 @@
+{
+    "name": "nam/nammoi",
+    "description": "Build Frmework",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nam"
+        }
+    ],
+    "require": {}
+}
