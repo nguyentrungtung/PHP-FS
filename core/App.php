@@ -46,6 +46,4 @@ class App {
 
         return explode('/', $this->uri);   
     }
-
-    
 }

@@ -12,32 +12,29 @@ class Student {
     public    $id;
     public    $name;
     public    $age;
-    private   $limit  = 2;
+    private   $limit  = 4;
 
     public function __construct() {
         $this->conn = (new Database())->connect();
     }
 
     // Tình tổng số trang
-    public function getLastPage() {
+    public function getTotalPage() {
         $query          = $this->conn->prepare("SELECT COUNT(*) FROM student");
         $query->execute();
         $totalRecords  = $query->fetchColumn();
-        $totalPage     = ceil($totalRecords / $this->limit);
+        $totalPage     = ceil($totalRecords / $this->limit);    
 
         return $totalPage;
     }
 
     public function getAllStudents($page) {
-        $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;  
-        // echo "<script>console.log($page)</script>";
-        
         //vị trí bắt đầu của dữ liệu trên mỗi trang
         $offSet = ($page - 1) * $this->limit; 
         
         $stmt = $this->conn->prepare("SELECT * FROM student LIMIT :limit OFFSET :offset");
-        $stmt->bindParam(':limit', $this->limit, PDO::PARAM_INT); // Ràng buộc kiểu dữ liệu là số nguyên
-        $stmt->bindParam(':offset', $offSet, PDO::PARAM_INT); // Ràng buộc kiểu dữ liệu là số nguyên
+        $stmt->bindParam(':limit', $this->limit, PDO::PARAM_INT); 
+        $stmt->bindParam(':offset', $offSet, PDO::PARAM_INT); 
         $stmt->execute();
         
         return $stmt->fetchAll(PDO::FETCH_OBJ);

@@ -14,17 +14,17 @@ class StudentController extends Controller {
         global $site_path; 
         $this->site_path = $site_path;
         $this->student = new Student(); 
+
     }
     
-    public function index($page = null) {
+    public function index($page = 1) {
         $page   = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
+        
         $studentModel = $this->student;
-        $lastPage = $studentModel->getLastPage(); //tổng số trang
+        $totalPage = $studentModel->getTotalPage(); //tổng số trang
         $students = $studentModel->getAllStudents($page);
 
-
-        $this->view('students/index', ['students' => $students, 'site_path' => $this->site_path, 'lastPage' => $lastPage, 'page' => $page]);
+        $this->view('students/index', ['students' => $students, 'site_path' => $this->site_path, 'totalPage' => $totalPage, 'page' => $page]);
     }
 
     public function create() {
@@ -40,22 +40,21 @@ class StudentController extends Controller {
     
         // Kiểm tra tên không rỗng
         if (empty($name)) {
-            echo "<script>alert('Tên không được để trống.');</script>";
-            // Chuyển hướng về trang danh sách sinh viên
-            echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
+            // echo "<script>alert('Tên không được để trống.');</script>";
+            // echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
 
             return;
         }
     
         // Kiểm tra tuổi không rỗng và phải là số nguyên dương
         if (empty($age)) {
-            echo "<script>alert('Tuổi không được để trống.');</script>";
-            echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
+            // echo "<script>alert('Tuổi không được để trống.');</script>";
+            // echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
 
             return;
         } elseif (!filter_var($age, FILTER_VALIDATE_INT) || $age <= 0) {
-            echo "<script>alert('Tuổi phải là số nguyên dương.');</script>";
-            echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
+            // echo "<script>alert('Tuổi phải là số nguyên dương.');</script>";
+            // echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
 
             return;
         }
@@ -83,31 +82,53 @@ class StudentController extends Controller {
                     $photo = $dest_path;
                     
                 } else {
-                    echo "<script>alert('Lỗi khi tải ảnh lên.');</script>";
-                    echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
+                    // echo "<script>alert('Lỗi khi tải ảnh lên.');</script>";
+                    // echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
 
                     return;
                 }
             } else {
-                echo "<script>alert('Định dạng ảnh không hợp lệ.');</script>";
-                echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
+                // echo "<script>alert('Định dạng ảnh không hợp lệ.');</script>";
+                // echo "<script>window.location.href='" . $this->site_path . "student/create';</script>";
 
                 return;
             }
         }
+        
+        $_SESSION['flash_message'] = [
+            'message' => 'Thêm sinh viên thành công!',
+            'type' => 'success'
+        ];
     
         $studentModel = $this->student;
         $studentModel->create($name, $age, $photo);
     
         header('Location: ' . $this->site_path . 'student/index');
     }
-    
 
+    public function show($studentId =null){
+
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['studentId'])) {
+            $studentId = $_GET['studentId'];
+            $studentModel = $this->student;
+            $student = $studentModel->getById($studentId);
+            // echo "<pre>"; 
+            // print_r($student);
+            // echo "</pre>";
+            echo json_encode([
+                'status' => 'success',
+                'studentId' => $studentId,
+                'student' => $student
+            ]);
+        }
+    }
+    
     public function edit($id) {
         $studentModel = $this->student;
         $student = $studentModel->getById($id);
 
         $this->view('students/edit', ['student' => $student, 'site_path' => $this->site_path]);
+
     }
 
     public function update($id) {
@@ -121,21 +142,21 @@ class StudentController extends Controller {
     
         // Kiểm tra tên không rỗng
         if (empty($name)) {
-            echo "<script>alert('Tên không được để trống.');</script>";
-            echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
+            // echo "<script>alert('Tên không được để trống.');</script>";
+            // echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
 
             return;
         }
     
         // Kiểm tra tuổi không rỗng và phải là số nguyên dương
         if (empty($age)) {
-            echo "<script>alert('Tuổi không được để trống.');</script>";
-            echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
+            // echo "<script>alert('Tuổi không được để trống.');</script>";
+            // echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
 
             return;
         } elseif (!filter_var($age, FILTER_VALIDATE_INT) || $age <= 0) {
-            echo "<script>alert('Tuổi phải là số nguyên dương.');</script>";
-            echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
+            // echo "<script>alert('Tuổi phải là số nguyên dương.');</script>";
+            // echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
 
             return;
         }
@@ -171,18 +192,23 @@ class StudentController extends Controller {
                     // Cập nhật đường dẫn của ảnh mới
                     $photo = $dest_path;
                 } else {
-                    echo "<script>alert('Lỗi khi tải ảnh lên.');</script>";
-                    echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
+                    // echo "<script>alert('Lỗi khi tải ảnh lên.');</script>";
+                    // echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
 
                     return;
                 }
             } else {
-                echo "<script>alert('Định dạng ảnh không hợp lệ.');</script>";
-                echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
+                // echo "<script>alert('Định dạng ảnh không hợp lệ.');</script>";
+                // echo "<script>window.location.href='" . $this->site_path . "student/edit/$id';</script>";
 
                 return;
             }
         }
+
+        $_SESSION['flash_message'] = [
+            'message' => 'Sửa thông tin sinh viên thành công!',
+            'type' => 'success'
+        ];
     
         // Cập nhật thông tin sinh viên
         if ($photo) {
@@ -194,11 +220,14 @@ class StudentController extends Controller {
         header('Location: ' . $this->site_path . 'student/index');
     }
     
-    
-
     public function delete($id) {
         $studentModel = $this->student;
         $studentModel->delete($id);
+
+        $_SESSION['flash_message'] = [
+            'message' => 'Xóa sinh viên thành công!',
+            'type' => 'success'
+        ];
 
         header('Location: '.$this->site_path.'student/index');
     }
