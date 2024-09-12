@@ -38,7 +38,7 @@
       <img style="width:50px !important; height: 50px !important; object-fit: contain; border-radius: 100%;  "
         src="https://www.pngitem.com/pimgs/m/243-2439806_iron-man-png-iron-man-face-vector-png.png" alt="">
 
-      <a class="navbar-brand m-0" href="http://localhost/build_fw/public/student/index"
+      <a class="navbar-brand m-0" href="http://localhost<?php echo BASE_PATH; ?>student/index"
         style="margin-left: -2rem !important;">
         <span class="ms-1 font-weight-bold">I'm NaM</span>
       </a>
@@ -47,7 +47,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link_ nav-link active" href="/build_fw/public/home/index">
+          <a class="nav-link_ nav-link active" href="<?php echo BASE_PATH; ?>home/index">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -56,7 +56,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link_ nav-link" href="/build_fw/public/student/index">
+          <a class="nav-link_ nav-link" href="<?php echo BASE_PATH; ?>student/index">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>

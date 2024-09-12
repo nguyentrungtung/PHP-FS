@@ -1,26 +1,27 @@
 <?php
 
-namespace Core;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-use PDO;
+// quản lý kết nối cơ sở dữ liệu và thiết lập môi trường cho Eloquent ORM
+$capsule = new Capsule;
 
-class Database {
-    private $host = 'localhost';
-    private $db_name = 'mvc';
-    private $username = 'root';
-    private $password = '';
-    private $conn;
+//  Cấu hình kết nối cơ sở dữ liệu
+$capsule->addConnection([
 
-    public function connect() {
-        $this->conn = null;
+   "driver" => "mysql",
 
-        try {
-            $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo 'Connection Error: ' . $e->getMessage();
-        }
+   "host" =>"localhost",
 
-        return $this->conn;
-    }
-}
+   "database" => "mvc",
+
+   "username" => "root",
+
+   "password" => ""
+
+]);
+
+// Đặt Eloquent vào chế độ toàn cầu (cho phép sử dụng khắp nơi)
+$capsule->setAsGlobal();
+
+// Khởi động Eloquent
+$capsule->bootEloquent();
