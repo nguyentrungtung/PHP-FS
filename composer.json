@@ -14,6 +14,8 @@
         }
     ],
     "require": {
-        "illuminate/database": "^10.48"
+        "illuminate/database": "^10.48",
+        "rakit/validation": "^1.4",
+        "illuminate/validation": "^10.48"
     }
 }

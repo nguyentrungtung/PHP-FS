@@ -135,41 +135,50 @@
   <script src="../../public/mixi/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
 
   <script>
+    // Bắt sự kiện click bên ngoài modal
+    $(document).on('click', function(event) {
+        // Kiểm tra nếu mục được click không phải là modal hoặc bất kỳ phần tử con nào của nó
+        if (!$(event.target).closest('.content-toast-wrap .cart').length) {
+          console.log(event.target);
+            $('.modal-edit').removeClass('show');
+        }
+    });
+
     function validateForm(isEdit = false) {
-      let valid = true;
-      // Lấy giá trị của các trường
-      let name = document.getElementById('name').value;
-      let age = document.getElementById('age').value;
-      let photo = document.getElementById('photo').value;
+        let valid = true;
+        // Lấy giá trị của các trường
+        let name = document.getElementById('name').value;
+        let age = document.getElementById('age').value;
+        let photo = document.getElementById('photo').value;
 
-      // Xóa thông báo lỗi trước đó
-      document.getElementById('nameError').textContent = '';
-      document.getElementById('ageError').textContent = '';
-      document.getElementById('photoError').textContent = '';
+        // Xóa thông báo lỗi trước đó
+        document.getElementById('nameError').textContent = '';
+        document.getElementById('ageError').textContent = '';
+        document.getElementById('photoError').textContent = '';
 
-      if (name.trim() === '') {
-        document.getElementById('nameError').textContent = 'Tên học sinh không được để trống.';
-        valid = false;
-      }
+        if (name.trim() === '') {
+          document.getElementById('nameError').textContent = 'Tên học sinh không được để trống.';
+          valid = false;
+        }
 
-      if (age.trim() === '') {
-        document.getElementById('ageError').textContent = 'Tuổi không được để trống.';
-        valid = false;
-      } else if (!/^\d+$/.test(age) || age <= 0) {
-        document.getElementById('ageError').textContent = 'Tuổi phải là số nguyên dương.';
-        valid = false;
-      }
+        if (age.trim() === '') {
+          document.getElementById('ageError').textContent = 'Tuổi không được để trống.';
+          valid = false;
+        } else if (!/^\d+$/.test(age) || age <= 0) {
+          document.getElementById('ageError').textContent = 'Tuổi phải là số nguyên dương.';
+          valid = false;
+        }
 
-      // Kiểm tra trường ảnh (chỉ bắt buộc ở form create)
-      if (!isEdit && photo.trim() === '') {
-        document.getElementById('photoError').textContent = 'Vui lòng chọn ảnh.';
-        valid = false;
-      } else if (photo.trim() !== '' && !(/\.(jpg|jpeg|png|gif)$/i).test(photo)) {
-        document.getElementById('photoError').textContent = 'Chỉ chấp nhận định dạng ảnh jpg, jpeg, png, gif.';
-        valid = false;
-      }
+        // Kiểm tra trường ảnh (chỉ bắt buộc ở form create)
+        if (!isEdit && photo.trim() === '') {
+          document.getElementById('photoError').textContent = 'Vui lòng chọn ảnh.';
+          valid = false;
+        } else if (photo.trim() !== '' && !(/\.(jpg|jpeg|png|gif)$/i).test(photo)) {
+          document.getElementById('photoError').textContent = 'Chỉ chấp nhận định dạng ảnh jpg, jpeg, png, gif.';
+          valid = false;
+        }
 
-      return valid;
+        return valid;
     }
 
     //hide status CRUD
