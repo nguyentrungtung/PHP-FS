@@ -1,6 +1,5 @@
 <?php 
     namespace App\Core;
-    use App\Core\Pagination;
     use App\Core\sysError;
     require_once('app/config/validator.php');
     // 
