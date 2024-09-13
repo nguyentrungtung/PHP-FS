@@ -10,15 +10,14 @@ class App {
 
     public function __construct() {
         $url = $this->parseUrl();
-        // echo dirname(__DIR__);
+        $controllerName = ucfirst($url[0]) . 'Controller';
+        $fullController = "App\\Controllers\\" . $controllerName;
 
-        // Controller
-        if (file_exists('../app/Controllers/' . ucfirst($url[0]) . 'Controller.php')) {
-            $controllerName = ucfirst($url[0]) . 'Controller';
-            $this->controller = $controllerName;
-        }   
+        // Kiểm tra nếu class controller tồn tại (autoload sẽ tự động tìm file controller)
+        if (class_exists($fullController)) {
+            $this->controller = $fullController;
+        }
 
-        $this->controller = "App\\Controllers\\" . $this->controller;
         $this->controller = new $this->controller;
 
         // Method

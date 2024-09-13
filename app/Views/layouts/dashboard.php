@@ -97,8 +97,6 @@
     </div>
     
   </main>
-  <!-- --Toast Messeage -->
-  <div id="toast"></div>
 
   <!-- ------------------------------------------------------------------------------------------------------ -->
   <!-- jquery -->
@@ -188,15 +186,6 @@
         flashMessage.style.display = 'none';
       }
     }, 1000);
-
-    // $(document).on('click', '.modal_detail-student', function (e) {
-    //   alert('Please enter');
-    //   $('.modal-edit').addClass('show');
-    // });
-
-    // $(document).on('click', '.close-edit', function (event) {
-    //   $('.modal-edit').removeClass('show');
-    // });
 
   </script>
   <script src="../../public/assets/main.js"></script>

@@ -1,7 +1,8 @@
 <?php
-require '../Config/define_path.php';
 require '../vendor/autoload.php';
-require '../core/Database.php';
+require '../app/Config/define_database.php';
+require '../app/Config/define_path.php';
+require '../app/Config/define_pagination.php';
 
 session_start();
 

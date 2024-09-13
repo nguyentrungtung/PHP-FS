@@ -32,10 +32,10 @@
             <tbody>
                 <?php foreach ($data['students'] as $key => $student): ?>
                 <tr>
-                    <td class="text-center" style="vertical-align: middle;"><?php echo $key?></td>
+                    <td class="text-center" style="vertical-align: middle;"><?php echo $key +1?></td>
                     <td class="text-center" style="vertical-align: middle;">
-                        <a href="<?php echo BASE_PATH; ?>student/show/<?php echo $student->id; ?>" class="modal_detail-student"
-                            studentId="<?php echo $student->id; ?>"
+                        <a href="<?php echo BASE_PATH; ?>student/show/<?php echo $student->id; ?>"
+                            class="modal_detail-student" studentId="<?php echo $student->id; ?>"
                             style="cursor : pointer"><?php echo $student->name; ?></a></td>
                     <td class="text-center" style="vertical-align: middle;">
                         <img src="<?php echo BASE_PATH; ?><?php echo $student->photo;?>" alt="Ảnh sinh viên"
@@ -55,7 +55,8 @@
                             <ul class="dropdown-menu">
                                 <!-- href="<?php echo BASE_PATH; ?>student/edit/<?php echo $student->id; ?>" -->
                                 <li><a class="dropdown-item text-center btn-modal_edit"
-                                        href="<?php echo BASE_PATH; ?>student/edit/<?php echo $student->id; ?>">Edit</a></li>
+                                        href="<?php echo BASE_PATH; ?>student/edit/<?php echo $student->id; ?>">Edit</a>
+                                </li>
                                 <li><a class="dropdown-item text-center btn-modal_edit"
                                         href="<?php echo BASE_PATH; ?>student/delete/<?php echo $student->id; ?>"
                                         onclick="return confirm('Bạn có chắc muốn xóa?')">Delete</a></li>
@@ -69,42 +70,14 @@
     </div>
 
     <div class="card-footer" style="display:flex; justify-content: center;">
-        <nav aria-label="Page navigation">
-            <ul class="pagination float-end">
-                <?php if ($data['page'] != 1 || !isset($data['page'])) : ?>
-                <li class="page-item">
-                    <a class="page-link" href="<?= '<?php echo BASE_PATH; ?>student/index/' . $data['page'] - 1 ?>"
-                        aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <?php endif; ?>
-
-                <?php for ($i = 1; $i <= $data['totalPage']; $i++) : ?>
-                <li class="page-item <?= $data['page'] == $i ? 'active' : '' ?>">
-                    <!-- <a class="page-link" href="<?= '<?php echo BASE_PATH; ?>student/index/' . $i ?>"> <?= $i ?> </a> -->
-                    <a class="page-link"
-                        href="<?php echo BASE_PATH; ?>student/index?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                </li>
-                <?php endfor; ?>
-
-                <?php if ($data['page'] != $data['totalPage']) : ?>
-                <li class="page-item">
-                    <button type="button" class="page-link"
-                        href="<?= '<?php echo BASE_PATH; ?>student/index/' . $data['page'] + 1 ?>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </button>
-                </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
+        <?php echo $data['paginationLinks'] ?>
     </div>
 
     <div class="modal-edit">
         <div class="content-toast-wrap">
             <div class="card edit-student">
                 <!-- <div class="card-header" style ="display:flex; align-items: center;"> -->
-                <div style ="width:100%; display:flex; align-items: center;justify-content: space-between;">
+                <div style="width:100%; display:flex; align-items: center;justify-content: space-between;">
                     <h5 class="card-title">Thông tin sinh viên</h5>
                     <p class="close-edit" style="cursor : pointer; font-size: 18px;"><i class="fa-solid fa-x"></i></p>
                 </div>
