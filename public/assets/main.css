@@ -1,4 +1,22 @@
 
+.icon-add {
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out, font-size 0.3s ease-in-out;
+}
+
+a:hover .icon-add {
+    transform: rotate(360deg);
+    color: black;
+    font-size: 1.2em;
+}
+
+ul.dropdown-menu.show::before {
+    opacity: 0;
+}
+
+a.btn.btn-secondary.dropdown-toggle::after {
+    content: '<i class=' fa-solid fa-caret-left '></i>';
+    font-size: 10px;
+}
 /* -----modal----- */
 
 .modal-edit {
@@ -43,3 +61,6 @@
 .modal-edit.active.edit-student {
     transform: translateY(0px);
 }
+
+
+

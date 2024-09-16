@@ -27,12 +27,13 @@ class StudentController extends Controller {
         // Xác định trang hiện tại
         $page               = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-        $totalStudents      = Student::count();
-        $paginator          = new Paginator($totalStudents, $page, LIMIT);
+        $totalStudents      = $this->model->all();
+        $paginator          = new Paginator($totalStudents->count() , $page, LIMIT);
 
         $offset             = $paginator->getOffset();
         $limit              = $paginator->getLimit();
-        $students           = Student::skip($offset)->take($limit)->get();
+        // $students           = $this->model->skip($offset)->take($limit)->get();
+        $students           =  $totalStudents->slice($offset, $limit);
         $paginationLinks    = $paginator->renderPaginationLinks('student/index');
 
         $this->view('students/index', [
@@ -102,7 +103,7 @@ class StudentController extends Controller {
             'type'      => 'success'
         ];
        
-        Student::create([
+        $this->model->create([
             'name'      => $name,
             'age'       => $age,
             'photo'     => $uploadedPhoto,
@@ -115,7 +116,7 @@ class StudentController extends Controller {
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['studentId'])) {
             $studentId  = $_GET['studentId'];
-            $student    = Student::find($studentId);
+            $student    = $this->model->find($studentId);
 
             echo json_encode([
                 'status'    => 'success',
@@ -126,7 +127,7 @@ class StudentController extends Controller {
     }
     
     public function edit($id) {
-        $student = Student::find($id);
+        $student = $this->model->find($id);
 
         $this->view('students/edit', ['student' => $student]);
 
@@ -136,7 +137,7 @@ class StudentController extends Controller {
         $name   = isset($_POST['name']) ? $_POST['name'] : '';
         $age    = isset($_POST['age']) ? $_POST['age'] : '';
     
-        $student = Student::find($id); 
+        $student = $this->model->find($id); 
         $photo = $student->photo; // Giữ lại ảnh cũ
 
         // Xử lý ảnh
@@ -158,7 +159,7 @@ class StudentController extends Controller {
     }
     
     public function delete($id) {
-        Student::destroy($id);
+        $this->model->destroy($id);
 
         $_SESSION['flash_message'] = [
             'message'   => 'Xóa sinh viên thành công!',

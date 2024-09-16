@@ -1,5 +1,5 @@
 <?php
 namespace App\Config;
 
-define('LIMIT', 5);
+define('LIMIT', 3);
 

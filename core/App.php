@@ -3,7 +3,7 @@
 namespace Core;
 
 class App {
-    protected $controller = 'StudentController';
+    protected $controller = '';
     protected $method = 'index';
     protected $params = [];
     protected $uri;
@@ -11,22 +11,27 @@ class App {
     public function __construct() {
         $url = $this->parseUrl();
         $controllerName = ucfirst($url[0]) . 'Controller';
-        $fullController = "App\\Controllers\\" . $controllerName;
+        $fullController = __CONTROLLER_NAMESPACE . $controllerName;
 
         // Kiểm tra nếu class controller tồn tại (autoload sẽ tự động tìm file controller)
         if (class_exists($fullController)) {
             $this->controller = $fullController;
         }
 
-        $this->controller = new $this->controller;
+        if (class_exists($fullController)) {
+            // Tạo đối tượng controller từ tên class
+            $this->controller = new $fullController;
+            
+            // Kiểm tra phương thức LoadModel có tồn tại trong đối tượng controller không
+            if (method_exists($this->controller, 'loadModel')) {
+                $this->controller->LoadModel(ucfirst($url[0]));
+            }
+        }
 
         // Method
         if (isset($url[1]) && method_exists($this->controller, $url[1])) {
             $this->method = $url[1];
-        } else {
-            // Đặt method mặc định nếu không tìm thấy
-            $this->method = 'index';
-        }
+        } 
 
         // Parameters
         $this->params = array_slice($url, 2);

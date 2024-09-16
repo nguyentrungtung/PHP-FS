@@ -93,7 +93,7 @@
     </nav>
 
     <div class="content" style="padding:20px 40px;">
-      <?php require_once($content); ?>
+      <?php echo $content; ?>
     </div>
     
   </main>
