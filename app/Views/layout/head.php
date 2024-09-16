@@ -40,20 +40,12 @@
                 <li class=\"nav-item ".($method==='create'?'active':'')."\">
                   <a class=\"nav-link\" href=\"".__Base_Uri."?cat=".$name."&view=create\">Create <span class=\"sr-only\">(current)</span></a>
                 </li>
-                <li class=\"nav-item ".($name==='students'?'active':'')."\">
-                  <a class=\"nav-link\" href=\"".__Base_Uri."?cat=students&view=index&page=1\">Students <span class=\"sr-only\">(current)</span></a>
-                </li>
-                <li class=\"nav-item ".($name==='_students'?'active':'')."\">
-                  <a class=\"nav-link\" href=\"".__Base_Uri."?cat=_students&view=index&page=1\">_Students<span class=\"sr-only\">(current)</span></a>
-                </li>
                 
             ";
           ?>
         </ul>
 
         <?php
-        echo "<p style=\"color: #a3a5a6;
-    font-size: 14px;\" >".($name==='_students'?'Using core model':'Using model Eloquent ORM')."</p>";
           echo "
                 <div style=\"width:550px;\" class=\"input-group \">
                 <input id=\"hide_name\" value=\"$name\" type=\"hidden\"/>

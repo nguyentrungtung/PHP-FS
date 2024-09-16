@@ -1,51 +1,60 @@
 <?php
     namespace App\controllers;
     use App\Core\Controller;
-    use App\Core\pagination;
     use App\Core\error;
     // 
-    // dung voi studnetModel duoc ke thua tu model Eloquent ORM 
+    // dung voi studentModel duoc ke thua tu model nam trong core;
     class studentsController extends Controller{
         private $table="students";
-        // khai bao rules de khiem tra du lieu khi khoi tao hoac update du lieu
-        private $rules=[
-            'student_id'=>'',
-            'first_name'=>'required|min:2|max:50',
-            'last_name'=>'required|min:2|max:50',
-            'date_of_birth'=>'required|date',
-            'phone_number'=>'required|digits_between:10,15',
-            'address'=>'required',
-            'gpa'=>'required|numeric|between:0,4',
-        ];
         public function __construct() {
             parent::__construct();
             $this->loadModel($this->table);
-            
         }
         // 
         public function index($page){
-            $result=$this->model->all();
             // 
-            $path=__Path_Views.$this->table."/home/index.php";
-            $total=count($result);
-            $config=array(
-                'limit'=>5,#gioi han du lieu moi trang
-                'current_page'=>$page,
-                'total_records'=>$total,
-                'link_full'=>"index.php?cat=_students&view=index&page="
-            );
-            // 
-            $pagination=new Pagination;
-            $pagination->init($config);
-            $start=$pagination->getStart();
-            $data=array_slice($this->model->fetch($result),$start,$config['limit']);
-            require_once ($path);
-            $pagination->getPagination();
+            if($this->model->getAll()===true){
+                $path=__Path_Views.$this->table."/home/index.php";
+                $count=$this->model->numRow();
+                // echo $count;
+                $config=array(
+                    'limit'=>5,#gioi han du lieu moi trang
+                    'current_page'=>$page,
+                    'total_records'=>$count,
+                    'link_full'=>"index.php?cat=".$this->table."&view=index&page="
+                );
+                // tao phan trang
+                $this->pagi->init($config);
+                // 
+                $start=$this->pagi->getStart();
+                // lay du lieu hien thi theo phan trang
+                $this->model->getLimit($start,$config['limit']);
+                $data=$this->model->data;
+                require_once ($path);
+                // goi ui phan trang
+                $this->pagi->getPagination();
+            }else{
+                $this->error->print("Failed to load Data!");
+            }
         }
-        // 
+        // lay view detail data
+        public function detail($id){
+            $path=__Path_Views.$this->table."/detail/index.php";
+            $data=$this->model->getOne($id);
+            $check=false;
+            require_once ($path);
+        }
+        // lay view change data
+        public function change($id){
+            $path=__Path_Views.$this->table."/detail/index.php";
+            $data=$data=$this->model->getOne($id);
+            $check=true;
+            require_once ($path);
+        }
         // goi view create 
         public function create($id=''){
             $path=__Path_Views.$this->table."/create/index.php";
+            $name=$this->table;
             require_once ($path);
             if($id!==''){
                 echo '<script>
@@ -53,93 +62,77 @@
                 </script>';
             }
         }
-        // // lay view detail data
-        public function detail($id){
-            if(isset($id)){
-                $path=__Path_Views.$this->table."/detail/index.php";
-                $data=$this->model->find($id);
-                $check=false;
-                require_once ($path);
-            }else{
-                $this->error->print("Missing parameter id!");
-            } 
-        }
-        // lay view change data
-        public function change($id){
-            $path=__Path_Views.$this->table."/detail/index.php";
-            $data=$this->model->find($id);  
-            // thay doi trang thai the in put cho phep thay doi du lieu
-            $check=true;
-            require_once ($path);
-        }
-        // 
-        public function search($param){
-                echo '<script>
-                    const searchValue =document.getElementById("search");
-                    searchValue.value="'.$param.'";
+        // goi ham tao ban ghi moi
+        public function add(){
+            $student=$this->model->create();
+            echo '<script>
+                    alert("Add succefully!");
+                    window.location.replace("http://localhost:8080/ommani/learn/phrases1/index.php?cat=students&view=search&param='.$student->id.'&page=1");
                 </script>';
-            $data=$this->model->where('id', $param)
-                ->orWhere('first_name', 'LIKE', "%{$param}%")
-                ->orWhere('date_of_birth', $param)
-                ->get();
-                // print_r($data);
-                if(isset($data)){
-                    $path=__Path_Views.$this->table."/home/index.php";
-                    require_once ($path);
-                    return ;
-                }
-                echo "Not Found";
-                
-            
         }
         // 
         public function update($id){
-            $this->rules['student_id']='';
-            if($this->error->checkValidator($_POST,$this->rules)){
-                $student=$this->model->find($id);
-                $this->model->write($student);
-                header("Location: index.php?cat=".$this->table."&view=detail&id=".$id);
-            }
+            $this->model->updateData($id);
+            // echo 'alert("Update succefully!");';
+            echo '<script>
+                    alert("Update succefully!");
+                    window.location.replace("http://localhost:8080/ommani/learn/phrases1/index.php?cat=students&view=detail&id='.$id.'");
+                </script>';
         }
         // 
         public function delete($id){
-            $this->model->find($id)->delete();
+            if(!$this->model->deleteData($id)){
+                echo '<script>
+                    alert("Delete fally!");
+                    window.history.back();
+                </script>';
+                return; 
+            }
+            // 
+            $view='index';
+            $page=1;
             if(isset($_SERVER['HTTP_REFERER'])){
                 $previous_url =$_SERVER['HTTP_REFERER'];
                 parse_str($previous_url,$query);
                 if(isset($query['page'])){
+                    if(isset($query['view'])){
+                        $view=$query['view'];
+                    }
                     $page=$query['page'];
-                }else{
-                    $page=1;
                 }
-            }
-            else{
-                $page=1;
+                if(isset($query['param'])){
+                    $param=$query['param'];
+                }
             }
             echo '<script>
                     alert("Delete succefully!");
-                    window.location.replace("http://localhost:8080/ommani/learn/phrases1/index.php?cat=students&view=index&page='.$page.'");
+                    window.location.replace("http://localhost:8080/ommani/learn/phrases1/index.php?cat=students&view='.$view.'&'.(isset($param)?"param=$param":"").'&page='.$page.'");
                 </script>';
         }
         // 
-        public function add(){
-            $this->rules['student_id']='required|integer';
-            // 
-            if($this->error->checkValidator($_POST,$this->rules)){
-               if(!$this->model->find($_POST['student_id'])){
-                    $student=new $this->model;
-                    $student->id=$_POST['student_id'];
-                    $this->model->write($student);
-                    echo '<script>
-                        alert("Add succefully!");
-                        window.location.replace("http://localhost:8080/ommani/learn/phrases1/index.php?cat=students&view=search&id='.$_POST["student_id"].'");
-                    </script>';
-                }else{
-                    echo '<script>
-                        alert("Add failures, This id is allready exist!");
-                        window.history.back();
-                    </script>';
-                }   
+        public function search($param){
+            echo '<script>
+                    const searchValue =document.getElementById("search");
+                    searchValue.value="'.$param.'";
+                </script>';
+            if($this->model->search($param)===true){
+                $page=isset($_REQUEST['page'])?$_REQUEST['page']:1;
+                $count=$this->model->numRow();
+                $config=array(
+                    'limit'=>5,#gioi han du lieu moi trang
+                    'current_page'=>$page,
+                    'total_records'=>$count,
+                    'link_full'=>"index.php?cat=".$this->table."&view=search&param=$param&page="
+                );
+                $this->pagi->init($config);
+                $start=$this->pagi->getStart();
+                $this->model->getLimit($start,$config['limit']);
+                $data=$this->model->data;
+                $path=__Path_Views.$this->table."/home/index.php";
+                require_once ($path);
+                $this->pagi->getPagination();
+            }else{
+                echo "Not Found";
             }
         }
         

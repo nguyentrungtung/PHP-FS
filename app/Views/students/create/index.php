@@ -1,8 +1,9 @@
 <div style="width:525px;" class="justify-content-sm-center">
-    <form action="<?php echo __Add_Uri ?>" class="row g-3 needs-validation" method="POST">
+    <form id="create-form" action="<?php echo __Base_Uri."?cat=$name&view=add" ?>" class="row g-3 needs-validation" method="POST">
         <div class="input-group mb-3">
             <span class="input-group-text">Student ID</span>
-            <input id="student-id" required type="text" name="student_id" class="form-control" placeholder="00000000" aria-label="student_id">
+            <input readonly disabled id="student-id" required type="text" name="student_id" class="form-control" placeholder="#200*****" aria-label="student_id">
+            <div id="handle-id" class="btn btn-primary">handle</div>
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text">First and last name</span>
@@ -25,6 +26,6 @@
             <span class="input-group-text">Address</span>
             <textarea required name="address" class="form-control" aria-label="With textarea"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button id="form_submit" type="submit" class="btn btn-primary">Submit</button>
     </form>                         
 </div>

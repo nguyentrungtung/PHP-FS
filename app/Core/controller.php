@@ -1,11 +1,13 @@
 <?php 
     namespace App\Core;
     use App\Core\sysError;
+    use App\Core\pagination;
     require_once('app/config/validator.php');
     // 
     class Controller{
         public function __construct() {
             $this->error=new sysError;
+            $this->pagi=new Pagination;
         }
         // 
         public function loadModel($modelName){

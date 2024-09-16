@@ -6,7 +6,6 @@
     // duong dan lay layout
     define('__Path_Layout','app/views/layout/');
     // 
-    define('__Add_Uri',$base_uri.'?cat=students&view=add');
     define('__Site_Path',$site_path);
     define('__Base_Uri',$base_uri);
     define('__Path_Model','app/models/');

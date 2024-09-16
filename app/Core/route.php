@@ -25,6 +25,9 @@
                         $param=1;
                     }
                 }
+                elseif(isset($_REQUEST['param'])){
+                    $param=$_REQUEST['param'];
+                }
                 // doi voi cac phuong thuc khac tham so dau vao la id neu khong co se gan la null va khong co tham so dau vao
                 else{
                     if(isset($_REQUEST['id'])){
