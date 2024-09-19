@@ -1,0 +1,136 @@
+/* box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3); */
+/* setTimeout(() => {debugger}, 3000) */
+
+/* Reset css */
+:root {
+    --color-primary: rgb(108, 176, 149);
+    --color-secondary: rgb(254, 229, 215);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+    font-size: 15px;
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.col-lg-1-5 {
+    /* width: 20% !important; */
+    /* width: 100% !important; */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.translate--y {
+    transition: all 0.3s;
+}
+
+.translate--y:hover {
+    /* background-color: rgb(226, 203, 166); */
+    transform: translateY(-3px);
+}
+
+.hover {
+    transition: all 0.3s;
+}
+
+.hover:hover {
+    /* background-color: rgb(226, 203, 166); */
+    border: 1px solid red;
+}
+
+/* Product item */
+.product-list {
+    /* display: inline-flex !important;
+    overflow: hidden; */
+    display: flex;
+    flex-wrap: nowrap !important;
+    overflow: hidden;
+}
+
+.product__item {
+    position: relative;
+    overflow: hidden;
+    /* padding: 0px; */
+}
+
+.product-item__name {
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Thêm dấu "..." khi văn bản vượt quá */
+    white-space: normal;
+    text-align: justify;
+}
+
+/* Product action  */
+.product-item__action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(225, 238, 238);
+    width: 35px;
+    padding: 3px 0;
+    /* box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3); */
+    border-radius: 4px;
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    transform: translateX(150%);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.product-item__action a {
+}
+
+.product-item:hover .product-item__action {
+    transform: translateX(0%);
+}
+
+.btn-cart--add {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 5px;
+}
+
+.btn-cart--add i:hover {
+    font-size: 17px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
