@@ -13,11 +13,25 @@
         <div class="d-flex justify-content-evenly align-items-center haeder_top" >
             <div class="d-flex align-items-center header_top_left">
                 <img class="header_top_left_logo" src="../public/img/winm_logo.png" alt="">
-                <form class="header_top_left_search" action="">
+                <form id="form_search" class="header_top_left_search" action="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                       </svg>
-                    <input class="header_top_left_search_input" type="text" >
+                    <input id="search_input" class="header_top_left_search_input" type="text" >
+                    <div id="search_ex" class="search_ex hidden">
+                        <h2 class="text-uppercase search_current_title">Tìm kiếm gần đây</h2>
+                        <div class="d-flex flex-wrap search_current">
+                            <div class="current_value">Bánh trung thu</div>
+                            <div class="current_value">Sữa</div>
+                            <div class="current_value">Sữa</div>
+                            <div class="current_value">Sữa</div>
+                            <div class="current_value">Sữa</div>
+                            <div class="current_value">Sữa</div>
+                            <div class="current_value">Sữa</div>
+                            <div class="current_value">Sữa</div>
+                        </div>
+                        <h2 class="text-uppercase search_current_title">Từ khóa gợi ý</h2>
+                    </div>
                 </form>
             </div>
             <div class="d-flex justify-content-between align-items-center  header_top_right">
@@ -28,12 +42,48 @@
                     </svg>  
                     <p class="text-center font-weight-bold header_top_right_shipping_space" >Giao Hàng</p>
                 </div>
-                <div class="d-flex align-items-center header_top_right_cart">
+                <div id="cart" class="d-flex align-items-center header_top_right_cart">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
                         <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
                         <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                     </svg>
                     <p class="header_top_right_cart_count" >Giỏ hàng (0)</p>
+                    <div id="cart_list" class="cart_list hidden">
+                        <div class=" d-flex flex-column cart_list_items">
+                            <div class="d-flex list_items_item">
+                                <img src="../public/img/fix_banner-2.jpg" alt="" class="item_img">
+                                <div class="d-flex flex-wrap flex-column item_content">
+                                    <p class="item_content_text">Nước tăng lực</p>
+                                    <div class="d-flex justify-content-between content_dv">
+                                        <p class="item_content_text">DVT:</p>
+                                        <p class="item_content_text">Chai</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between item_content_price">
+                                        <p class="item_content_text">x 2</p>
+                                        <p class="item_price">79.800 VND</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex list_items_item">
+                                <img src="../public/img/fix_banner-2.jpg" alt="" class="item_img">
+                                <div class="d-flex flex-wrap flex-column item_content">
+                                    <p class="item_content_text">Nước tăng lực</p>
+                                    <div class="d-flex justify-content-between content_dv">
+                                        <p class="item_content_text">DVT:</p>
+                                        <p class="item_content_text">Chai</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between item_content_price">
+                                        <p class="item_content_text">x 2</p>
+                                        <p class="item_price">79.800 VND</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between cart_list_total">
+                            <p class="total_text">Có tổng số: 4 sản phẩm</p>
+                            <button class="btn total_detail">Xem chi tiết</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex align-items-center header_top_right_user">
                     <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -45,24 +95,55 @@
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center header_buttom" >
-            <div class="d-flex align-items-center header_buttom_mennu">
+            <div id="menu" class="d-flex align-items-center header_buttom_menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                 </svg>
-                <p class="header_buttom_mennu_title" >Danh mục sản phẩm</p>
+                <p class="header_buttom_menu_title" >Danh mục sản phẩm</p>
+                <div id="menu_list" class="align-items-start menu_list hidden">
+                    <ul type="none" class="menu_list_ul">
+                        <li class="menu_list_ul_li">Siêu rẻ</li>
+                        <li class="menu_list_ul_li">Siêu Khuyến mãi</li>
+                        <li class="menu_list_ul_li">Ưu đãi hội viên</li>
+                        <li class="d-flex justify-content-between align-items-center menu_list_ul_li sub">Sữa các loại
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                              </svg>
+                        </li>
+                        <li class="menu_list_ul_li">Rau củ - Trái cây</li>
+                        <li class="menu_list_ul_li">Hóa phẩm - Tẩy rửa</li>
+                        <li class="menu_list_ul_li">Chăm sóc cá nhân</li>
+                        <li class="menu_list_ul_li">Thịt hải sản tươi</li>
+                        <li class="menu_list_ul_li">Bánh kẹo</li>
+                        <li class="menu_list_ul_li">Đồ uống có cồn</li>
+                    </ul>
+                    <div id="sub_list" class="menu_sub_list hidden">
+                        <ul type="none" class="menu_list_ul">
+                            <li class="menu_list_ul_li">Siêu rẻ</li>
+                            <li class="menu_list_ul_li">Siêu Khuyến mãi</li>
+                            <li class="menu_list_ul_li">Ưu đãi hội viên</li>
+                            <li class="menu_list_ul_li">Sữa các loại</li>
+                        </ul>
+                        <img src="../public/img/fix_banner-1.jpg" alt="" class="sub_list_img">
+                    </div>
+                </div>
             </div>
             <div class="d-flex align-items-center justify-content-between header_buttom_help">
-                <div class="d-flex align-items-center header_buttom_help_new">
+                <div  class="d-flex align-items-center header_buttom_help_new">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                         <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
                     </svg>
                     <p class="new_title" >Tin tức winmart</p>
                 </div>
-                <div class="d-flex align-items-center header_buttom_help_hostline">
+                <div id="hostline" class="d-flex align-items-center header_buttom_help_hostline">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-headset" viewBox="0 0 16 16">
                         <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5"/>
                     </svg>
                     <p class="hostline_title" >Tư vấn mua hàng</p>
+                    <div id="hostline_infor" class="hostline_content hidden">
+                        <p class="hostline_content_p">Mua online:</p>
+                        <p class="hostline_content_p">09*****456</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -144,6 +225,6 @@
             </div>
         </div>
     </div>
-    <script src="./js/layout.js"></script>
+    <script src="../public/js/layout/layout.js"></script>
 </body>
 </html>
