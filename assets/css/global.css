@@ -1,4 +1,5 @@
 /* box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3); */
+/* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
 /* setTimeout(() => {debugger}, 3000) */
 
 /* Reset css */
@@ -11,9 +12,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 15px;
 }
+
+/* body {
+    background-color: rgb(243, 244, 246);
+} */
 
 ul,
 ol {
@@ -61,28 +66,115 @@ a {
     transform: translateY(-3px);
 }
 
-.hover {
+.hover--border {
     transition: all 0.3s;
 }
 
-.hover:hover {
-    /* background-color: rgb(226, 203, 166); */
+.hover--border:hover {
     border: 1px solid red;
+}
+
+.hover--box-shadow {
+    transition: all 0.3s;
+}
+
+.hover--box-shadow:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Product item */
 .product-list {
-    /* display: inline-flex !important;
-    overflow: hidden; */
     display: flex;
     flex-wrap: nowrap !important;
     overflow: hidden;
 }
 
-.product__item {
+.product-item {
     position: relative;
     overflow: hidden;
-    /* padding: 0px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.product-item__discount-wrap {
+    position: absolute;
+    z-index: 100;
+    top: 20px;
+    left: 15px;
+}
+
+.product-item__discount-product {
+    background-color: rgb(212, 35, 51);
+    padding: 2px 7px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: 12px;
+}
+
+.product-item__discount-ship {
+    height: 24px;
+}
+
+.product-item__img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 190px;
+    margin-top: 20px;
+}
+
+.product-item__img {
+    position: relative;
+    box-sizing: border-box;
+    padding: 0px;
+    margin: auto;
+    display: block;
+    width: 0px;
+    height: 0px;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.product-item__frame {
+    position: absolute;
+    background-image: url('https://hcm.fstorage.vn/images/2024/09/frame-800x800-20240917044518-thumb-1.png');
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100%;
+    box-sizing: border-box;
+    /* border-top: 20px dashed transparent;
+    background-origin: content-box;
+    box-sizing: border-box; */
+    /* top: 15px; */
+}
+
+.product-item__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.product-item__promotion-info {
+    display: flex;
+}
+
+.product-item__promotion-info-image {
+    width: 45px !important;
+    height: 45px;
+}
+
+.product-item__promotion-info-text {
+    color: rgb(153, 140, 140);
+    font-size: 13px;
 }
 
 .product-item__name {
@@ -102,20 +194,18 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(225, 238, 238);
+    background-color: rgb(255, 255, 255);
     width: 35px;
     padding: 3px 0;
-    /* box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(188, 185, 185);
     border-radius: 4px;
     position: absolute;
-    top: 2%;
+    top: 3%;
     right: 3%;
     transform: translateX(150%);
     transition: all 0.5s;
     cursor: pointer;
-}
-
-.product-item__action a {
 }
 
 .product-item:hover .product-item__action {
@@ -132,5 +222,29 @@ a {
 .btn-cart--add i:hover {
     font-size: 17px;
     font-weight: bold;
-    transition: all 0.3s;
+    transition: all 0.1s;
+}
+
+/* Thanh cuộn tổng quát */
+::-webkit-scrollbar {
+    width: 7px; /* Chiều rộng thanh cuộn */
+    height: 7px; /* Chiều cao thanh cuộn ngang */
+}
+
+/* Phần nền của thanh cuộn */
+/* Màu nền thanh cuộn */
+::-webkit-scrollbar-track {
+    /* background: #f1f1f1; */
+}
+
+/* Thanh cuộn */
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu của thanh cuộn */
+    border-radius: 10px; /* Bo góc thanh cuộn */
+    border: 2px solid #f1f1f1; /* Viền của thanh cuộn */
+}
+
+/* Khi người dùng rê chuột vào thanh cuộn */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Màu thanh cuộn khi hover */
 }

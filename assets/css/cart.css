@@ -1,0 +1,206 @@
+.cart__item-wrapper {
+    padding: 0 10px 0 0;
+}
+
+.cart__item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.cart__item-produt_info {
+    padding: 0 40px 0 10px;
+}
+
+.cart__item-name {
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Thêm dấu "..." khi văn bản vượt quá */
+    white-space: normal;
+    text-align: justify;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+.cart__item-price,
+.cart__item-unit {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cart__summary-total-products,
+.cart__summary-total-price-estimated,
+.cart__summary-total-price-saving,
+.cart__summary-shopping-fee,
+.cart__summary-coupon {
+    font-size: 14px;
+}
+
+.product-special-offer__title {
+    /* border-bottom: 1px solid red; */
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.product-special-offer__position-title {
+    text-align: center;
+    position: absolute;
+    top: 2px;
+    left: 20%;
+    right: 0;
+    transform: translateY(-10%);
+}
+
+.product-special-offer__position-title span {
+    transform: translateY(-1px);
+    margin-right: 4px;
+}
+
+.product-special-offer__title-heading {
+    position: relative;
+    background-color: rgb(226, 252, 212);
+    width: fit-content;
+    padding: 5px;
+    color: red;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.product-special-offer__title-heading::before {
+    content: '';
+    border-right: 9px solid black;
+    border-top: 16px solid transparent;
+    position: absolute;
+    left: -9px;
+    top: 0px;
+    bottom: 50%;
+    opacity: 0.57;
+}
+
+.product-special-offer__title-heading::after {
+    content: '';
+    border-left: 9px solid black;
+    border-top: 16px solid transparent;
+    position: absolute;
+    right: -9px;
+    top: 0px;
+    bottom: 50%;
+    opacity: 0.57;
+}
+
+.cart__summary-actions {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: space-evenly; */
+}
+
+.cart__discount-code {
+    width: 100%;
+}
+
+.cart__checkout,
+.cart__continue-shopping {
+    width: 200px;
+}
+
+.cart__summary-actions__top {
+    margin-bottom: 10px;
+}
+
+.cart__discount-code {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid red;
+    padding: 6px 0;
+    border-radius: 4px;
+}
+.cart__discount-code__left {
+    font-size: 17px;
+}
+
+.cart__summary-actions__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-search_coupon {
+    display: flex;
+    flex: 1;
+}
+
+/* Block: coupon-list */
+
+.coupon-list {
+    padding: 5px 10px 10px;
+    list-style: none;
+    max-height: 452px;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+.coupon-list__item {
+    /* position: relative; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    padding-left: 10px;
+}
+
+.coupon-list__logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-right: 15px;
+}
+
+.coupon-list__content {
+    flex: 1;
+    /* justify-items: flex-start;
+    align-self: flex-start; */
+    text-align: left;
+}
+
+.coupon-item__after-active {
+    background-image: url('https://winmart.vn/voucher/ticket_left.png');
+    background-size: contain !important;
+    padding: 12px 12px 12px 16px;
+    background-repeat: no-repeat;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+}
+
+.coupon-list__title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+.coupon-list__description {
+    margin: 0;
+    color: #555;
+}
+
+.coupon-list__actions {
+    display: flex;
+    gap: 10px;
+}
+
+.coupon-list__expiration-date {
+}
+
+.coupon-list__promotional-terms {
+    text-decoration: underline;
+    color: rgb(118, 100, 253);
+}
