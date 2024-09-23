@@ -1,0 +1,61 @@
+.account_detail{
+    width: 100%;
+}
+.account_detail_tabs{
+    width: 100%;
+    border-bottom: 1px solid grey;
+    position: relative;
+}
+.detail_tabs_tab{
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+}
+.active{
+    color: #e82428 !important;
+}
+.move{
+    position: absolute;
+    width: 150px;
+    height: 3px;
+    bottom: 0;
+    border-radius: 10px;
+    transition: left 0.5s ease;
+    background: #e82428;
+}
+.hidden{
+    display: none !important;
+}
+.detail_content_view{
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+}
+.content_input{
+    width: 65%;
+}
+.gender_radio{
+    width: 200px;
+    align-items: center;
+    justify-content: space-around;
+}
+.gender{
+    margin: 0;
+}
+.btn_account{
+    background: #e82428;
+    width: 100px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+.btn_account--disabled{
+    width: 100px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    color: rgb(85, 85, 85);
+    background: rgb(219, 219, 219);
+    
+}
