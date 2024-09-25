@@ -39,7 +39,7 @@ class AdminCategoriesController extends Controller
     public function store(Request $request)
     {
         $this->catgoryService->create($request);
-        return redirect()->route('admin.categories')->with('success','');
+        return redirect()->route('admin.categories')->with('success','Add sucsess!');
     }
 
     /**
@@ -75,6 +75,7 @@ class AdminCategoriesController extends Controller
     public function destroy(string $id)
     {
         $this->catgoryService->destroy($id);
+        // return with('success','Delete sucsess!');
         //
     }
 }
