@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ url('dashboard') }}/assets/img/apple-icon.png">
   <link rel="icon" href="https://play-lh.googleusercontent.com/29JpANiXA74CO46WxNM3DWN1XU92NhRPe0ET1D_ogFbgO6YSQjQKpuA48-IicZOVdw" type = "image/x-icon">
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>
     Dashboard winmart
   </title>
