@@ -60,7 +60,7 @@
     <!-- navbar -->
     @include('admin.components.navbar')
 
-    <div class="container-fluid py-4">
+    <div class="container py-4">
       @include('admin.components.alert')
 
       {{-- content --}}
@@ -70,7 +70,7 @@
       @include('admin.components.footer')
     </div>
   </main>
- 
+
   <!--   Core JS Files   -->
   <script src="{{ url('dashboard') }}/assets/js/core/popper.min.js"></script>
   <script src="{{ url('dashboard') }}/assets/js/core/bootstrap.min.js"></script>
@@ -173,6 +173,9 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{ url('dashboard') }}/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+
+{{--  Custom file js--}}
+  @stack('custom-script')
 </body>
 
 </html>

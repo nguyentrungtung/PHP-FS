@@ -33,6 +33,14 @@
             <span class="nav-link-text ms-1">Sản phẩm</span>
           </a>
         </li>
+          <li class="nav-item">
+              <a class="nav-link d-flex align-items-center justify-content-start" href="{{route('coupons.index')}}">
+                  <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                      <i class="fa-solid fa-ticket-simple text-warning fs-5 opacity-10"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Coupon</span>
+              </a>
+          </li>
       </ul>
     </div>
   </aside>
