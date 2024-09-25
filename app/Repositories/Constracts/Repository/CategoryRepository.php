@@ -7,10 +7,10 @@
         public function __construct(Categories $categories){
             $this->model = $categories;
         }
-        public function index(){
-            return $this->model::paginate(10);
-        }
         public function getParents(){
             return $this->model->whereNull("categories_parent_id")->get();
+        }
+        public function index(){
+            return $this->model::paginate(10);
         }
     }

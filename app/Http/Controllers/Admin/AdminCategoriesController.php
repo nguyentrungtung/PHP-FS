@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Repositories\Constracts\Repository\CategoryRepository;
+use App\Services\CategoriesService;
 use Illuminate\Http\Request;
 
 class AdminCategoriesController extends Controller
 {
-    protected $catgoryRepository;
-    public function __construct(CategoryRepository $catgoryRepository){
-        $this->catgoryRepository = $catgoryRepository;
+    private $catgoryService;
+    public function __construct(
+        CategoriesService $catgoryService,
+    ){
+        $this->catgoryService = $catgoryService;
     }
     //
     public function index()
     {
         
-        $categories = $this->catgoryRepository->index();
+        $categories = $this->catgoryService->index();
         // dd($categories);
         return view('admin.category.index',['cats'=>$categories]);
     }
@@ -26,7 +28,7 @@ class AdminCategoriesController extends Controller
     public function create()
     {
         //
-        $parents=$this->catgoryRepository->getParents();
+        $parents=$this->catgoryService->getParents();
         // dd($parents);
         return view('admin.category.create',['cats'=>$parents]);
     }
@@ -36,12 +38,7 @@ class AdminCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request->input());
-        $name= $request->input('name');
-        $parent_Id= $request->input('parent_id');
-        $data=['categories_name'=>$name,'categories_parent_id'=>$parent_Id];
-        $this->catgoryRepository->create($data);
+        $this->catgoryService->create($request);
         return redirect()->route('admin.categories')->with('success','');
     }
 
@@ -59,9 +56,8 @@ class AdminCategoriesController extends Controller
     public function edit(string $id)
     {
         //
-        $cat=$this->catgoryRepository->find($id);
-        $parents=$this->catgoryRepository->getParents();
-        return view('admin.category.edit',['cat'=>$cat,'cats'=>$parents]);
+        $data=$this->catgoryService->getCatWithParent($id);
+        return view('admin.category.edit',['cat'=>$data['cat'],'cats'=>$data['parents']]);
     }
 
     /**
@@ -69,8 +65,7 @@ class AdminCategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data=['categories_name'=>$request->input('name'),'categories_parent_id'=>$request->input('parent_id')];
-        $this->catgoryRepository->update($id,$data);
+        $this->catgoryService->update($request,$id);
         return redirect()->route('admin.categories.edit',['id'=>$id])->with('success','Update sucsess!');
     }
 
@@ -79,7 +74,7 @@ class AdminCategoriesController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->catgoryRepository->delete($id);
+        $this->catgoryService->destroy($id);
         //
     }
 }
