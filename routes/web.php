@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 /*
@@ -16,7 +17,12 @@ use App\Http\Controllers\Admin\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-
-
+Route::prefix('admin/categories')->group(function () {
+    Route::get('/', [AdminCategoriesController::class,'index'])->name('admin.categories');
+    Route::get('/create', [AdminCategoriesController::class,'create'])->name('admin.categories.create');
+    Route::post('/store',[AdminCategoriesController::class,'store'])->name('admin.categories.store');
+    Route::get('/detail/{id}', [AdminCategoriesController::class,'edit'])->name('admin.categories.edit');
+    Route::delete('/delete/{id}', [AdminCategoriesController::class,'destroy'])->name('admin.categories.destroy');
+    Route::put('/update/{id}',[AdminCategoriesController::class,'update'])->name('admin.categories.update');
+});
