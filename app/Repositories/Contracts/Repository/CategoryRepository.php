@@ -1,11 +1,11 @@
 <?php
-    namespace App\Repositories\Constracts\Repository;
+    namespace App\Repositories\Contracts\Repository;
     use App\Repositories\BaseRepository;
-    use App\Repositories\Constracts\RepositoryInterface\CategoryRepositoryInterface;
+    use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
     use App\Models\Categories;
     class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface{
         public function __construct(Categories $categories){
-            $this->model = $categories;
+            parent::__construct($categories);
         }
         public function getParents(){
             return $this->model->whereNull("categories_parent_id")->get();
