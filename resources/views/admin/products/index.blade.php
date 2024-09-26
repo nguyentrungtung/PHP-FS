@@ -6,8 +6,8 @@
             <h2 class="mb-0">Danh sách sản phẩm</h2>
             <a href="{{route('products.create')}}" class="btn btn-success mt-3 mb-0">Tạo sản phẩm mới</a>
         </div>
-
-        <table class="table table-striped table-bordered">
+        <hr>
+        <table class="table table-striped table-bordered" id ="myProductTable">
             <thead>
             <tr>
                 <th class ="text-center" scope="col">ID</th>
@@ -64,7 +64,7 @@
             </tbody>
         </table>
         <div class="footer">
-            {!! $products->links("pagination::bootstrap-5") !!}
+{{--            {!! $products->links("pagination::bootstrap-5") !!}--}}
         </div>
     </div>
 @endsection

@@ -191,7 +191,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // $('#myTable_').DataTable();
+        $('#myProductTable').DataTable();
     })
 </script>
 
