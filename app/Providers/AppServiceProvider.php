@@ -2,12 +2,24 @@
 
 namespace App\Providers;
 
-use App\Repositories\Constracts\Repository\CategoryRepository;
-use App\Repositories\Constracts\RepositoryInterface\CategoryRepositoryInterface;
-use Illuminate\Support\ServiceProvider;
-use App\Repositories\Contracts\RepositoryInterface\CouponRepositoryInterface;
+<<<<<<< Updated upstream
+use App\Repositories\Contracts\Repository\BrandRepository;
+use App\Repositories\Contracts\Repository\CategoryRepository;
 use App\Repositories\Contracts\Repository\CouponRepository;
+use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CouponRepositoryInterface;
+=======
+use App\Repositories\Contracts\Repository\CategoryRepository;
+use App\Repositories\Contracts\Repository\CouponRepository;
+use App\Repositories\Contracts\Repository\ProductRepository;
+use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CouponRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use Illuminate\Pagination\Paginator;
+>>>>>>> Stashed changes
+use Illuminate\Support\ServiceProvider;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -15,9 +27,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CouponRepositoryInterface::class, CouponRepository::class);
+<<<<<<< Updated upstream
         //
+        $this->app->bind(CouponRepositoryInterface::class, CouponRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class,CategoryRepository::class);
+        $this->app->bind(BrandRepositoryInterface::class,BrandRepository::class);
+=======
+        $repositories = [
+            CouponRepositoryInterface::class => CouponRepository::class,
+            ProductRepositoryInterface::class => ProductRepository::class,
+            CategoryRepositoryInterface::class => CategoryRepository::class,
+        ];
+
+        foreach ($repositories as $interface => $repository) {
+            $this->app->bind($interface, $repository);
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -26,6 +51,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Paginator::useBootstrapFive();
     }
 }

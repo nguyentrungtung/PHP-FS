@@ -1,7 +1,7 @@
 <?php
     namespace App\Services;
 
-use App\Repositories\Constracts\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
     class CategoriesService{

@@ -1,0 +1,33 @@
+/* Ghi đè CSS cho Select2 để khớp với Bootstrap */
+.select2-container .select2-selection--single {
+    height: calc(2.25rem + 2px); /* Kích thước chuẩn của input Bootstrap */
+    padding: 0.375rem 0.75rem;   /* Điều chỉnh padding */
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+}
+
+/* Xóa bỏ border mặc định khi focus */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #495057;
+    padding-left: 0; /* Loại bỏ padding không cần thiết */
+}
+
+/* Điều chỉnh focus cho Select2 */
+.select2-container--default .select2-selection--single:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Điều chỉnh cho mũi tên chọn của Select2 */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: calc(2.25rem + 2px);
+    right: 10px; /* Đảm bảo mũi tên nằm đúng vị trí */
+    top: 50%;
+    transform: translateY(-50%);
+}
