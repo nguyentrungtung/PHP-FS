@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminCategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\AdminUnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,13 @@ Route::prefix('admin/brands')->group(function () {
     Route::get('/detail/{id}', [AdminBrandController::class,'edit'])->name('admin.brands.edit');
     Route::delete('/delete/{id}', [AdminBrandController::class,'destroy'])->name('admin.brands.destroy');
     Route::put('/update/{id}',[AdminBrandController::class,'update'])->name('admin.brands.update');
+});
+// 
+Route::prefix('admin/units')->group(function () {
+    Route::get('/', [AdminUnitController::class,'index'])->name('admin.units');
+    Route::get('/create', [AdminUnitController::class,'create'])->name('admin.units.create');
+    // Route::post('/store',[AdminUnitController::class,'store'])->name('admin.units.store');
+    Route::get('/detail/{id}', [AdminUnitController::class,'edit'])->name('admin.units.edit');
+    // Route::delete('/delete/{id}', [AdminUnitController::class,'destroy'])->name('admin.units.destroy');
+    // Route::put('/update/{id}',[AdminUnitController::class,'update'])->name('admin.units.update');
 });
