@@ -1,0 +1,37 @@
+Merge pull request #1 from nguyentrungtung/be_coupon-create
+
+Be coupon create
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Author:    Moi Pub <125459743+mixi-ironman@users.noreply.github.com>
+# Date:      Wed Sep 25 16:50:02 2024 +0700
+#
+# On branch be_coupon-create
+# Changes to be committed:
+#	new file:   app/Http/Controllers/Admin/CouponController.php
+#	deleted:    app/Http/Controllers/Admin/ProductController.php
+#	new file:   app/Http/Requests/CouponRequest.php
+#	new file:   app/Models/Coupon.php
+#	deleted:    app/Models/Product.php
+#	modified:   app/Providers/AppServiceProvider.php
+#	modified:   app/Repositories/BaseRepository.php
+#	modified:   app/Repositories/BaseRepositoryInterface.php
+#	deleted:    app/Repositories/Constracts/Repository/ProductRepository.php
+#	renamed:    app/Repositories/Constracts/Repository/CategoryRepository.php -> app/Repositories/Contracts/Repository/CategoryRepository.php
+#	new file:   app/Repositories/Contracts/Repository/CouponRepository.php
+#	renamed:    app/Repositories/Constracts/RepositoryInterface/CategoryRepositoryInterface.php -> app/Repositories/Contracts/RepositoryInterface/CategoryRepositoryInterface.php
+#	renamed:    app/Repositories/Constracts/RepositoryInterface/ProductRepositoryInterface.php -> app/Repositories/Contracts/RepositoryInterface/CouponRepositoryInterface.php
+#	new file:   app/Services/CouponService.php
+#	deleted:    database/migrations/2024_09_24_083736_create_products_table.php
+#	new file:   database/migrations/2024_09_24_095632_create_coupons_table.php
+#	new file:   public/admin/css/global.css
+#	new file:   public/admin/js/global.js
+#	modified:   resources/views/admin/components/sidebar.blade.php
+#	new file:   resources/views/admin/coupons/create.blade.php
+#	new file:   resources/views/admin/coupons/edit.blade.php
+#	new file:   resources/views/admin/coupons/index.blade.php
+#	modified:   resources/views/admin/master-layout.blade.php
+#	modified:   routes/web.php
+#

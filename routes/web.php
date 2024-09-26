@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
 
@@ -40,7 +41,7 @@ Route::prefix('admin/categories')->group(function () {
     Route::delete('/delete/{id}', [AdminCategoriesController::class,'destroy'])->name('admin.categories.destroy');
     Route::put('/update/{id}',[AdminCategoriesController::class,'update'])->name('admin.categories.update');
 });
-// 
+//
 Route::prefix('admin/brands')->group(function () {
     Route::get('/', [AdminBrandController::class,'index'])->name('admin.brands');
     Route::get('/create', [AdminBrandController::class,'create'])->name('admin.brands.create');
@@ -49,7 +50,19 @@ Route::prefix('admin/brands')->group(function () {
     Route::delete('/delete/{id}', [AdminBrandController::class,'destroy'])->name('admin.brands.destroy');
     Route::put('/update/{id}',[AdminBrandController::class,'update'])->name('admin.brands.update');
 });
-// 
+
+
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');                 // Danh sách các sản phẩm
+    Route::get('/create', [ProductController::class, 'create'])->name('products.create');         // Hiển thị form tạo sản phẩm
+    Route::post('/', [ProductController::class, 'store'])->name('products.store');                // Lưu sản phẩm mới
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');      // Hiển thị form chỉnh sửa sản phẩm
+    Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');       // Cập nhật sản phẩm
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');  // Xóa sản phẩm
+});
+
+
+//
 Route::prefix('admin/units')->group(function () {
     Route::get('/', [AdminUnitController::class,'index'])->name('admin.units');
     Route::get('/create', [AdminUnitController::class,'create'])->name('admin.units.create');
