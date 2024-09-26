@@ -23,14 +23,15 @@ use App\Repositories\BaseRepository;
         }
         public function update($id, array $data){
             $brand= $this->model->find($id);
-            if ($brand) {
-                if(isset($data['move'])){
-                    File::move($data['move']['current'], $data['move']['new']);
-                }
-                if(isset($data['create'])){
-                    $this->deleteImg($brand);
-                    $this->createImg($data['create']['file'],$data['create']['fileName']);
-                }
+            if (!$brand) {
+                return false;
+            }
+            if(isset($data['move'])){
+                File::move($data['move']['current'], $data['move']['new']);
+            }
+            if(isset($data['create'])){
+                $this->deleteImg($brand);
+                $this->createImg($data['create']['file'],$data['create']['fileName']);
             }
             $brand->update($data);
             return $brand;

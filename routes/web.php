@@ -1,11 +1,12 @@
 <?php
+
 use App\Http\Controllers\Admin\AdminBrandController;
+use App\Http\Controllers\Admin\AdminCategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\AdminCategoriesController;
 use App\Http\Controllers\Admin\CouponController;
-
+use App\Http\Controllers\Admin\AdminUnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,14 +34,13 @@ Route::prefix('coupons')->group(function () {
 });
 
 Route::prefix('admin/categories')->group(function () {
-    Route::get('/', [AdminCategoriesController::class, 'index'])->name('admin.categories');
-    Route::get('/create', [AdminCategoriesController::class, 'create'])->name('admin.categories.create');
-    Route::post('/store', [AdminCategoriesController::class, 'store'])->name('admin.categories.store');
-    Route::get('/detail/{id}', [AdminCategoriesController::class, 'edit'])->name('admin.categories.edit');
-    Route::delete('/delete/{id}', [AdminCategoriesController::class, 'destroy'])->name('admin.categories.destroy');
-    Route::put('/update/{id}', [AdminCategoriesController::class, 'update'])->name('admin.categories.update');
+    Route::get('/', [AdminCategoriesController::class,'index'])->name('admin.categories');
+    Route::get('/create', [AdminCategoriesController::class,'create'])->name('admin.categories.create');
+    Route::post('/store',[AdminCategoriesController::class,'store'])->name('admin.categories.store');
+    Route::get('/detail/{id}', [AdminCategoriesController::class,'edit'])->name('admin.categories.edit');
+    Route::delete('/delete/{id}', [AdminCategoriesController::class,'destroy'])->name('admin.categories.destroy');
+    Route::put('/update/{id}',[AdminCategoriesController::class,'update'])->name('admin.categories.update');
 });
-
 //
 Route::prefix('admin/brands')->group(function () {
     Route::get('/', [AdminBrandController::class,'index'])->name('admin.brands');
@@ -61,3 +61,13 @@ Route::prefix('products')->group(function () {
     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');  // Xóa sản phẩm
 });
 
+
+//
+Route::prefix('admin/units')->group(function () {
+    Route::get('/', [AdminUnitController::class,'index'])->name('admin.units');
+    Route::get('/create', [AdminUnitController::class,'create'])->name('admin.units.create');
+    Route::post('/store',[AdminUnitController::class,'store'])->name('admin.units.store');
+    Route::get('/detail/{id}', [AdminUnitController::class,'edit'])->name('admin.units.edit');
+    Route::delete('/delete/{id}', [AdminUnitController::class,'destroy'])->name('admin.units.destroy');
+    Route::put('/update/{id}',[AdminUnitController::class,'update'])->name('admin.units.update');
+});
