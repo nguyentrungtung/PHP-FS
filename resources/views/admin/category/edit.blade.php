@@ -9,7 +9,7 @@
         style="width: 50%" method="POST" action="{{ route('admin.categories.update',['id'=>$cat->id]) }}">
         @csrf
         @method('PUT')
-        <h4 class="text-start text-capitalize">Create Category</h4>
+        <h4 class="text-start text-capitalize">Category Detail</h4>
         <div class="d-flex justify-content-start align-items-start flex-column mb-1 ">
           <label for="catname" class="form-label">Category name</label>
           <input disabled value="{{$cat->categories_name}}" name='name' required type="text" class="form-control form_input" id="catname" aria-describedby="catHelp">

@@ -1,5 +1,6 @@
 @extends('admin.master-layout')
 @section('content')
+<h4 class="text-start text-capitalize">Categories index</h4>
 <div class="d-flex justify-content-start align-items-center">
   <a href="{{ route('admin.categories') }}" class="btn btn-primary mx-3">Categories</a>
   <a href="{{ route('admin.categories.create') }}" class="btn btn-primary">Create</a>
