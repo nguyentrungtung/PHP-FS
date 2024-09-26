@@ -11,8 +11,8 @@
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Unit name</th>
-            <th scope="col">Create at</th>
-            <th scope="col">Update at</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Updated at</th>
             <th scope="col">Handle</th>
           </tr>
         </thead>
@@ -21,8 +21,8 @@
             <tr style="height: 30px;">
               <th scope="row">{{$unit->id}}</th>
               <td>{{$unit->unit_name}}</td>
-              <td>{{$unit->create_at}}</td>
-              <td>{{$unit->update_at}}</td>
+              <td>{{$unit->created_at}}</td>
+              <td>{{$unit->updated_at}}</td>
               <td>
                 <div class="d-flex justify-content-evenly align-items-center">
                   <button onclick="confirmDelete({{ $unit->id }})" class="btn btn-danger">Delete</button>
