@@ -2,8 +2,8 @@
 @section('content')
 <h4 class="text-start text-capitalize">Customers index</h4>
 <div class="d-flex justify-content-start align-items-center">
-  <a  class="btn btn-primary mx-3">Customers</a>
-  <a  class="btn btn-primary">Create</a>
+  <a href="{{route('admin.customers')}}" class="btn btn-primary mx-3">Customers</a>
+  <a href="{{route('admin.customers.create')}}" class="btn btn-primary">Create</a>
 </div>
 <div style="background: white" >
     <table class="table table-striped-columns table-hover">

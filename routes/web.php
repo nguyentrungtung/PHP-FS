@@ -75,9 +75,9 @@ Route::prefix('admin/units')->group(function () {
 // 
 Route::prefix('admin/customers')->group(function () {
     Route::get('/', [AdminCustomerController::class,'index'])->name('admin.customers');
-    // Route::get('/create', [AdminCustomerController::class,'create'])->name('admin.customers.create');
-    // Route::post('/store',[AdminCustomerController::class,'store'])->name('admin.customers.store');
-    // Route::get('/detail/{id}', [AdminCustomerController::class,'edit'])->name('admin.customers.edit');
-    // Route::delete('/delete/{id}', [AdminCustomerController::class,'destroy'])->name('admin.customers.destroy');
-    // Route::put('/update/{id}',[AdminCustomerController::class,'update'])->name('admin.customers.update');
+    Route::get('/create', [AdminCustomerController::class,'create'])->name('admin.customers.create');
+    Route::post('/store',[AdminCustomerController::class,'store'])->name('admin.customers.store');
+    Route::get('/detail/{id}', [AdminCustomerController::class,'edit'])->name('admin.customers.edit');
+    Route::delete('/delete/{id}', [AdminCustomerController::class,'destroy'])->name('admin.customers.destroy');
+    Route::put('/update/{id}',[AdminCustomerController::class,'update'])->name('admin.customers.update');
 });
