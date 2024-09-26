@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // $this->call(CategoryTableSeeder::class);
         // $this->call(PromotionsTableSeeser::class);
-        $this->call(UnitTableSeeder::class);
+        // $this->call(UnitTableSeeder::class);
+        $this->call(CustomersSeeder::class);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
