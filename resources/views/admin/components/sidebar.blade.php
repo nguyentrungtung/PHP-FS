@@ -34,7 +34,6 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center justify-content-start" href="{{ route('products.index') }}">
           <a class="nav-link " href="{{route('admin.units')}} ">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
@@ -43,7 +42,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link d-flex align-items-center justify-content-start" href="./pages/tables.html">
+          <a class="nav-link d-flex align-items-center justify-content-start" href="{{route('products.index')}}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa-brands fa-product-hunt text-warning fs-5 opacity-10"></i>
             </div>
