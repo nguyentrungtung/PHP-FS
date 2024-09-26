@@ -29,8 +29,8 @@
               <td>{{$customer->date_of_birth}}</td>
               <td>
                 <div class="d-flex justify-content-evenly align-items-center">
-                  <button  class="btn btn-danger">Delete</button>
-                  <a  class="btn btn-primary">Detail</a>
+                  <button onclick="confirmDelete({{ $customer->id }})"   class="btn btn-danger">Delete</button>
+                  <a href="{{ route('admin.customers.edit',['id'=>$customer->id]) }}" class="btn btn-primary">Detail</a>
                 </div>
               </td>
             </tr>
@@ -47,7 +47,7 @@
       // Hiển thị hộp thoại xác nhận
       if (confirm('Are you sure you want to delete this brand?')) {
           $.ajax({
-              url: '{{ url("admin/brands/delete") }}/' + id,
+              url: '{{ url("admin/customers/delete") }}/' + id,
               type: 'POST',
               data: {
                   _method: 'DELETE',

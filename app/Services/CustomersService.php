@@ -36,4 +36,7 @@ use Illuminate\Support\Facades\Hash;
             ]);
             return $this->customersRepository->update($id,$request->except('_token','_method'));
         }
+        public function destroy($id){
+            $this->customersRepository->delete($id);
+        }
     }   

@@ -36,6 +36,8 @@ class AdminCustomerController extends Controller
         $customer=$this->service->update($request,$id);
         return view('admin.customers.edit',['customer'=>$customer]);
     }
-    // 
-
+    //
+    public function destroy($id){
+        $this->service->destroy($id);
+    }
 }
