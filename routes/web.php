@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
+use App\Http\Controllers\AdminCustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,4 +71,13 @@ Route::prefix('admin/units')->group(function () {
     Route::get('/detail/{id}', [AdminUnitController::class,'edit'])->name('admin.units.edit');
     Route::delete('/delete/{id}', [AdminUnitController::class,'destroy'])->name('admin.units.destroy');
     Route::put('/update/{id}',[AdminUnitController::class,'update'])->name('admin.units.update');
+});
+// 
+Route::prefix('admin/customers')->group(function () {
+    Route::get('/', [AdminCustomerController::class,'index'])->name('admin.customers');
+    // Route::get('/create', [AdminCustomerController::class,'create'])->name('admin.customers.create');
+    // Route::post('/store',[AdminCustomerController::class,'store'])->name('admin.customers.store');
+    // Route::get('/detail/{id}', [AdminCustomerController::class,'edit'])->name('admin.customers.edit');
+    // Route::delete('/delete/{id}', [AdminCustomerController::class,'destroy'])->name('admin.customers.destroy');
+    // Route::put('/update/{id}',[AdminCustomerController::class,'update'])->name('admin.customers.update');
 });
