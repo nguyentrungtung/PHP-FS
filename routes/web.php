@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
-Route::prefix('coupons')->group(function () {
+Route::group(['prefix' => 'admin/coupons'], function () {
     Route::get('/', [CouponController::class, 'index'])->name('coupons.index');                 // Danh sách các coupon
     Route::get('/create', [CouponController::class, 'create'])->name('coupons.create');         // Hiển thị form tạo coupon
     Route::post('/', [CouponController::class, 'store'])->name('coupons.store');                // Lưu coupon mới
@@ -53,7 +53,7 @@ Route::prefix('admin/brands')->group(function () {
 });
 
 
-Route::prefix('products')->group(function () {
+Route::group(['prefix' => 'admin/products'], function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');                 // Danh sách các sản phẩm
     Route::get('/create', [ProductController::class, 'create'])->name('products.create');         // Hiển thị form tạo sản phẩm
     Route::post('/', [ProductController::class, 'store'])->name('products.store');                // Lưu sản phẩm mới
@@ -72,7 +72,7 @@ Route::prefix('admin/units')->group(function () {
     Route::delete('/delete/{id}', [AdminUnitController::class,'destroy'])->name('admin.units.destroy');
     Route::put('/update/{id}',[AdminUnitController::class,'update'])->name('admin.units.update');
 });
-// 
+//
 Route::prefix('admin/customers')->group(function () {
     Route::get('/', [AdminCustomerController::class,'index'])->name('admin.customers');
     Route::get('/create', [AdminCustomerController::class,'create'])->name('admin.customers.create');
