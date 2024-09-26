@@ -8,6 +8,7 @@ use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
 
 class ProductController extends Controller
 {
@@ -15,16 +16,19 @@ class ProductController extends Controller
     private $productService;
     private $productRepositoryInterface;
     private $categoryRepositoryInterface;
+    private $brandRepositoryInterface;
 
     public function __construct(
-        ProductService $productService,
-        ProductRepositoryInterface $productRepositoryInterface,
-        CategoryRepositoryInterface $categoryRepositoryInterface
+        ProductService              $productService,
+        ProductRepositoryInterface  $productRepositoryInterface,
+        CategoryRepositoryInterface $categoryRepositoryInterface,
+        BrandRepositoryInterface    $brandRepositoryInterface
     )
     {
         $this->productService = $productService;
         $this->productRepositoryInterface = $productRepositoryInterface;
         $this->categoryRepositoryInterface = $categoryRepositoryInterface;
+        $this->brandRepositoryInterface = $brandRepositoryInterface;
     }
 
     /**
@@ -41,9 +45,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = $this->categoryRepositoryInterface->all();
-//        $brands = $this->brandRepositoryInterface->all();
-
-        return view('admin.products.create',['categories' => $categories]);
+        $brands     = $this->brandRepositoryInterface->all();
+        return view('admin.products.create', ['categories' => $categories, 'brands' => $brands]);
     }
 
     /**
@@ -51,12 +54,9 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        dd($request);
-        // Dữ liệu đã được validate bởi ProductRequest
         $validatedData = $request->validated();
-        dd($validatedData);
         $this->productService->createProduct($validatedData);
-        return redirect()->back()->with('success', 'Coupon created successfully!');
+        return redirect()->back()->with('success', 'Product created successfully!');
     }
 
     /**

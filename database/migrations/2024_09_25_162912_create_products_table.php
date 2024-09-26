@@ -20,7 +20,8 @@ return new class extends Migration
             $table->text('product_description')->nullable(); // Mô tả sản phẩm
             $table->foreignId('category_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); // Khóa ngoại tới bảng categories
             $table->foreignId('brand_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); // Khóa ngoại tới bảng brands
-            $table->foreignId('coupon_id')->nullable()->constrained()->onDelete('set null')->onUpdate('cascade'); // Khóa ngoại tới bảng coupons
+//            $table->foreignId('coupon_id')->nullable()->constrained()->onDelete('set null')->onUpdate('cascade'); // Khóa ngoại tới bảng coupons
+            $table->integer('product_quantity');
             $table->timestamps(); // Thời gian tạo và cập nhật
         });
     }

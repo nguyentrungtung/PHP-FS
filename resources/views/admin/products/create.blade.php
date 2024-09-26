@@ -29,8 +29,11 @@
                     <div class="mb-3 col-md-4">
                         <label for="brand_id" class="col-form-label">Thương Hiệu (Brand)</label>
                         <div class="">
-                            <select class="form-select" id="brand_id" name="brand_id">
-                                <!-- Danh sách thương hiệu sẽ được điền vào đây -->
+                            <select class="form-select select2" id="brand_id" name="brand_id">
+                                <option value="">Chọn thương hiệu</option> <!-- Tùy chọn mặc định -->
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                                @endforeach
                             </select>
                             @error('brand_id')
                             <span class="text-danger">{{ $message }}</span>
@@ -68,13 +71,12 @@
                             @enderror
                         </div>
                     </div>
-                    <!-- Product SKU -->
+                    <!-- Product quantity -->
                     <div class="mb-3 col-md-4">
-                        <label for="product_sku" class="col-form-label">SKU Sản Phẩm</label>
+                        <label for="product_quantity" class="col-form-label">Số lượng</label>
                         <div class="">
-                            <input type="text" class="form-control" id="product_sku" name="product_sku"
-                                   placeholder="Nhập SKU sản phẩm">
-                            @error('product_sku')
+                            <input type="number" class="form-control" id="product_quantity" name="product_quantity">
+                            @error('product_quantity')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -106,6 +108,11 @@
     $(document).ready(function() {
         // Khởi tạo Select2 cho trường Category ID
         $('#category_id').select2({
+            placeholder: "Chọn danh mục",
+            allowClear: true // Cho phép xóa lựa chọn
+        });
+
+        $('#brand_id').select2({
             placeholder: "Chọn danh mục",
             allowClear: true // Cho phép xóa lựa chọn
         });

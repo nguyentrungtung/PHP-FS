@@ -1,19 +1,12 @@
 <?php
-
-use App\Http\Controllers\Admin\AdminCategoriesController;
-use App\Http\Controllers\Admin\CouponController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Admin\AdminBrandController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
-
-
-=======
 use App\Http\Controllers\Admin\ProductController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminCategoriesController;
+use App\Http\Controllers\Admin\CouponController;
 
->>>>>>> Stashed changes
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,7 +40,7 @@ Route::prefix('admin/categories')->group(function () {
     Route::delete('/delete/{id}', [AdminCategoriesController::class, 'destroy'])->name('admin.categories.destroy');
     Route::put('/update/{id}', [AdminCategoriesController::class, 'update'])->name('admin.categories.update');
 });
-<<<<<<< Updated upstream
+
 //
 Route::prefix('admin/brands')->group(function () {
     Route::get('/', [AdminBrandController::class,'index'])->name('admin.brands');
@@ -57,7 +50,7 @@ Route::prefix('admin/brands')->group(function () {
     Route::delete('/delete/{id}', [AdminBrandController::class,'destroy'])->name('admin.brands.destroy');
     Route::put('/update/{id}',[AdminBrandController::class,'update'])->name('admin.brands.update');
 });
-=======
+
 
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');                 // Danh sách các sản phẩm
@@ -68,4 +61,3 @@ Route::prefix('products')->group(function () {
     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');  // Xóa sản phẩm
 });
 
->>>>>>> Stashed changes

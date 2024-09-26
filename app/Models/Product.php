@@ -17,6 +17,6 @@ class Product extends Model
         'product_sku',
         'product_description',
         'brand_id',
-        'coupon_id'
+        'product_quantity'
     ];
 }

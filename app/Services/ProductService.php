@@ -26,6 +26,7 @@ class ProductService
 
     public function createProduct(array $data)
     {
+        $data['product_sku'] = $this->productRepositoryInterface->generateSKU($data['category_id']);
         return $this->productRepositoryInterface->create($data);
     }
 
