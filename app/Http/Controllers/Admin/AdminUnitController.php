@@ -36,4 +36,12 @@ class AdminUnitController extends Controller
         return redirect()->back()->with('error','False to create a new Unit');
     }
     // 
+    public function update(Request $request, $id){
+        $unit= $this->service->update($request,$id);
+        return redirect()->route('admin.units.edit',['id'=>$unit->id])->with('success','Update a unit success!');
+    }
+    // 
+    public function destroy($id){
+        $this->service->destroy($id);
+    }
 }

@@ -22,5 +22,13 @@ use Illuminate\Http\Request;
         public function edit($id){
             return $this->unitRepository->find($id);
         }
-
+        // 
+        public function update(Request $request, $id){
+            $data=['unit_name'=>$request->input('name')];
+            return $this->unitRepository->update($id,$data);
+        }
+        // 
+        public function destroy($id){
+            return $this->unitRepository->delete($id);
+        }
     }
