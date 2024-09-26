@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\Repository\ProductImageRepository;
+use App\Repositories\Contracts\Repository\UnitValueRepository;
+use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
 use Illuminate\Support\Facades\View;
 use App\Http\View\Composers\ProductComposer;
 use App\Repositories\Contracts\Repository\BrandRepository;
@@ -16,7 +20,6 @@ use App\Repositories\Contracts\RepositoryInterface\CustomersRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitRepositoryInterface;
 use App\Repositories\Contracts\Repository\ProductRepository;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
-use Illuminate\Pagination\Paginator;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -34,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BrandRepositoryInterface::class,BrandRepository::class);
         $this->app->bind(UnitRepositoryInterface::class,UnitRepository::class);
         $this->app->bind(CustomersRepositoryInterface::class,CustomersRepository::class);
+        $this->app->bind(ProductImageRepositoryInterface::class,ProductImageRepository::class);
+        $this->app->bind(UnitValueRepositoryInterface::class,UnitValueRepository::class);
     }
 
     /**

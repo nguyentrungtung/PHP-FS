@@ -3,20 +3,28 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
 
 class ProductService
 {
     private $productRepositoryInterface;
+    private $productImageRepositoryInterface;
+    private $unitValueRepositoryInterface;
 
     /**
      * @param ProductRepositoryInterface $productRepositoryInterface
      */
     public function __construct(
-        ProductRepositoryInterface $productRepositoryInterface
+        ProductRepositoryInterface $productRepositoryInterface,
+        ProductImageRepositoryInterface $productImageRepositoryInterface,
+        UnitValueRepositoryInterface $unitValueRepositoryInterface,
     )
     {
         $this->productRepositoryInterface = $productRepositoryInterface;
+        $this->productImageRepositoryInterface = $productImageRepositoryInterface;
+        $this->unitValueRepositoryInterface = $unitValueRepositoryInterface;
     }
 
     public function getAllProductsPaginate($limit)
@@ -26,9 +34,40 @@ class ProductService
 
     public function createProduct(array $data)
     {
+        // Tạo SKU cho sản phẩm
         $data['product_sku'] = $this->productRepositoryInterface->generateSKU($data['category_id']);
-        return $this->productRepositoryInterface->create($data);
+
+        // Tạo sản phẩm mới và lưu vào cơ sở dữ liệu
+        $product = $this->productRepositoryInterface->create($data);
+
+        // Lưu ảnh sản phẩm
+        if (isset($data['product_images'])) {
+            foreach ($data['product_images'] as $index => $image) {
+                // Tạo dữ liệu cho bảng product_image
+                $imageData = [
+                    'product_id' => $product->id,
+                    'image_type' => $data['image_types'][$index], // Lưu image_type tương ứng
+                    'image_url' => uploadImage($image, 'products') // Sử dụng helper
+                ];
+                $this->productImageRepositoryInterface->create($imageData); // Lưu thông tin ảnh
+            }
+        }
+
+        // Lưu giá trị đơn vị cho sản phẩm
+        if (isset($data['units']) && isset($data['unit_values'])) {
+            foreach ($data['units'] as $unitId) {
+                $unitValueData = [
+                    'product_id' => $product->id,
+                    'unit_id' => $unitId,
+                    'value' => $data['unit_values'][$unitId] // Giá trị tương ứng với unit_id
+                ];
+                $this->unitValueRepositoryInterface->create($unitValueData); // Lưu thông tin giá trị đơn vị
+            }
+        }
+
+        return $product; // Trả về sản phẩm đã tạo
     }
+
 
     public function getAllProducts()
     {

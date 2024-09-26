@@ -29,6 +29,10 @@ class ProductRequest extends FormRequest
             'product_quantity' => 'required|numeric|min:0',
             'product_price_old' => 'nullable|numeric|min:0',
             'product_description' => 'nullable|string',
+            'product_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',  // Xác thực cho từng ảnh
+            'image_types.*' => 'required|in:main,thumbnail',  // Loại ảnh chỉ được là 'main' hoặc 'thumbnail'
+            'units.*' => 'required|exists:units,id',
+            'unit_values.*' => 'required|numeric|min:0',
         ];
     }
 
@@ -46,9 +50,19 @@ class ProductRequest extends FormRequest
             'product_price.min' => 'Giá sản phẩm không được nhỏ hơn 0.',
             'product_price_old.numeric' => 'Giá cũ phải là một số.',
             'product_price_old.min' => 'Giá cũ không được nhỏ hơn 0.',
-            'product_description.string' => 'Mô tả sản phẩm phải là chuỗi ký tự hợp lệ.',
             'product_quantity.required' => 'Vui lòng nhập số lượng sản phẩm.',
             'product_quantity.numeric' => 'Số lượng sản phẩm phải là một số.',
+            'product_images.*.required' => 'Vui lòng chọn ảnh.',
+            'product_images.*.image' => 'File phải là định dạng ảnh hợp lệ.',
+            'product_images.*.mimes' => 'Chỉ chấp nhận định dạng ảnh: jpeg, png, jpg, gif.',
+            'product_images.*.max' => 'Dung lượng ảnh không được vượt quá 2048KB.',
+            'image_types.*.required' => 'Vui lòng chọn loại ảnh',
+            'image_types.*.in' => 'Loại ảnh chỉ được chọn là "main" hoặc "thumbnail".',
+            'units.*.required' => 'Vui lòng chọn ít nhất một đơn vị.',
+            'units.*.exists' => 'Đơn vị đã chọn không hợp lệ.',
+            'unit_values.*.required' => 'Vui lòng nhập giá trị ',
+            'unit_values.*.numeric' => 'Giá trị đơn vị phải là một số.',
+            'unit_values.*.min' => 'Giá trị đơn vị không được nhỏ hơn 0.',
         ];
     }
 }
