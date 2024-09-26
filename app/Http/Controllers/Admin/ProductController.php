@@ -45,9 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepositoryInterface->all();
-        $brands     = $this->brandRepositoryInterface->all();
-        return view('admin.products.create', ['categories' => $categories, 'brands' => $brands]);
+        return view('admin.products.create');
     }
 
     /**
@@ -73,15 +71,18 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = $this->productService->getProductById($id);
+        return view('admin.products.edit', ['product' => $product]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request  , string $id)
     {
-        //
+        $validatedData = $request->validated();
+        $this->productService->updateProduct($id, $validatedData);
+        return redirect()->back()->with('success', 'Product created successfully!');
     }
 
     /**
@@ -89,6 +90,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->productService->deleteProduct($id);
+        return redirect()->back()->with('success', 'Product  deleted successfully!');
     }
 }
