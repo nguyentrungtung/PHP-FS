@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Categories;
-use App\Models\Brand;
+use App\Models\ProductImage;
 
 class Product extends Model
 {
@@ -32,5 +33,10 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function productImage()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

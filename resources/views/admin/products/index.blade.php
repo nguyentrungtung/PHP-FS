@@ -12,9 +12,9 @@
             <tr>
                 <th class ="text-center" scope="col">ID</th>
                 <th class ="text-center" scope="col">Tên sản phẩm</th>
+                <th class ="text-center" scope="col">Hình ảnh</th>
                 <th class ="text-center" scope="col">Giá sản phẩm</th>
                 <th class ="text-center" scope="col">Giá cũ</th>
-                <th class ="text-center" scope="col">SKU</th>
                 <th class ="text-center" scope="col">Số lượng</th>
                 <th class ="text-center" scope="col">Mô tả</th>
                 <th class ="text-center" scope="col">Danh mục</th>
@@ -24,14 +24,21 @@
             </thead>
             <tbody>
 
-
             @foreach($products as $key => $product)
                 <tr>
                     <td class="text-center">{{ $key + 1 }}</td>
-                    <td class="text-center">{{ $product->product_name ?? null }}</td>
+                    <td class="text-center">
+                        <div class="text-truncate" style="max-width: 200px;">{{ $product->product_name ?? null }}</div>
+                    </td>
+                    @foreach($product->productImage as $product_image)
+                        <td class="text-center">
+                            @if($product_image->image_type == 'main')
+                                <img src="{{ asset($product_image->image_url) }}" alt="Main Image" style="max-width: 100px; max-height: 100px;">
+                            @endif
+                        </td>
+                    @endforeach
                     <td class="text-center">{{ number_format($product->product_price) }}₫</td>
                     <td class="text-center">{{ number_format($product->product_price_old) }}₫</td>
-                    <td class="text-center">{{ $product->product_sku ?? null }}</td>
                     <td class="text-center">{{ $product->product_quantity ?? null }}</td>
                     <td class="text-center">{{ Str::limit($product->product_description, 50) ?? null }}</td>
                     <td class="text-center">{{ $product->category->categories_name ?? null }}</td>

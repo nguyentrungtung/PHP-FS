@@ -14,10 +14,9 @@
                         <label for="category_id" class="col-form-label">Danh Mục (Category)</label>
                         <div class="">
                             <select class="form-select select2" id="category_id" name="category_id">
-                                <option value="">Chọn danh mục</option> <!-- Tùy chọn mặc định -->
+                                <option value="">Chọn danh mục</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->categories_name }}</option>
-                                    <!-- Thay 'name' bằng thuộc tính thích hợp -->
                                 @endforeach
                             </select>
                             @error('category_id')
@@ -30,7 +29,7 @@
                         <label for="brand_id" class="col-form-label">Thương Hiệu (Brand)</label>
                         <div class="">
                             <select class="form-select select2" id="brand_id" name="brand_id">
-                                <option value="">Chọn thương hiệu</option> <!-- Tùy chọn mặc định -->
+                                <option value="">Chọn thương hiệu</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
                                 @endforeach
@@ -90,6 +89,63 @@
                             <span id="product_description-error" class="error-message text-danger"></span>
                         </div>
                     </div>
+                    <div class="row">
+                        <!-- Product Images -->
+                        <div class="mb-3 col-md-6">
+                            <label for="product_images" class="col-form-label">Hình Ảnh Sản Phẩm</label>
+                            <div id="image-upload-container">
+                                <div class="image-upload-row">
+                                    <input type="file" class="form-control mb-2" id="product_images"
+                                           name="product_images[]" multiple>
+                                    <select class="form-select mb-2" name="image_types[]">
+                                        <option value="">Chọn loại ảnh</option>
+                                        <option value="main">Ảnh Chính</option>
+                                        <option value="thumbnail">Ảnh Phụ</option>
+                                    </select>
+                                    <!-- Hiển thị lỗi cho từng file hình ảnh -->
+                                    @error('product_images.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    <!-- Hiển thị lỗi cho từng loại ảnh -->
+                                    @error('image_types.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-success" id="add-image-row">Thêm ảnh khác</button>
+                        </div>
+
+                        <div class="mb-3 col-md-6">
+                            <!-- Unit Value -->
+                            <div class="mb-3 col-md-12">
+                                <label for="units" class="col-form-label">Đơn Vị Sản Phẩm</label>
+                                <div class="">
+                                    <select class="form-select select2" id="units" name="units[]" multiple>
+                                        <option value="">Chọn đơn vị</option>
+                                        @foreach($units as $unit)
+                                            <option value="{{ $unit->id }}">{{ $unit->unit_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <!-- Hiển thị lỗi cho từng đơn vị -->
+                                    @error('units.*')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- Giá trị đơn vị -->
+                            <div class="mb-3 col-md-12">
+                                <label for="unit_values" class="col-form-label">Giá Trị Đơn Vị</label>
+                                <div id="unit-values-container">
+                                    <!-- Sẽ tự động tạo các input khi chọn đơn vị -->
+                                </div>
+                                <!-- Hiển thị lỗi cho giá trị đơn vị -->
+                                @error('unit_values.*')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Submit Button -->
                 <div class="row">
@@ -103,20 +159,55 @@
         </div>
     </div>
 @endsection
+
 @push('custom-script')
     <script>
-    $(document).ready(function() {
-        // Khởi tạo Select2 cho trường Category ID
-        $('#category_id').select2({
-            placeholder: "Chọn danh mục",
-            allowClear: true // Cho phép xóa lựa chọn
-        });
+        $(document).ready(function () {
+            // Khởi tạo Select2 cho trường Category ID và Brand ID
+            $('#category_id, #brand_id, #units').select2({
+                placeholder: "Chọn",
+                allowClear: true
+            });
 
-        $('#brand_id').select2({
-            placeholder: "Chọn danh mục",
-            allowClear: true // Cho phép xóa lựa chọn
+            //Khi chọn đơn vị thì tạo các trường input để nhập giá trị đơn vị
+            $('#units').on('change', function () {
+                let selectedUnits = $(this).val();
+                let unitValuesContainer = $('#unit-values-container');
+                unitValuesContainer.empty(); // Xóa các input cũ
+
+                if (selectedUnits.length > 0) { //đảm bảo rằng chỉ khi người dùng chọn ít nhất một đơn vị thì các input tương ứng mới được tạo
+                    selectedUnits.forEach(function (unitId) {
+                        let unitName = $('#units option[value="' + unitId + '"]').text();
+                        unitValuesContainer.append(`
+                            <div class="mb-3 col-md-12">
+                                <label for="unit_value_${unitId}" class="col-form-label">Giá Trị Cho ${unitName}</label>
+                                <input type="number" class="form-control" id="unit_value_${unitId}" name="unit_values[${unitId}]"
+                                       placeholder="Nhập giá trị cho ${unitName}">
+                            </div>
+                        `);
+                    });
+                }
+            });
+
+            // Thêm hàng upload ảnh mới
+            $('#add-image-row').click(function () {
+                const imageUploadRow = `
+                <div class="image-upload-row">
+                    <input type="file" class="form-control mb-2" name="product_images[]">
+                    <select class="form-select mb-2" name="image_types[]">
+                        <option value="">Chọn loại ảnh</option>
+                        <option value="main">Ảnh Chính</option>
+                        <option value="thumbnail">Ảnh Phụ</option>
+                    </select>
+                    <button type="button" class="btn btn-danger remove-image-row">Xóa</button>
+                </div>`;
+                $('#image-upload-container').append(imageUploadRow);
+            });
+
+            // Xóa hàng upload ảnh
+            $(document).on('click', '.remove-image-row', function () {
+                $(this).closest('.image-upload-row').remove();
+            });
         });
-    });
     </script>
-
 @endpush
