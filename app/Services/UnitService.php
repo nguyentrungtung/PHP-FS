@@ -14,5 +14,13 @@ use Illuminate\Http\Request;
             return $this->unitRepository->index($per);
         }
         // 
+        public function create(Request $request){
+            $data=['unit_name'=>$request->input('name')];
+            return $this->unitRepository->create($data);
+        }
+        // 
+        public function edit($id){
+            return $this->unitRepository->find($id);
+        }
 
     }

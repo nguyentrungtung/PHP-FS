@@ -75,7 +75,7 @@
                 success: function(result) {
                     // Nếu xóa thành công, làm mới trang hoặc xử lý kết quả
                     setTimeout(function() {
-                        window.location.href = document.referrer; // Reload trang
+                        window.location.href = '{{url("admin/categories")}}'; // Reload trang
                     }, 500);
                 },
                 error: function(xhr) {

@@ -53,8 +53,8 @@ Route::prefix('admin/brands')->group(function () {
 Route::prefix('admin/units')->group(function () {
     Route::get('/', [AdminUnitController::class,'index'])->name('admin.units');
     Route::get('/create', [AdminUnitController::class,'create'])->name('admin.units.create');
-    // Route::post('/store',[AdminUnitController::class,'store'])->name('admin.units.store');
+    Route::post('/store',[AdminUnitController::class,'store'])->name('admin.units.store');
     Route::get('/detail/{id}', [AdminUnitController::class,'edit'])->name('admin.units.edit');
-    // Route::delete('/delete/{id}', [AdminUnitController::class,'destroy'])->name('admin.units.destroy');
-    // Route::put('/update/{id}',[AdminUnitController::class,'update'])->name('admin.units.update');
+    Route::delete('/delete/{id}', [AdminUnitController::class,'destroy'])->name('admin.units.destroy');
+    Route::put('/update/{id}',[AdminUnitController::class,'update'])->name('admin.units.update');
 });

@@ -22,7 +22,18 @@ class AdminUnitController extends Controller
         return view('admin.unit.crate');
     }
     // 
-    public function edit(Request $request){
-        return view('admin.unit.edit');
+    public function edit($id){
+        $unit=$this->service->edit($id);
+        // dd($unit);
+        return view('admin.unit.edit',['unit'=>$unit]);
     }
+    // 
+    public function store(Request $request){
+        $unit= $this->service->create($request);
+        if($unit){
+            return redirect()->route('admin.units.edit',['id'=>$unit->id])->with('success','Create a new Unit success');
+        }
+        return redirect()->back()->with('error','False to create a new Unit');
+    }
+    // 
 }
