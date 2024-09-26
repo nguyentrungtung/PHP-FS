@@ -36,7 +36,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->productService->getAllProductsPaginate($this->limit);
+        return view('admin.products.index', ['products' => $products]);
     }
 
     /**
