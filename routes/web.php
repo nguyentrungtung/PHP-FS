@@ -13,6 +13,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\clientProductController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
+use App\Http\Controllers\Home\CartController as HomeCartController;
 
 
 /*
@@ -101,4 +102,5 @@ Route::prefix('client/products')->group(function () {
 
 //Home
 // Route cho trang chi tiết sản phẩm
-Route::get('/product/{id}', [HomeProductController::class, 'show'])->name('product.show');
+Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
+Route::get('/cart', [HomeCartController::class, 'showCart'])->name('cart.show');

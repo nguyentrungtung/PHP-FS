@@ -2,12 +2,12 @@ body {
     max-width: 100vw;
     overflow-x: hidden;
 }
-
 .fix {
     position: fixed;
     top: 0;
     z-index: 10000000000000000000;
     left: 0;
+    z-index: 10000;
 }
 a {
     text-decoration: none;

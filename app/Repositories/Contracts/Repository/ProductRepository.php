@@ -40,7 +40,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
 
-    // 
+    //
     public function render($cat,$start,$limit){
         $count = $this->model::where('category_id', $cat)->count();
         $remain=$count - ($start+$limit);
@@ -58,7 +58,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $products = $this->model::whereIn('id', $data)->get();
         return $this->setShortData($products);
     }
-    // 
+    //
     private function setShortData($products){
         $reponseProdct=[];
         foreach ($products as $product) {
@@ -77,7 +77,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 'img_url'=>asset('img/product.png')
             ];
             $reponseProdct[]=$data;
-            
+
         }
         return $reponseProdct;
     }

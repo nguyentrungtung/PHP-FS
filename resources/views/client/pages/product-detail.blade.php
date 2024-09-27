@@ -20,9 +20,9 @@
             @foreach($product->productImage as $product_image)
                 @if($product_image->image_type == 'main')
                     <!-- Main Product Image -->
-                @php
-                    $mainPath = $product_image->image_url;
-                @endphp
+                    @php
+                        $mainPath = $product_image->image_url;
+                    @endphp
                     <img
                         id="mainImage"
                         src="{{ asset($product_image->image_url) }}"
@@ -33,7 +33,7 @@
                     @php
                         $hasThumbnail = true;
                     @endphp
-                        <!-- product-info__Thumbnail Images -->
+                            <!-- product-info__Thumbnail Images -->
                     <div class="product-info__thumbnail-container">
                         <ul class="product-info__thumbnail-list">
                             <li class="product-info__thumbnail-item">
@@ -77,7 +77,7 @@
 
         <!-- Product Details -->
         <div class="col-md-7 product-details">
-            <h5 class="product-details__name-product m-0" id ="product_name--detail">
+            <h5 class="product-details__name-product m-0" id="product_name--detail">
                 {{$product->product_name}}
             </h5>
             <p class="product-details__text-muted">
@@ -87,19 +87,19 @@
             <p class="product-details__text-stock"></p>
             <span class="product-details__title inline-block">Tình trạng : </span>
             @if($product->product_quantity > 0)
-            <span class="inline-block p-2 btn" style="border:1px solid rgb(226, 218, 218)">Còn hàng</span>
+                <span class="inline-block p-2 btn" style="border:1px solid rgb(226, 218, 218)">Còn hàng</span>
             @else
             <span class="inline-block p-2 btn" style="border:1px solid rgb(226, 218, 218)">Hết hàng</span>
             @endif
             </p>
             <p class="product-details__product-price">
                 <span class="product-details__title inline-block">Giá : </span>
-                <span class="text-danger fs-5" id ="product_price--detail">{{ number_format($product->product_price) }}đ</span>
+                <span class="text-danger fs-5 fw-bold" id="product_price--detail">{{ number_format($product->product_price) }}đ</span>
             </p>
             <p class="product-details__text-ship">
                 <span class="product-details__title inline-block">Vận chuyển : </span>
                 <span class="inline-block">Miễn phí giao hàng cho đơn từ 300.000đ.
-                            Giao hàng trong 2 giờ.</span>
+                        Giao hàng trong 2 giờ.</span>
             </p>
             <div class="product-details__text-type">
                 <span class="product-details__title inline-block">Chọn loại : </span>
@@ -109,11 +109,12 @@
                             $price = $product->product_price;
                             $priceUnit = (int)$price * (int)$unitValue->value
                         @endphp
-{{--                        @if(number_format($unitValue->value) > 1)--}}
-{{--                            <li class="product-details__unit-item btn btn-danger">{{number_format($unitValue->value) .' '. $unitValue->unit->unit_name }}</li>--}}
-{{--                        @else--}}
-                            <li class="product-details__unit-item btn btn-danger" value = "{{$priceUnit}}" onclick="changePrice(this.value, this)">{{$unitValue->unit->unit_name}}</li>
-{{--                        @endif--}}
+                        {{--                        @if(number_format($unitValue->value) > 1)--}}
+                        {{--                            <li class="product-details__unit-item btn btn-danger">{{number_format($unitValue->value) .' '. $unitValue->unit->unit_name }}</li>--}}
+                        {{--                        @else--}}
+                        <li class="product-details__unit-item btn btn-danger" value="{{$priceUnit}}"
+                            onclick="changePrice(this.value, this)">{{$unitValue->unit->unit_name}}</li>
+                        {{--                        @endif--}}
                     @endforeach
                 </ul>
             </div>
@@ -127,7 +128,8 @@
                            style="color:white;border-top-left-radius: 12px;border-bottom-right-radius: 12px"></i>
                     </button>
                     <!-- <input type="number" name="quatity" id="" value="1" max-length="12" /> -->
-                    <input type="text" inputmode="numeric" name="quatity" id="input-quantity" value="1" max-length="12"
+                    <input type="text" inputmode="numeric" name="quatity" id="input-quantity" value="1"
+                           max-length="12"
                            class="input-quantity">
                     <button type="button">
                         <i class="fa-solid fa-plus icon-flus"
@@ -141,80 +143,101 @@
     </div>
 
     <!-- Product Description and info -->
-    <div class="row product-description">
-        <div class="col-md-5">
-            <div class="product-description__tab-buttons">
-                <button class="product-description__btn-description translate--y" onclick="showTab('description')">
-                    Mô tả
-                </button>
-                <button class="product-description__btn-info translate--y d-none" onclick="showTab('info')">
-                    Thông tin sản phẩm
-                </button>
+    <div class="row g-2 product-description">
+        {{--        <div class="col-md-5">--}}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="product-description__tab-buttons">
+                        <button class="product-description__btn-description translate--y"
+{{--                            onclick="showTab('description')"--}}
+                        >
+                            Mô tả
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="product-description__tab-buttons">
+                        <button class="product-description__btn-info translate--y"
+{{--                            onclick="showTab('info')"--}}
+                        >
+                            Thông tin sản phẩm
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="product-description__tab-content" id="description-tab" style ="text-align: justify">
-                <h4 class="fw-bold">Chi tiết sản phẩm</h4>
+        </div>
+        <div class="col-md-5">
+            <div class="product-description__tab-content" id="description-tab" style="text-align: justify">
+                <h5 class="mb-3">Chi tiết sản phẩm</h5>
                 <p>
                     {{$product->product_description}}
                 </p>
             </div>
-            <div class="product-description__tab-content d-none" id="info-tab">
-                <h3>Đánh giá của khách hàng</h3>
-                <p>Hiện tại chưa có đánh giá nào. Hãy là người đầu tiên đánh giá sản phẩm này!</p>
+        </div>
+
+        <div class="col-md-7">
+            <div class="product-description__tab-content" id="info-tab">{{--d-none--}}
+                <h5 class ="mb-3">Thông tin sản phẩm</h5>
+                <p>Xuất xứ: Việt Nam</p>
+                <p>Hướng Dẫn Sử Dụng: Dùng trộn salad, rau, các món gỏi hoặc dùng làm gia vị tẩm ướp.</p>
+                <p>Bảo Quản: Bảo quản nơi khô ráo tránh ánh nắng mặt trời</p>
             </div>
         </div>
-        <div class="col-md-7" style ="opacity:0"></div>
+        {{--        </div>--}}
+        {{--        <div class="col-md-7" style ="opacity:0"></div>--}}
     </div>
 
     <!-- Related Products -->
     <div class="row  product-related mt-4">
         <h4 class="product-related__title mb-3 fw-bold">Sản phẩm tương tự</h4>
         <div class="product-list  owl-carousel owl-theme">
-{{--        <div class="col-md-12 product-list">--}}
-{{--            <div class="row g-2">--}}
+            {{--        <div class="col-md-12 product-list">--}}
+            {{--            <div class="row g-2">--}}
             @foreach($productRelates as $productRelate)
-            <div class="col-lg-1-5">
-                <div class="card product-item">
-                    <div class="product-item__img-wrap">
-                        @foreach($productRelate->productImage as $product_image)
-                            @if($product_image->image_type == 'main')
-                                <!-- Main Product Image -->
-                                <img
-                                    id="mainImage"
-                                    src="{{ asset($product_image->image_url) }}"
-                                    class="product-info__image product-item__img card-img-top"
-                                    alt="Main Product Image"
-                                />
+                <div class="col-lg-1-5">
+                    <div class="card product-item">
+                        <div class="product-item__img-wrap">
+                            @foreach($productRelate->productImage as $product_image)
+                                @if($product_image->image_type == 'main')
+                                    <!-- Main Product Image -->
+                                    <img
+                                            id="mainImage"
+                                            src="{{ asset($product_image->image_url) }}"
+                                            class="product-info__image product-item__img card-img-top"
+                                            alt="Main Product Image"
+                                    />
                                 @endif
-                        @endforeach
+                            @endforeach
 
-                        <div class="product-item__frame d-none"></div>
-                    </div>
-                    <div class="card-body text-muted product-item__info">
-                        <p class="card-title product-item__name">CHERISH Thạch vị thơm gói 405G Mô tả ngắn về sản phẩm
-                            này. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pretium lectus
-                            nec urna consequat, a feugiat lectus aliquet.</p>
-                        <p class="card-text mb-1">ĐVT: Gói</p>
-                        <div class="product-item__promotion-info">
-                            <img class="product-item__promotion-info-image"
-                                 src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png" alt="">
-                            <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau sàn
-                                MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
+                            <div class="product-item__frame d-none"></div>
                         </div>
-                        <p class="card-text text-danger fw-bold">30.000đ</p>
-                    </div>
-                    <!-- Product action -->
-                    <div class="product-item__action">
-                        <a href="#" class="d-block btn-cart--add" data-url="">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                        <a href="#" class="d-block btn-cart--add">
-                            <i class="fa-regular fa-heart"></i>
-                        </a>
+                        <div class="card-body text-muted product-item__info">
+                            <p class="card-title product-item__name">{{$productRelate->product_name}}</p>
+{{--                            @foreach($productRelate->unitValues as $unitValue)--}}
+                                <p class="card-text mb-1">ĐVT: {{$productRelate->unitValues->first()->unit->unit_name}}</p>
+{{--                            @endforeach--}}
+                            <div class="product-item__promotion-info">
+                                <img class="product-item__promotion-info-image"
+                                     src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png" alt="">
+                                <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau sàn
+                                    MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
+                            </div>
+                            <p class="card-text text-danger fw-bold">30.000đ</p>
+                        </div>
+                        <!-- Product action -->
+                        <div class="product-item__action">
+                            <a href="#" class="d-block btn-cart--add" data-url="">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+                            <a href="#" class="d-block btn-cart--add">
+                                <i class="fa-regular fa-heart"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
-{{--            </div>--}}
+            {{--            </div>--}}
         </div>
     </div>
 @endsection

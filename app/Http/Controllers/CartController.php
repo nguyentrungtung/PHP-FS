@@ -17,7 +17,6 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
         if(session()->has('user_carts')){
             return session('user_carts');
         }
@@ -58,7 +57,7 @@ class CartController extends Controller
         }
         // Lưu lại giỏ hàng đã cập nhật vào session
         Session::put('user_carts', $userCarts);
-        
+
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Brand;
+use App\Models\Brands;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Categories;
@@ -34,7 +34,7 @@ class Product extends Model
     // Mối quan hệ với Brand
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brands::class);
     }
 
     public function productImage()
