@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
 use App\Http\Controllers\AdminCustomerController;
+use App\Http\Controllers\Home\ProductController as HomeProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +83,7 @@ Route::prefix('admin/customers')->group(function () {
     Route::delete('/delete/{id}', [AdminCustomerController::class,'destroy'])->name('admin.customers.destroy');
     Route::put('/update/{id}',[AdminCustomerController::class,'update'])->name('admin.customers.update');
 });
+
+//Home
+// Route cho trang chi tiết sản phẩm
+Route::get('/product/{id}', [HomeProductController::class, 'show'])->name('product.show');

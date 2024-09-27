@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Categories;
 use App\Models\ProductImage;
+use App\Models\UnitValue;
+use App\Models\Unit;
 
 class Product extends Model
 {
@@ -38,5 +40,13 @@ class Product extends Model
     public function productImage()
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function unitValues()
+    {
+        return $this->hasMany(UnitValue::class, 'product_id');
+    }
+    public function units(){
+        return $this->hasMany(Unit::class);
     }
 }

@@ -28,4 +28,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $categoryPart.$randomPart;
     }
 
+    public function productRelate($productId)
+    {
+        // Lấy thông tin của sản phẩm hiện tại
+        $product = $this->model->find($productId);
+        // Lấy các sản phẩm liên quan cùng danh mục nhưng không bao gồm sản phẩm hiện tại
+        return $this->model->where('category_id', $product->category_id)
+            ->where('id', '!=', $productId)  // Không lấy chính nó
+            ->limit(5)
+            ->get();
+    }
+
+
 }

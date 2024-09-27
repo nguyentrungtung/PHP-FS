@@ -14,4 +14,9 @@ class UnitValue extends Model
         'product_id',
         'value'
     ];
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
 }

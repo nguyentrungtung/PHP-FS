@@ -7,10 +7,10 @@
             <a href="{{route('products.create')}}" class="btn btn-success mt-3 mb-0">Tạo sản phẩm mới</a>
         </div>
         <hr>
-        <table class="table table-striped table-bordered" id ="myProductTable">
+        <table class="table table-striped table-bordered"  id ="myProductTable" >
             <thead>
             <tr>
-                <th class ="text-center" scope="col">ID</th>
+                <th class ="text-center" scope="col">Stt</th>
                 <th class ="text-center" scope="col">Tên sản phẩm</th>
                 <th class ="text-center" scope="col">Hình ảnh</th>
                 <th class ="text-center" scope="col">Giá sản phẩm</th>
@@ -30,13 +30,14 @@
                     <td class="text-center">
                         <div class="text-truncate" style="max-width: 200px;">{{ $product->product_name ?? null }}</div>
                     </td>
-                    @foreach($product->productImage as $product_image)
-                        <td class="text-center">
-                            @if($product_image->image_type == 'main')
-                                <img src="{{ asset($product_image->image_url) }}" alt="Main Image" style="max-width: 100px; max-height: 100px;">
-                            @endif
-                        </td>
-                    @endforeach
+                    <td class="text-center">
+                        @php
+                            $main_image = $product->productImage->firstWhere('image_type', 'main');
+                        @endphp
+                        @if($main_image)
+                            <img src="{{ asset($main_image->image_url) }}" alt="Main Image" style="max-width: 100px; max-height: 100px;">
+                        @endif
+                    </td>
                     <td class="text-center">{{ number_format($product->product_price) }}₫</td>
                     <td class="text-center">{{ number_format($product->product_price_old) }}₫</td>
                     <td class="text-center">{{ $product->product_quantity ?? null }}</td>
@@ -78,6 +79,9 @@
 
 @push('custom-script')
     <script>
+        $(document).ready(function () {
+            $('#myProductTable').DataTable();
+        })
     </script>
 @endpush
 
