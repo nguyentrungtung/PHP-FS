@@ -40,4 +40,45 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
 
 
+    // 
+    public function render($cat,$start,$limit){
+        $count = $this->model::where('category_id', $cat)->count();
+        $remain=$count - ($start+$limit);
+        $products = $this->model
+        ->where('category_id', $cat)
+        ->skip($start)
+        ->take($limit)
+        ->get();
+        $reponseProdct=$this->setShortData($products);
+        // dd($reponseProdct);
+        return response()->json(['products'=>$reponseProdct,'remain'=>max(0, $remain)]);
+    }
+    // lay san pham theo list id
+    public function getByList($data){
+        $products = $this->model::whereIn('id', $data)->get();
+        return $this->setShortData($products);
+    }
+    // 
+    private function setShortData($products){
+        $reponseProdct=[];
+        foreach ($products as $product) {
+            if(isset($product->product_price_old)){
+                $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;
+                $old=$product->product_price_old;
+            }else{
+                $sale= 0;
+                $old= 0;
+            }
+            $data=['id'=>$product->id,
+                'name'=> $product->product_name,
+                'price'=>$product->product_price,
+                'sale'=>$sale,
+                'old'=>$old,
+                'img_url'=>asset('img/product.png')
+            ];
+            $reponseProdct[]=$data;
+            
+        }
+        return $reponseProdct;
+    }
 }

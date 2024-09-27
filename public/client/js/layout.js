@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     const menu=document.getElementById("menu");
     menu.addEventListener("mouseenter",showMenu);
     menu.addEventListener("mouseleave",hiddenMenu);
-    const item=document.querySelector(".sub");
-    item.addEventListener("mouseenter",showSubMenu);
     const host=document.getElementById("hostline");
     host.addEventListener("mouseenter",showHostline);
     host.addEventListener("mouseleave",hiddenHostline);
@@ -30,13 +28,57 @@ document.addEventListener("DOMContentLoaded",()=>{
     cart.addEventListener("mouseleave",hiddenCart);
     userMenu();
     selectShipping();
+    const items=document.querySelectorAll(".sub");
+    hoverParentCat(items);
 });
 
 function showCart(){
     const cart=document.getElementById("cart_list");
     if(cart.classList.contains("hidden")){
+        $.ajax({
+            url: 'client/products/cart/show',
+            type: 'GET',
+            success: function(response) {
+                console.log(response);
+                const products=response.products;
+                let newArr=[];
+                products.forEach(product => {
+                    newArr.push(getshortProduct(product));
+                });
+                const list=document.querySelector('.cart_list_items');
+                list.innerHTML=newArr.join('');
+            },
+            error: function(xhr) {
+                // Xử lý lỗi nếu có
+                alert('False to loading data.');
+            }
+        });
         cart.classList.remove("hidden");
     }
+}
+
+function getshortProduct(product){
+    console.log(product);
+    let price = product.price*product.count;
+    
+    price= new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    }).format(price);
+    return `<div class="d-flex list_items_item">
+        <img src="${product.img_url}" alt="" class="item_img">
+        <div class="d-flex flex-wrap flex-column item_content">
+            <p class="item_content_text">${product.name}</p>
+            <div class="d-flex justify-content-between content_dv">
+                <p class="item_content_text">DVT:</p>
+                <p class="item_content_text">Chai</p>
+            </div>
+            <div class="d-flex justify-content-between item_content_price">
+                <p class="item_content_text">x ${product.count}</p>
+                <p class="item_price">${price}</p>
+            </div>
+        </div>
+    </div>`;
 }
 
 function hiddenCart(){
@@ -97,6 +139,31 @@ function hiddenMenu(){
         sub_menu.classList.add("hidden");
     }
     
+}
+function hoverParentCat(list){
+    const menu=document.getElementById("sub_list");
+    const ul=document.getElementById('child_cat');
+    let timeout;
+    if(menu.classList.contains("hidden")){
+        menu.classList.remove("hidden");
+    }
+    list.forEach(cat => {
+        cat.addEventListener('mouseenter',()=>{
+            clearTimeout(timeout);
+            menu.classList.remove("hidden");
+            const sublist =JSON.parse(cat.getAttribute('data-child'));
+            const newList=[];
+            sublist.forEach(item=>{
+                newList.push(`<a data-parent_id='${item['parent_id']}' href=""><li class="menu_list_ul_li text-capitalize">${item['name']}</li></a>`)
+            })
+            html=newList.join('');
+            ul.innerHTML=html;
+        })
+    });
+    list.addEventListener('mouseenter',()=>{
+        
+
+    })
 }
 // 
 function userMenu(){

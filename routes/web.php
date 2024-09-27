@@ -8,6 +8,10 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
 use App\Http\Controllers\AdminCustomerController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\clientProductController;
+use App\Http\Controllers\ViewController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 
 
@@ -22,9 +26,10 @@ use App\Http\Controllers\Home\ProductController as HomeProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [CategoriesController::class,'index'])->name('categories.index');
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
 Route::group(['prefix' => 'admin/coupons'], function () {
@@ -82,6 +87,16 @@ Route::prefix('admin/customers')->group(function () {
     Route::get('/detail/{id}', [AdminCustomerController::class,'edit'])->name('admin.customers.edit');
     Route::delete('/delete/{id}', [AdminCustomerController::class,'destroy'])->name('admin.customers.destroy');
     Route::put('/update/{id}',[AdminCustomerController::class,'update'])->name('admin.customers.update');
+});
+// nhom route cho trang web chinh
+Route::group([], function () {
+    Route::get('/',[ViewController::class,'index'])->name('web.home');
+});
+// route lay danh sach san pham phia client
+Route::prefix('client/products')->group(function () {
+    Route::get('/{cat}/{start}/{limit}', [clientProductController::class,'index'])->name('client.products');
+    Route::get('add/{id}', [CartController::class,'store'])->name('client.add.cart');
+    Route::get('cart/show', [CartController::class,'show'])->name('client.add.cart.show');
 });
 
 //Home

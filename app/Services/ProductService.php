@@ -94,10 +94,34 @@ class ProductService
     {
         return $this->productRepositoryInterface->delete($id);
     }
+<<<<<<< HEAD
 
     public function productRelate($productId)
     {
         return $this->productRepositoryInterface->productRelate($productId);
     }
 
+=======
+    // 
+    public function render($cat,$start,$limit){
+        return $this->productRepositoryInterface->render($cat,$start,$limit);
+    }
+    // 
+    // lay san pham theo list id
+    public function getByList($data){
+       $idArr=[];
+       foreach ($data as $key => $value) {
+        $idArr[] =$value['id'];
+       }
+       $products= $this->productRepositoryInterface->getByList($idArr);
+       
+    //    dd($products[0]['count']);
+       for( $i= 0; $i<count($products); $i++ ){
+        // dd($data[$i]);
+        $products[$i]['count']=$data[$i]['count'];
+       }
+    //    dd($products);
+       return response()->json(['products'=>$products]);
+    }
+>>>>>>> FE-01/getCats
 }
