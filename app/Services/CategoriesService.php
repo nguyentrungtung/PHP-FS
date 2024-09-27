@@ -36,4 +36,25 @@ use Illuminate\Http\Request;
         public function destroy($id){
             $this->catgoryRepository->delete($id);
         }
+        // lay ra list cat va phan loai de hien thi ra man hinh 
+        public function all(){
+            $categories= $this->catgoryRepository->all();
+            $child=[];
+            $root=[];
+            foreach($categories as $category){
+                if($category->categories_parent_id===null){
+                    $root[]=['id'=>$category->id,'name'=>$category->categories_name,'child'=>[]];
+                }else{
+                    $child[]=['id'=>$category->id,'name'=>$category->categories_name,'parent_id'=> $category->categories_parent_id];
+                }
+            }
+            for($i= 0;$i<count($root);$i++){
+                foreach($child as $cat){
+                    if($cat['parent_id']===$root[$i]['id']){
+                        $root[$i]['child'][]=$cat;
+                    }
+                }
+            }
+            return $root;
+        }
     }   

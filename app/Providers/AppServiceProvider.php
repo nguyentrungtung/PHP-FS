@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use App\Http\View\Composers\ProductComposer;
+use App\Http\View\Composers\ViewComposer;
 use App\Repositories\Contracts\Repository\BrandRepository;
 use App\Repositories\Contracts\Repository\CategoryRepository;
 use App\Repositories\Contracts\Repository\CouponRepository;
@@ -46,5 +47,8 @@ class AppServiceProvider extends ServiceProvider
             ['admin.products.create', 'admin.products.edit'], // Các view cần chia sẻ dữ liệu
             ProductComposer::class
         );
+        // 
+        View::composer(['*', '!admin/*'], 
+        ViewComposer::class);
     }
 }
