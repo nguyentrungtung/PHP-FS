@@ -143,13 +143,11 @@ function hiddenMenu(){
 function hoverParentCat(list){
     const menu=document.getElementById("sub_list");
     const ul=document.getElementById('child_cat');
-    let timeout;
     if(menu.classList.contains("hidden")){
         menu.classList.remove("hidden");
     }
     list.forEach(cat => {
         cat.addEventListener('mouseenter',()=>{
-            clearTimeout(timeout);
             menu.classList.remove("hidden");
             const sublist =JSON.parse(cat.getAttribute('data-child'));
             const newList=[];
