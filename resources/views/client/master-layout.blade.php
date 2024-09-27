@@ -28,7 +28,7 @@
             @include('client.components.layout.header')
         </header>
 
-        <main class="main-content">
+        <main class="main-content container">
             @yield('content')
         </main>
         <footer class="footer">

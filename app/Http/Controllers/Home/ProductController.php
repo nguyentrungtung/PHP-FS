@@ -27,10 +27,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function productDetail(string $id)
     {
         $product = $this->productService->getProductById($id);
         $productRelates = $this->productService->productRelate($id);
+
         return view('client.pages.product-detail', compact('product', 'productRelates'));
     }
 }
