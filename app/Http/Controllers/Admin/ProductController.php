@@ -12,7 +12,6 @@ use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
 
 class ProductController extends Controller
 {
-    private $limit = 5;
     private $productService;
     private $productRepositoryInterface;
     private $categoryRepositoryInterface;
@@ -36,7 +35,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->productService->getAllProductsPaginate($this->limit);
+        $products = $this->productService->getAllProducts();
         return view('admin.products.index', ['products' => $products]);
     }
 

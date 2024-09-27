@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
@@ -12,17 +13,20 @@ class ProductService
     private $productRepositoryInterface;
     private $productImageRepositoryInterface;
     private $unitValueRepositoryInterface;
+    private $categoryRepositoryInterface;
 
     /**
      * @param ProductRepositoryInterface $productRepositoryInterface
      */
     public function __construct(
-        ProductRepositoryInterface $productRepositoryInterface,
+        ProductRepositoryInterface      $productRepositoryInterface,
+        CategoryRepositoryInterface     $categoryRepositoryInterface,
         ProductImageRepositoryInterface $productImageRepositoryInterface,
-        UnitValueRepositoryInterface $unitValueRepositoryInterface,
+        UnitValueRepositoryInterface    $unitValueRepositoryInterface,
     )
     {
         $this->productRepositoryInterface = $productRepositoryInterface;
+        $this->categoryRepositoryInterface = $categoryRepositoryInterface;
         $this->productImageRepositoryInterface = $productImageRepositoryInterface;
         $this->unitValueRepositoryInterface = $unitValueRepositoryInterface;
     }
@@ -90,4 +94,10 @@ class ProductService
     {
         return $this->productRepositoryInterface->delete($id);
     }
+
+    public function productRelate($productId)
+    {
+        return $this->productRepositoryInterface->productRelate($productId);
+    }
+
 }

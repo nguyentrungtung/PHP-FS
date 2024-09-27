@@ -189,12 +189,6 @@
 {{-- add tinymce như ckeditor --}}
 <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#myProductTable').DataTable();
-    })
-</script>
-
 {{--  Custom file js--}}
 @stack('custom-script')
 </body>
