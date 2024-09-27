@@ -91,6 +91,7 @@ Route::prefix('admin/customers')->group(function () {
 // nhom route cho trang web chinh
 Route::group([], function () {
     Route::get('/',[ViewController::class,'index'])->name('web.home');
+    Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');
 });
 // route lay danh sach san pham phia client
 Route::prefix('client/products')->group(function () {

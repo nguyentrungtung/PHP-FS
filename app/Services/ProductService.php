@@ -121,4 +121,10 @@ class ProductService
     //    dd($products);
        return response()->json(['products'=>$products]);
     }
+    //
+    // lay san pham trong ngay
+    public function today(){
+        return $this->productRepositoryInterface->getToday();
+    } 
+
 }

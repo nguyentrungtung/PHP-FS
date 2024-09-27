@@ -118,6 +118,7 @@ function bannerSlider(){
     // Khởi tạo vị trí ban đầu
     updateSlidePosition();
     autoSlide();
+    addCart();
 }
 
 function partnerSlide(){
@@ -181,21 +182,11 @@ function fetchData(element) {
             addCart();
         },
         error: function(xhr) {
-            // Xử lý lỗi nếu có
-            alert('False to loading data.');
         }
     });
 }
 // 
 function getProduct(product){
-    const price = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(product.price);
-    const old = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(product.old);
     return `
         <div class="d-flex flex-column justify-content-between align-items-center product">
             ${product.sale!==0?`<div class="d-flex justify-content-center align-items-center product_pin">
@@ -209,8 +200,8 @@ function getProduct(product){
                     <p class="product_content_text">${product.name}</p>
                     <p class="product_content_text">ĐVT: Cuộn</p>
                     <div class="d-flex product_content_price">
-                        <p class="content_price price_sale">${price}</p>
-                        ${product.old!==0?`<p class="text-decoration-line-through content_price price_old">${old}</p>`:''}
+                        <p class="content_price price_sale">${product.price}</p>
+                        ${product.old!==0?`<p class="text-decoration-line-through content_price price_old">${product.old}</p>`:''}
                     </div>
                 </div>
                 <div data-id="${product.id}" class="d-flex justify-content-between align-items-center content_add">
@@ -282,20 +273,25 @@ function addCart(){
     console.log(btns);
     btns.forEach(btn=>{
         const id=btn.getAttribute('data-id');
-        btn.addEventListener('click',()=>{
-            $.ajax({
-                url: 'client/products/add/' + id,
-                type: 'GET',
-                success: function(response) {
-                    const cart=document.getElementById('cart_count');
-                    const count = parseInt(cart.innerHTML)+1;
-                    cart.innerHTML= count;
-                },
-                error: function(xhr) {
-                    // Xử lý lỗi nếu có
-                    alert('False to loading data.');
-                }
+        if (!btn.dataset.hasClickEvent) {
+            btn.addEventListener('click', function() {
+                $.ajax({
+                    url: 'client/products/add/' + id,
+                    type: 'GET',
+                    success: function(response) {
+                        const cart=document.getElementById('cart_count');
+                        const count = parseInt(cart.innerHTML)+1;
+                        cart.innerHTML= count;
+                    },
+                    error: function(xhr) {
+                        // Xử lý lỗi nếu có
+                        alert('False to loading data.');
+                    }
+                });
             });
-        })
+    
+            // Đánh dấu đã có sự kiện click
+            btn.dataset.hasClickEvent = 'true';
+        }
     })
 }

@@ -77,4 +77,8 @@
             }
             return false;
         }
+        // 
+        public function all(){
+            return $this->brandRepository->all();
+        }
     }

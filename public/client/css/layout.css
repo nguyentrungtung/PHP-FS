@@ -22,10 +22,11 @@ a {
     width: 40%;
 }
 .header_top_left_logo {
-    width: 30%;
-    height: 80px;
+    /* width: 30%; */
+    height: 130px;
     object-fit: cover;
 }
+
 .header_top_left_search {
     position: relative;
     background: white;
@@ -184,6 +185,7 @@ a {
     position: absolute;
     top: -10px;
     left: 0;
+    z-index: 100000000000000000000000000000000000 !important;
     background: #ffffff;
     z-index: 1;
     box-shadow: 0 0 20px 100vw rgb(0 0 0 / 54%);
@@ -329,6 +331,7 @@ a {
 .menu_list_ul {
     margin: 0;
     padding: 0;
+    z-index: 10000 !important;
     width: 200px;
 }
 .menu_list_ul_li {
