@@ -109,8 +109,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $data=['id'=>$product->id,
                 'name'=> $product->product_name,
                 'price'=>$price,
+                'unit'=>'Chai',
                 'sale'=>$sale,
-                'old'=>$old,
+                'old_price'=>$old,
                 'img_url'=>asset('img/product.png')
             ];
             $reponseProdct[]=$data;

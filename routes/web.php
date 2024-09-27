@@ -2,18 +2,17 @@
 
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
+use App\Http\Controllers\Home\Carttemp;
+use App\Http\Controllers\Home\CategoriesController;
+use App\Http\Controllers\Home\clientProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
-use App\Http\Controllers\AdminCustomerController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\clientProductController;
-use App\Http\Controllers\ViewController;
+use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
-
+use App\Http\Controllers\Home\ViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,10 +95,11 @@ Route::group([], function () {
 // route lay danh sach san pham phia client
 Route::prefix('client/products')->group(function () {
     Route::get('/{cat}/{start}/{limit}', [clientProductController::class,'index'])->name('client.products');
-    Route::get('add/{id}', [CartController::class,'store'])->name('client.add.cart');
-    Route::get('cart/show', [CartController::class,'show'])->name('client.add.cart.show');
+    Route::get('add/{id}', [Carttemp::class,'store'])->name('client.add.cart');
+    Route::get('cart/show', [Carttemp::class,'show'])->name('client.add.cart.show');
 });
 
 //Home
 // Route cho trang chi tiết sản phẩm
-Route::get('/product/{id}', [HomeProductController::class, 'show'])->name('product.show');
+Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
+Route::get('/cart', [Carttemp::class, 'showCart'])->name('cart.show');
