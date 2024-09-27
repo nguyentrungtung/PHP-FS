@@ -94,14 +94,12 @@ class ProductService
     {
         return $this->productRepositoryInterface->delete($id);
     }
-<<<<<<< HEAD
+
 
     public function productRelate($productId)
     {
         return $this->productRepositoryInterface->productRelate($productId);
     }
-
-=======
     // 
     public function render($cat,$start,$limit){
         return $this->productRepositoryInterface->render($cat,$start,$limit);
@@ -123,5 +121,4 @@ class ProductService
     //    dd($products);
        return response()->json(['products'=>$products]);
     }
->>>>>>> FE-01/getCats
 }
