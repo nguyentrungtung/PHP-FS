@@ -2,9 +2,12 @@
 
 namespace App\Repositories\Contracts\Repository;
 
+use App\Models\Categories;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\BaseRepository;
+use Carbon\Carbon;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
@@ -39,41 +42,76 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->get();
     }
 
-
-    //
+    // 
+    public function getToday(){
+        $todayProducts = $this->model::whereDate('created_at', Carbon::today())
+        ->take(10)
+        ->get();
+        $data=$this->setShortData($todayProducts,true);
+        for( $i = 0; $i < count($data); $i++ ){
+            $mainImage = ProductImage::where('product_id', $data[$i]['id'])
+                ->where('image_type', 'main')
+                ->first();
+            //  dd($mainImage);
+            $data[$i]['img_url']=$mainImage?$mainImage->image_url:'img/product.png';
+        }
+        // dd($data);
+        return $data;
+    }
+    // 
     public function render($cat,$start,$limit){
-        $count = $this->model::where('category_id', $cat)->count();
-        $remain=$count - ($start+$limit);
+        $categoryIds = Categories::where('categories_parent_id', $cat)->pluck('id');
+        $count = $this->model::where('category_id', $cat)->orWhereIn('category_id', $categoryIds)->count();
+        $remain=$count - (int)($start+$limit);
         $products = $this->model
         ->where('category_id', $cat)
+        ->orWhereIn('category_id', $categoryIds)
         ->skip($start)
         ->take($limit)
         ->get();
-        $reponseProdct=$this->setShortData($products);
+        $reponseProdct=$this->setShortData($products,true);
+        for( $i = 0; $i < count($reponseProdct); $i++ ){
+            $mainImage = ProductImage::where('product_id', $reponseProdct[$i]['id'])
+                ->where('image_type', 'main')
+                ->first();
+            //  dd($mainImage);
+            $reponseProdct[$i]['img_url']=asset($mainImage?$mainImage->image_url:'img/product.png');
+        }
         // dd($reponseProdct);
         return response()->json(['products'=>$reponseProdct,'remain'=>max(0, $remain)]);
     }
+    
     // lay san pham theo list id
     public function getByList($data){
         $products = $this->model::whereIn('id', $data)->get();
-        return $this->setShortData($products);
+        return $this->setShortData($products,false);
     }
-    //
-    private function setShortData($products){
+    // 
+    private function setShortData($products,$check){
         $reponseProdct=[];
         foreach ($products as $product) {
             if(isset($product->product_price_old)){
                 $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;
-                $old=$product->product_price_old;
+                
+                if($check){
+                    $old=number_format($product->product_price_old, 0, ',', '.') . ' ₫';
+                    $price=number_format($product->product_price, 0, ',', '.') . ' ₫';
+                }else{
+                    $price=$product->product_price;
+                    $old=$product->product_price_old;
+                }
             }else{
+                $price=$product->product_price;
                 $sale= 0;
                 $old= 0;
             }
+            // number_format($product->product_price, 0, ',', '.') . ' ₫';
             $data=['id'=>$product->id,
                 'name'=> $product->product_name,
-                'price'=>$product->product_price,
+                'price'=>$price,
+                'unit'=>'Chai',
                 'sale'=>$sale,
-                'old'=>$old,
+                'old_price'=>$old,
                 'img_url'=>asset('img/product.png')
             ];
             $reponseProdct[]=$data;

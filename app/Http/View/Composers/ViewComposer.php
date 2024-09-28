@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\View\Composers;
-
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\Home\Carttemp;
+use App\Http\Controllers\Home\CategoriesController;
 use Illuminate\View\View;
-use App\Http\Controllers\CategoriesController;
 
 class ViewComposer
 {

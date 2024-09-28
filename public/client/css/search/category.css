@@ -1,0 +1,153 @@
+body{
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+.list_title_text{
+    font-size: 16px;
+}
+.category{
+    width: 100vw;
+    padding: 0 10vw;
+    min-height: 100vh;
+    background: #dcdcdc;
+}
+.detail_list{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(184, 184, 184);
+}
+.categoty_detai{
+    width: 25%;
+    border-right:1px solid rgb(184, 184, 184);
+    background: white;
+}
+.list_title{
+    width: 100%;
+    margin-bottom:5px;
+}
+.btn_drop{
+    color: black ;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+.dropdown{
+    color:#e82428;
+    font-weight: bold;
+    transform: rotate(90deg);
+}
+.list_subcat{
+    width: 100%;
+    height: 0px;
+    font-size: 14px;
+    overflow: hidden;
+    transition: height 0.5s ease;
+}
+.subcat_title{
+    display: flex;
+    margin-bottom:10px;
+    height: 40px;
+    width: 100%;
+    background: #f1f1f1;
+    padding: 0 10px;
+    border: 1px solid #ffffff;
+}
+.sublits{
+    opacity: 1;
+    width: 100%;
+    transform: translateX(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hidden{
+    /* display: none; */
+    opacity: 0 !important;
+    transform: translateX(20%) !important;
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s 0.5s;
+}
+
+.active{
+    border: 1px solid #e82428 !important;
+}
+.detail_brand{
+    padding: 10px;
+}
+.brand_list{
+    width: 100%;
+    overflow: hidden;
+    transition: height 0.5s ease;
+}
+.brand_logo{
+    border: 1px solid white;
+    margin: 1px;
+    object-fit: fill;
+}
+.loadmore{
+    width: 100%;
+    cursor: pointer;
+    color: black;
+    &:hover{
+        color: #e82428;
+    }
+}
+.categoty_content{
+    background: white;
+    width: 100%;
+}
+.content_fillter_sale{
+    height: 50px;
+    width: 100%;
+    margin-top:10px ;
+    padding: 0 10px;
+    padding-bottom: 10px;
+}
+.content_fillter{
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(184, 184, 184);
+}
+.content_fillter_brand{
+    padding: 0 10px;
+}
+.text{
+    margin: 0;
+    padding: 0;
+}
+.list_brand{
+    padding: 10px;
+    max-width: 600px;
+    margin-left: 10px;
+}
+.brand_fill{
+    margin: 2px 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background: #dcdcdc;
+}
+.fillter_lits{
+    margin-left: 10px;
+}
+.fillter_detai{
+    padding: 0 10px;
+    height: 100%;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid #f1f1f1;
+    background: #f1f1f1;
+}
+.category_content_products{
+    padding: 0 10px;
+}
+.products_url{
+    padding: 10px 0;
+    font-size: 14px;
+}
+.brandlist{
+    opacity: 1;
+    width: 100%;
+    transform: translateX(0px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.delete_fillter{
+    color: #e82428;
+    cursor: pointer;
+    width: 100px;
+}

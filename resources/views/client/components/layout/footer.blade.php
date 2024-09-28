@@ -1,4 +1,4 @@
-<div class="d-flex flex-column footer" >
+<div class="d-flex flex-column footer_layout" >
     <div class="d-flex align-items-center justify-content-around footer_top">
         <img src="{{asset('client/img/layout/footer-01.png')}}" alt="" class="footer_top_img">
         <img src="{{asset('client/img/layout/footer-02.png')}}" alt="" class="footer_top_img">
@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center justify-content-between footer_bootom">
+    <div class="d-flex align-items-start justify-content-between footer_bootom">
         <div class="d-flex flex-column align-items-center footer_bootom_space">
             <h2 class="footer_bootom_space_title">Địa chỉ giao dịch Hà Nội:</h2>
             <p>

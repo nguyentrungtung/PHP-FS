@@ -1,0 +1,10 @@
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>
+<div class="product loading"></div>

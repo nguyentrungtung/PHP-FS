@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Home;
+use App\Http\Controllers\Controller;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-class CartController extends Controller
+class Carttemp extends Controller
 {
     private $service;
     public function __construct(ProductService $service){

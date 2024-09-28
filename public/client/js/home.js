@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     addCart();
     //
 })
-//
+// dem nguoc thoi gian
 function countdown(){
     const sec=document.getElementById("countdown_sec");
     const hour=document.getElementById("countdown_hours");
@@ -47,7 +47,7 @@ function countdown(){
 
     },1000);
 }
-//
+// hover brand
 function hoverPartner(){
     const listFartner=document.querySelectorAll(".partner_logo");
     listFartner.forEach(partner => {
@@ -59,7 +59,7 @@ function hoverPartner(){
         })
     });
 }
-//
+// banner slide
 function bannerSlider(){
     const slides = document.querySelectorAll('.banners_slide_img');
     const dots = document.querySelectorAll('.switch_dot');
@@ -152,7 +152,7 @@ function partnerSlide(){
         }
     });
 }
-//
+// lay du lieu cua san pham qua ajax va render ra man hinh
 function fetchData(element) {
     // Giả sử đây là phần logic để lấy dữ liệu sản phẩm từ server
     const id=element.getAttribute('data-id');
@@ -187,44 +187,45 @@ function fetchData(element) {
     });
 }
 //
+// loading san pham
+// tao html de render
 function getProduct(product){
-    const price = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(product.price);
-    const old = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(product.old);
-    return `
-        <div class="d-flex flex-column justify-content-between align-items-center product">
-            ${product.sale!==0?`<div class="d-flex justify-content-center align-items-center product_pin">
-                ${product.sale}%
+    return `<div class="col-lg-1-5">
+        <div class="card product-item">
+            ${product.sale!==0?`
+            <div class="product-item__discount-wrap">
+                <p class="product-item__discount-product">- ${product.sale}%</p>
+                <img src="" alt="" class="product-item__discount-ship d-none">
             </div>`:''}
-            <div class="d-flex justify-content-center align-items-center product_img">
-                <img src="${product.img_url}" class="product_img_content">
+            <div class="product-item__img-wrap">
+                <img
+                    src="${product.img_url}"
+                    class="product-item__img card-img-top"
+                    alt="..."
+                />
+                <div class="product-item__frame d-none"></div>
             </div>
-            <div class="d-flex flex-column justify-content-end product_content">
-                <div class="d-flex flex-column content_text">
-                    <p class="product_content_text">${product.name}</p>
-                    <p class="product_content_text">ĐVT: Cuộn</p>
-                    <div class="d-flex product_content_price">
-                        <p class="content_price price_sale">${price}</p>
-                        ${product.old!==0?`<p class="text-decoration-line-through content_price price_old">${old}</p>`:''}
-                    </div>
+            <div class="card-body text-muted product-item__info">
+                <p class="card-title product-item__name">${product.name}</p>
+                <p class="card-text mb-1">ĐVT: ${product.unit}</p>
+                <div class="product-item__info-price d-flex">
+                    <p class="card-text text-danger fw-bold product-item__price-new m-0">${product.price}</p>
+                    ${product.old_price!=0?`<span class="product-item__price-old ms-4 text-decoration-line-through">${product.old_price}</span>`:''}
                 </div>
-                <div data-id="${product.id}" class="d-flex justify-content-between align-items-center content_add">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                        <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
-                        <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                      </svg>
-                      <p class="cart_add">Thêm vào giỏ hàng</p>
-                </div>
+            </div>
+            <!-- Product action -->
+            <div class="product-item__action">
+                <a href="#" class="d-block btn-cart--add" data-url="">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <a href="#" class="d-block btn-cart--add" >
+                    <i class="fa-regular fa-heart"></i>
+                </a>
             </div>
         </div>
-    `;
+    </div>`;
 }
-//
+// lay them san pham neu san pham do con
 function LoadMore(){
     const listLoad=document.querySelectorAll('.list_load_more');
     listLoad.forEach(load=>{
@@ -275,6 +276,4 @@ const observer = new IntersectionObserver((entries, observer) => {
             observer.unobserve(entry.target);
         }
     });
-}, { threshold: 0.3 }); // Chạy khi 10% element đã vào khung nhìn
-
-
+}, { threshold: 0.3 });

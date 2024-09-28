@@ -1,11 +1,6 @@
 
-.home{
-    width: 100vw;
-    padding: 0 10vw;
-    background: #ececec;
-}
 .banner{
-    height: 390px;
+    height: 411px;
 }
 .home_banners{
     width: 100%;
@@ -73,6 +68,9 @@
 .home_vouchers{
     width: 100%;
     margin-top: 20px;
+    padding: 10px 20px;
+    background: #ececec;
+    border-radius: 10px;
 }
 .voucher{
     position: relative;
@@ -164,8 +162,10 @@
 .home_cat_list_title{
     background-color: #ececec;
     width: 100%;
+    border-radius: 5px;
     color: rgb(0, 0, 0);
     padding: 10px 20px;
+    margin-bottom: 5px;
 }
 .today_dead_date_title,.home_cat_list_title_text{
     margin: 0;
@@ -336,6 +336,7 @@
 }
 .partner_logo{
     /* width: 100px; */
+    height: 100px;
     max-width: 120px;
     margin: 0 60px;
     object-fit: fill;
