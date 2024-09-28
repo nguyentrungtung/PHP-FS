@@ -36,45 +36,37 @@ function showCart(){
     const cart=document.getElementById("cart_list");
     if(cart.classList.contains("hidden")){
         $.ajax({
-            url: 'client/products/cart/show',
+            url: 'client/cart/show',
             type: 'GET',
             success: function(response) {
-                console.log(response);
-                const products=response.products;
                 let newArr=[];
-                products.forEach(product => {
-                    newArr.push(getshortProduct(product));
+                Object.values(response).forEach(product => {
+                    newArr.push(changeCartData(product));
                 });
                 const list=document.querySelector('.cart_list_items');
                 list.innerHTML=newArr.join('');
-            },
-            error: function(xhr) {
-                // Xử lý lỗi nếu có
-                alert('False to loading data.');
             }
         });
         cart.classList.remove("hidden");
     }
 }
 
-function getshortProduct(product){
-    console.log(product);
-    let price = product.price*product.count;
-    
+function changeCartData(product){
+    let price = product.product_price*product.product_quantity;
     price= new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
     }).format(price);
     return `<div class="d-flex list_items_item">
-        <img src="${product.img_url}" alt="" class="item_img">
+        <img src="${product.product_image}" alt="" class="item_img">
         <div class="d-flex flex-wrap flex-column item_content">
-            <p class="item_content_text">${product.name}</p>
+            <p class="item_content_text">${product.product_name}</p>
             <div class="d-flex justify-content-between content_dv">
                 <p class="item_content_text">DVT:</p>
-                <p class="item_content_text">Chai</p>
+                <p class="item_content_text">${product.product_unit}</p>
             </div>
             <div class="d-flex justify-content-between item_content_price">
-                <p class="item_content_text">x ${product.count}</p>
+                <p class="item_content_text">x ${product.product_quantity}</p>
                 <p class="item_price">${price}</p>
             </div>
         </div>

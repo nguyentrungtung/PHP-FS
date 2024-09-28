@@ -44,19 +44,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     // 
     public function getToday(){
-        $todayProducts = $this->model::whereDate('created_at', Carbon::today())
+        return $this->model::whereDate('created_at', Carbon::today())
         ->take(10)
         ->get();
-        $data=$this->setShortData($todayProducts,true);
-        for( $i = 0; $i < count($data); $i++ ){
-            $mainImage = ProductImage::where('product_id', $data[$i]['id'])
-                ->where('image_type', 'main')
-                ->first();
-            //  dd($mainImage);
-            $data[$i]['img_url']=$mainImage?$mainImage->image_url:'img/product.png';
-        }
-        // dd($data);
-        return $data;
     }
     // 
     public function render($cat,$start,$limit){
@@ -69,54 +59,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         ->skip($start)
         ->take($limit)
         ->get();
-        $reponseProdct=$this->setShortData($products,true);
-        for( $i = 0; $i < count($reponseProdct); $i++ ){
-            $mainImage = ProductImage::where('product_id', $reponseProdct[$i]['id'])
-                ->where('image_type', 'main')
-                ->first();
-            //  dd($mainImage);
-            $reponseProdct[$i]['img_url']=asset($mainImage?$mainImage->image_url:'img/product.png');
-        }
-        // dd($reponseProdct);
-        return response()->json(['products'=>$reponseProdct,'remain'=>max(0, $remain)]);
+        return compact('remain','products');
     }
-    
-    // lay san pham theo list id
-    public function getByList($data){
-        $products = $this->model::whereIn('id', $data)->get();
-        return $this->setShortData($products,false);
-    }
-    // 
-    private function setShortData($products,$check){
-        $reponseProdct=[];
-        foreach ($products as $product) {
-            if(isset($product->product_price_old)){
-                $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;
-                
-                if($check){
-                    $old=number_format($product->product_price_old, 0, ',', '.') . ' ₫';
-                    $price=number_format($product->product_price, 0, ',', '.') . ' ₫';
-                }else{
-                    $price=$product->product_price;
-                    $old=$product->product_price_old;
-                }
-            }else{
-                $price=$product->product_price;
-                $sale= 0;
-                $old= 0;
-            }
-            // number_format($product->product_price, 0, ',', '.') . ' ₫';
-            $data=['id'=>$product->id,
-                'name'=> $product->product_name,
-                'price'=>$price,
-                'unit'=>'Chai',
-                'sale'=>$sale,
-                'old_price'=>$old,
-                'img_url'=>asset('img/product.png')
-            ];
-            $reponseProdct[]=$data;
 
-        }
-        return $reponseProdct;
-    }
 }

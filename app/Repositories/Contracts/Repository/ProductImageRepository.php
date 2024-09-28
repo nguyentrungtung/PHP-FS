@@ -15,4 +15,14 @@ class ProductImageRepository extends BaseRepository implements ProductImageRepos
         $this->model = $model;
         parent::__construct($model);
     }
+    // 
+    public function getByProductId($productId){
+        return $this->model->where("product_id",$productId)->get();
+    }
+    // 
+    public function getMainImg($productId){
+        return $this->model
+        ->where("product_id",$productId)
+        ->where('image_type','main')->first();
+    }
 }

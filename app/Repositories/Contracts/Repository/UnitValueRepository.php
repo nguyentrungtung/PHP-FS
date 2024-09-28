@@ -15,4 +15,8 @@ class UnitValueRepository extends BaseRepository implements UnitValueRepositoryI
         $this->model = $model;
         parent::__construct($model);
     }
+    // 
+    public function getByProductID($product_id){
+        return $this->model->where("product_id",$product_id)->first();
+    }
 }

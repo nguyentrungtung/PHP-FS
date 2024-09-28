@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     targets.forEach(target => {
         observer.observe(target); // Theo dõi từng phần tử
     });
-    LoadMore();
-    
+    addCart();
+    detail();
     // 
 })
 // dem nguoc thoi gian 
@@ -155,114 +155,112 @@ function partnerSlide(){
 }
 // lay du lieu cua san pham qua ajax va render ra man hinh 
 function fetchData(element) {
-    // Giả sử đây là phần logic để lấy dữ liệu sản phẩm từ server
     const id=element.getAttribute('data-id');
+    const name=element.getAttribute('data-name');
+    const content=element.querySelector('.list_content');
     const list_products=element.querySelector('.list_products');
-    const count=element.querySelector('.count');
+    console.log(name);
     $.ajax({
         url: 'client/products/' + id + '/' + 0 + '/' + 10,
         type: 'GET',
         success: function(response) {
-            const products=(response.products);
-            const remain=(response.remain);
-            let newArr=[];
-            products.forEach(product => {
-                newArr.push(getProduct(product));
-            });
-            if((countCats[id])){
-                countCats[id]['remain']-=10;
-                countCats[id]['start']+=10;
-            }else{
-                countCats[id]={'remain':remain,'start':10};
+            list_products.innerHTML=changeData(id,response);
+            addCart();
+            if(countCats[id]['remain']>0){
+                content.innerHTML+=`<div data-id="${id}" class="list_load_more">
+                    <p class="more_text">Xem Thêm <p class="more_text count">${countCats[id]['remain']}</p> sản phẩm </p>
+                    <p class="more_text cat_name">${name}</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+                      </svg>
+                </div>`;
+                const load =content.querySelector('.list_load_more');
+                LoadMore(load,id,element);
+                
             }
-            console.log(countCats);
-            const html=newArr.join('');
-            list_products.innerHTML=html;
-            count.innerHTML=remain;
-            
         },
         error: function(xhr) {
         }
     });
 }
 // 
+function changeData(id,response){
+    const products=(response.products);
+    const remain=(response.remain);
+    let newArr=[];
+    products.forEach(product => {
+        newArr.push(productItem(product));
+    });
+    if((countCats[id])){
+        countCats[id]['remain']-=10;
+        countCats[id]['start']+=10;
+    }else{
+        countCats[id]={'remain':remain,'start':10};
+    }
+    return newArr.join('');
+}
 // loading san pham
+// lay them san pham neu san pham do con
+function LoadMore(load,id,element){
+    load.addEventListener('click',()=>{
+        const count=load.querySelector('.count');
+        const list_products=element.querySelector('.list_products');
+        $.ajax({
+            url: 'client/products/' + id + '/' + countCats[id]['start'] + '/' + 10,
+            type: 'GET',
+            success: function(response) {
+                const html=changeData(id,response);
+                console.log(list_products);
+                list_products.innerHTML+=html;
+                addCart();
+                detail();
+                if(countCats[id]['remain']<=0){
+                    load.classList.add('hidden');
+                }else{
+                    count.innerHTML=countCats[id]['remain'];
+                }
+            },
+            error: function(xhr) {
+                // Xử lý lỗi nếu có
+                alert('False to loading data.');
+            }
+        });
+    })
+}
 // tao html de render
-function getProduct(product){
+function productItem(product){
     return `<div class="col-lg-1-5">
-        <div class="card product-item">
-            ${product.sale!==0?`
-            <div class="product-item__discount-wrap">
-                <p class="product-item__discount-product">- ${product.sale}%</p>
-                <img src="" alt="" class="product-item__discount-ship d-none">
-            </div>`:''}
-            <div class="product-item__img-wrap">
-                <img
-                    src="${product.img_url}"
-                    class="product-item__img card-img-top"
-                    alt="..."
-                />
-                <div class="product-item__frame d-none"></div>
-            </div>
-            <div class="card-body text-muted product-item__info">
-                <p class="card-title product-item__name">${product.name}</p>
-                <p class="card-text mb-1">ĐVT: ${product.unit}</p>
-                <div class="product-item__info-price d-flex">
-                    <p class="card-text text-danger fw-bold product-item__price-new m-0">${product.price}</p>
-                    ${product.old_price!=0?`<span class="product-item__price-old ms-4 text-decoration-line-through">${product.old_price}</span>`:''}
+            <div data-id="${product.id}" class="card product-item">
+                ${product.sale!==0?`
+                <div class="product-item__discount-wrap">
+                    <p class="product-item__discount-product">- ${product.sale}%</p>
+                    <img src="" alt="" class="product-item__discount-ship d-none">
+                </div>`:''}
+                <div class="product-item__img-wrap">
+                    <img
+                        src="${product.product_image}"
+                        class="product-item__img card-img-top"
+                        alt="..."
+                    />
+                    <div class="product-item__frame d-none"></div>
                 </div>
-            </div>
-            <!-- Product action -->
-            <div class="product-item__action">
-                <a href="#" class="d-block btn-cart--add" data-url="">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-                <a href="#" class="d-block btn-cart--add" >
-                    <i class="fa-regular fa-heart"></i>
-                </a>
-            </div>
+                <div class="card-body text-muted product-item__info">
+                    <p class="card-title product-item__name">${product.product_name}</p>
+                    <p class="card-text mb-1">ĐVT: ${product.product_unit}</p>
+                    <div class="product-item__info-price d-flex">
+                        <p class="card-text text-danger fw-bold product-item__price-new m-0">${product.product_price}</p>
+                        ${product.product_old_price!=0?`<span class="product-item__price-old ms-4 text-decoration-line-through">${product.product_old_price}</span>`:''}
+                    </div>
+                </div>
+                <!-- Product action -->
+                <div class="product-item__action">
+                    <i data-id="${product.id}" class="d-block btn-cart--add fa-solid fa-cart-shopping cart_add"></i>
+                    <a href="#" class="d-block btn-cart--add" >
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                </div>
         </div>
     </div>`;
-}
-// lay them san pham neu san pham do con
-function LoadMore(){
-    const listLoad=document.querySelectorAll('.list_load_more');
-    listLoad.forEach(load=>{
-        const id=load.getAttribute('data-id');
-        
-        load.addEventListener('click',()=>{
-            const parent = load.parentElement;
-            // console.log(parent);
-            const count=parent.querySelector('.count');
-            const list_products=parent.querySelector('.list_products');
-            $.ajax({
-                url: 'client/products/' + id + '/' + countCats[id]['start'] + '/' + 10,
-                type: 'GET',
-                success: function(response) {
-                    const products=(response.products);
-                    const remain=(response.remain);
-                    let newArr=[];
-                    products.forEach(product => {
-                        newArr.push(getProduct(product));
-                    });
-                    countCats[id]['remain']-=10;
-                    countCats[id]['start']+=10;
-                    console.log(countCats);
-                    const html=newArr.join('');
-                    list_products.innerHTML+=html;
-                    if(remain<=0){
-                        load.classList.add('hidden');
-                    }else{
-                        count.innerHTML=remain;
-                    }
-                },
-                error: function(xhr) {
-                    // Xử lý lỗi nếu có
-                    alert('False to loading data.');
-                }
-            });
-        })
-    })
 }
 // Tạo IntersectionObserver để theo dõi nhiều phần tử với class home_cat_list
 const observer = new IntersectionObserver((entries, observer) => {
@@ -275,3 +273,44 @@ const observer = new IntersectionObserver((entries, observer) => {
         }
     });
 }, { threshold: 0.3 });
+// 
+// them su kien click add san pham vao gio hang
+// 
+function addCart(){
+    const carts=document.querySelectorAll('.cart_add');
+    carts.forEach(cart=>{
+        if (!cart.dataset.hasClick) {
+            cart.addEventListener('click', function() {
+                const id=cart.getAttribute('data-id');
+            console.log(id);
+            $.ajax({
+                url: 'client/cart/add/' + id,
+                type: 'GET',
+                success: function(response) {
+                    const counts=document.querySelectorAll('.cart_count');
+                    console.log([counts]);
+                    counts.forEach(count=>{
+                        count.innerHTML=parseInt(count.innerHTML)+1;
+                    })
+                }
+            });
+            });
+            cart.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
+        }
+    })
+}
+//  
+// ham bat su kien xem thong tin san pham
+// 
+function detail(){
+    const items=document.querySelectorAll('.product-item'); 
+    items.forEach(item=>{
+        if (!item.dataset.hasClick) {
+            item.addEventListener('click', function() {
+                const id=item.getAttribute('data-id');
+                window.location.pathname = '/product/'+id;
+            });
+            item.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
+        }
+    })
+}

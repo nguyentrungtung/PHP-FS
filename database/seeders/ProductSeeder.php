@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
+use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
         $catModel = new Categories();
         $cats = $catModel::all();
         
-        $brandModel = new Brand();
+        $brandModel = new Brands();
         $brands = $brandModel::all();
 
         // Lấy tất cả các file ảnh trong thư mục public/upload
@@ -33,12 +33,12 @@ class ProductSeeder extends Seeder
         // Duyệt qua từng category
         foreach ($cats as $cat) {
             // Tạo ngẫu nhiên từ 10 đến 20 sản phẩm cho mỗi category
-            $productCount = rand(10, 20);
+            $productCount = rand(5,10 );
 
             for ($i = 0; $i < $productCount; $i++) {
                 // Tạo một sản phẩm mới
                 $product = new Product();
-                $product->product_name = 'Product_cat_'.$cat->id.'_per_' . $i;
+                $product->product_name = 'Product_cat_'.$cat->categories_name.'_'.$cat->id.'_per_' . $i;
                 $product->category_id = $cat->id;
                 $product->product_price = rand(30000, 200000);
 

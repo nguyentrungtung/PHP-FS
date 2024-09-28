@@ -477,6 +477,10 @@ a {
 a{
     text-decoration: none !important;
 }
-.cart_count{
+.cart_count,.count_second{
     margin: 0;
+}
+.count_second{
+    font-size: 12px;
+    margin: 0 5px;
 }

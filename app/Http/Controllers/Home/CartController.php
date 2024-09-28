@@ -4,43 +4,54 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
+use App\Services\CartService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+
+    private $productRepositoryInterface;
+    private $productService;
+    private $cartService;
+
     public function __construct(
+        CartService $cartService,
         ProductService             $productService,
         ProductRepositoryInterface $productRepositoryInterface,
     )
     {
+        $this->cartService = $cartService;
         $this->productService = $productService;
         $this->productRepositoryInterface = $productRepositoryInterface;
     }
-
+    // 
+    public function count(){
+        $cart= $this->cartService->getCart();
+        $count=0;
+        foreach($cart as $item){
+            $count+=$item['product_quantity'];
+        }
+        return $count;
+    }
     /**
      * Display a listing of the resource.
      */
     public function showCart()
     {
-        $cart[32] = [
-            'product_name' => 'Lốc 6 chai nước tăng lực nhân sâm Sting 330ml',
-            'product_image' => 'https://hcm.fstorage.vn/images/2023/05/ndfc_thumnail_web-10-1--20230526074339.jpg',
-            'product_price' => 99000,
-            'product_unit' => 'Gói',
-            'product_quantity' => 7,
-        ];
-        $cart[33] = [
-            'product_name' => 'Nước tăng lực nhân sâm Sting 330ml',
-            'product_image' => 'https://hcm.fstorage.vn/images/2023/05/ndfc_thumnail_web-10-1--20230526074339.jpg',
-            'product_price' => 19000,
-            'product_unit' => 'chai',
-            'product_quantity' => 7,
-        ];
-
-        session()->put('cart', $cart);
-        $carts = session()->get('cart', []);
-
+        $carts = $this->cartService->getCart();
         return view('client.pages.cart-detail', compact('carts'));
+    }
+    // 
+    // Them san pham vao trong cart
+    public function store($id){
+        return $this->cartService->addCart($id);
+    }
+    // 
+    // lay du lieu cart de show trong short cart detail
+    // 
+    public function show(){
+
+        return $this->cartService->show();
     }
 }
