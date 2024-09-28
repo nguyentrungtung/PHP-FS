@@ -10,18 +10,30 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    private $cartService;
+
+    private $productRepositoryInterface;
     private $productService;
+    private $cartService;
 
     public function __construct(
         ProductService             $productService,
         CartService                $cartService,
+        ProductRepositoryInterface $productRepositoryInterface,
     )
     {
         $this->productService = $productService;
         $this->cartService = $cartService;
+        $this->productRepositoryInterface = $productRepositoryInterface;
     }
-
+    //
+    public function count(){
+        $cart= $this->cartService->getCart();
+        $count=0;
+        foreach($cart as $item){
+            $count+=$item['product_quantity'];
+        }
+        return $count;
+    }
     /**
      * Display a listing of the resource.
      */

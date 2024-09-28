@@ -167,4 +167,9 @@
     margin-top: 50px;
 }
 
-
+.cart_add{
+    padding: 10px 0;
+}
+.product-item__discount-product{
+    color: white;
+}

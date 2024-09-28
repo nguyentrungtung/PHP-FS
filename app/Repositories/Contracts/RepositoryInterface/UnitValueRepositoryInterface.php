@@ -6,4 +6,7 @@ use App\Repositories\BaseRepositoryInterface;
 
 interface UnitValueRepositoryInterface extends BaseRepositoryInterface
 {
+    // 
+    public function getByProductID($product_id);
+    
 }

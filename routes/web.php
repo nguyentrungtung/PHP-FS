@@ -94,14 +94,13 @@ Route::group([], function () {
     Route::get('/',[ViewController::class,'index'])->name('web.home');
     Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');
 });
-// route lay danh sach san pham phia client
+// route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {
-    Route::get('/{cat}/{start}/{limit}', [clientProductController::class,'index'])->name('client.products');
-    Route::get('add/{id}', [Carttemp::class,'store'])->name('client.add.cart');
-    Route::get('cart/show', [Carttemp::class,'show'])->name('client.add.cart.show');
+    Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
 });
 
-Route::get('/cart', [Carttemp::class, 'showCart'])->name('cart.show');
+//Home
+
 // Product
 Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
 //Cart
