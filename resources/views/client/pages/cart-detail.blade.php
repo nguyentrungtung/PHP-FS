@@ -16,47 +16,54 @@
                     <h4 class="cart__header-title">Sản phẩm trong giỏ</h4>
                 </div>
                 <div class="cart__body">
-                    <div class="row g-3" id="cart-list">
-                    @foreach($carts as $cart)
-                            <div class="cart__item col-12">
-                                <div
-                                    class="cart__item-wrapper d-flex justify-content-between align-items-center border-bottom py-2 hover--box-shadow"
-                                >
-                                    <div class="cart__item-info d-flex align-items-center">
-                                        <img
-                                            src="{{$cart['product_image']}}"
-                                            class="cart__item-image"
-                                            alt="Sản phẩm 1"
-                                        />
-                                        <div class="cart__item-produt_info">
-                                            <h5 class="cart__item-name">
-                                                {{$cart['product_name']}}
-                                            </h5>
-                                            <p class="cart__item-price">
-                                                Giá : <span class="text-danger">{{$cart['product_price']}}</span>
-                                            </p>
-                                            <p class="cart__item-unit">
-                                                ĐVT : <span class="text-danger">{{$cart['product_unit']}}</span>
-                                            </p>
+                    @if(count($carts))
+                        <div class="row g-2" id="cart-list">
+                            @foreach($carts as $product_id => $cart)
+                                <div class="cart__item col-12" data-id="{{$product_id}}">
+                                    <div class="cart__item-wrapper d-flex justify-content-between align-items-center border-bottom  hover--box-shadow">
+                                        <div class="cart__item-info d-flex align-items-center">
+                                            <img
+                                                    src="{{ $cart['product_image'] }}"
+                                                    class="cart__item-image"
+                                                    alt="Sản phẩm {{ $cart['product_name'] }}"
+                                            />
+                                            <div class="cart__item-product-info">
+                                                <h5 class="cart__item-name">{{ $cart['product_name'] }}</h5>
+                                                <p class="cart__item-price">
+                                                    Giá: <span class="text-danger">{{ number_format($cart['product_price'], 0, ',', '.') }} đ</span>
+                                                </p>
+                                                <p class="cart__item-unit">
+                                                    ĐVT: <span class="text-danger">{{ $cart['product_unit'] }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="cart__item-actions d-flex flex-column align-items-end">
+                                            <input
+                                                    type="number"
+                                                    class="form-control cart__item-quantity"
+                                                    value="{{ $cart['product_quantity'] }}"
+                                                    min="1"
+                                                    style="width: 80px"
+                                                    data-url_update_cart="{{route('cart.update')}}"
+                                            />
+                                            {{--                                            <button class="btn btn-danger btn-sm mt-2 cart__item-remove" data-url="{{ route('cart.remove', $cart['id']) }}">Xóa</button>--}}
                                         </div>
                                     </div>
-                                    <div class="cart__item-actions">
-                                        <input
-                                            type="number"
-                                            class="form-control cart__item-quantity"
-                                            value="{{$cart['product_quantity']}}"
-                                            style="width: 80px"
-                                        />
-                                        <button class="btn btn-danger btn-sm mt-2 cart__item-remove">Xóa</button>
-                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                            <a href="#" class="mt-3 btn btn-outline-danger text-decoration-underline"
+                               data-url="{{ route('cart.clear') }}" id="btn_cart--clear" style="width: max-content">Xóa
+                                giỏ hàng</a>
+                        </div>
+                    @endif
+                    <div class="text-center" id="cart_empty--text" style="display:none">
+                        <p class="text-muted">Trong giỏ hàng không có sản phẩm nào.</p>
+                        <a href="{{ route('web.home') }}" class="btn btn-outline-danger text-decoration-underline">Tiếp
+                            tục mua sắm</a>
                     </div>
                 </div>
 
-                <div class="cart__footer mt-3">
-                    <a href="#" class="text-decoration-underline btn btn-danger">Xóa giỏ hàng</a>
+                <div class="cart__footer mt-3" style="opacity:0">
                 </div>
             </div>
 
@@ -68,7 +75,7 @@
                     </div>
                     <div class="cart__summary-body">
                         <p class="cart__summary-total-products">
-                            Tổng sản phẩm: <span class="text-danger float-end">2</span>
+                            Tổng sản phẩm: <span class="text-danger float-end">{{$totalCart}}</span>
                         </p>
                         <p class="cart__summary-total-price-estimated">
                             Tạm tính giỏ hàng: <span class="text-danger float-end">30.000đ</span>
@@ -90,7 +97,7 @@
                             <div class="cart__summary-actions__top">
                                 <div class="cart__discount-code">
                                     <a href="#" class="btn cart__discount-code__left"><i
-                                            class="fa-solid fa-ticket me-1"></i> Khuyến mại</a>
+                                                class="fa-solid fa-ticket me-1"></i> Khuyến mại</a>
                                     <a href="#" class="btn btn-danger cart__discount-code__btn" data-bs-toggle="modal"
                                        data-bs-target="#exampleModal">Chọn mã Voucher</a>
 
@@ -102,20 +109,20 @@
                                                 <div class="modal-header"
                                                      style="background-color: rgb(235, 31, 58) !important; padding: 8px 7px !important;">
                                                     <button
-                                                        style="width: 20px; margin-right: 10px; color: rgb(255, 255, 255)!important"
-                                                        type="button"
-                                                        class="btn-close"
-                                                        data-bs-dismiss="modal"
-                                                        aria-label="Close"
+                                                            style="width: 20px; margin-right: 10px; color: rgb(255, 255, 255)!important"
+                                                            type="button"
+                                                            class="btn-close"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"
                                                     ></button>
                                                     <div class="form-search_coupon">
                                                         <input
-                                                            type="email"
-                                                            class="form-control"
-                                                            id="exampleInputEmail1"
-                                                            aria-describedby="emailHelp"
-                                                            placeholder="Nhập mã khuyến mại"
-                                                            style="padding:6px 6px 6px 10px;
+                                                                type="email"
+                                                                class="form-control"
+                                                                id="exampleInputEmail1"
+                                                                aria-describedby="emailHelp"
+                                                                placeholder="Nhập mã khuyến mại"
+                                                                style="padding:6px 6px 6px 10px;
                                                                     border:none;
                                                                     "
                                                         />
@@ -130,8 +137,8 @@
                                                     <div class="coupon-list__item coupon-item__after-active">
                                                         <div class="coupon-list__logo">
                                                             <img
-                                                                src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
-                                                                alt="logo coupon">
+                                                                    src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
+                                                                    alt="logo coupon">
                                                         </div>
                                                         <div class="coupon-list__content ">
                                                             <h5 class="coupon-list__title">Giảm giá 20%</h5>
@@ -145,7 +152,7 @@
                                                         </div>
                                                         <div class="coupon-list__actions">
                                                             <button
-                                                                class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
+                                                                    class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
                                                                 Áp dụng
                                                             </button>
                                                             <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
@@ -191,9 +198,9 @@
                             </div>
                             <div class="product-item__img-wrap">
                                 <img
-                                    src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
-                                    class="product-item__img card-img-top"
-                                    alt="..."
+                                        src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
+                                        class="product-item__img card-img-top"
+                                        alt="..."
                                 />
                                 <div class="d-none product-item__frame"></div>
                             </div>
@@ -212,7 +219,7 @@
                                 <div class="product-item__info-price d-flex">
                                     <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000đ</p>
                                     <span
-                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
+                                            class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
                                 </div>
                             </div>
                             <!-- Product action -->
@@ -236,3 +243,6 @@
     <script src="{{ url('client') }}/js/product.js"></script>
     <script src="{{ url('client') }}/js/cart.js"></script>
 @endsection
+
+@push('custom-script')
+@endpush

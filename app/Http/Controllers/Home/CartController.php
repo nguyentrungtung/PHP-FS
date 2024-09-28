@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private $cartService;
+    private $productService;
+
     public function __construct(
         ProductService             $productService,
         CartService                $cartService,
-        ProductRepositoryInterface $productRepositoryInterface,
     )
     {
         $this->productService = $productService;
         $this->cartService = $cartService;
-        $this->productRepositoryInterface = $productRepositoryInterface;
     }
 
     /**
@@ -34,5 +35,14 @@ class CartController extends Controller
     public function addToCart(Request $request, $id)
     {
         return $this->cartService->addToCart($request, $id);
+    }
+
+    public function updateCart(Request $request)
+    {
+        return $this->cartService->updateCart($request);
+    }
+
+    public function clearCart(){
+        return $this->cartService->clearCart();
     }
 }
