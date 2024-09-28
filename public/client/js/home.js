@@ -9,10 +9,10 @@ document.addEventListener("DOMContentLoaded",()=>{
         observer.observe(target); // Theo dõi từng phần tử
     });
     LoadMore();
-    
-    // 
+    addCart();
+    //
 })
-// dem nguoc thoi gian 
+// dem nguoc thoi gian
 function countdown(){
     const sec=document.getElementById("countdown_sec");
     const hour=document.getElementById("countdown_hours");
@@ -33,18 +33,18 @@ function countdown(){
                     hourValue-=1;
                     if(hourValue<0){
                         secValue=-1;
-                        return; 
+                        return;
                     }
                     hour.innerHTML=hourValue;
                     minValue=59;
-                    
+
                 }
                 min.innerHTML=minValue;
                 secValue=60;
             }
             sec.innerHTML=secValue;
         }
-        
+
     },1000);
 }
 // hover brand
@@ -59,7 +59,7 @@ function hoverPartner(){
         })
     });
 }
-// banner slide 
+// banner slide
 function bannerSlider(){
     const slides = document.querySelectorAll('.banners_slide_img');
     const dots = document.querySelectorAll('.switch_dot');
@@ -84,7 +84,7 @@ function bannerSlider(){
       slides.forEach((slide) => {
         slide.style.transform = `translateX(${(-currentSlide) * 100}%)`;
       });
-      
+
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentSlide);
       });
@@ -118,9 +118,8 @@ function bannerSlider(){
     // Khởi tạo vị trí ban đầu
     updateSlidePosition();
     autoSlide();
-    
 }
-// slide banners list
+
 function partnerSlide(){
     const slide=document.getElementById('list_partner');
     const left=document.getElementById('partner_left');
@@ -153,7 +152,7 @@ function partnerSlide(){
         }
     });
 }
-// lay du lieu cua san pham qua ajax va render ra man hinh 
+// lay du lieu cua san pham qua ajax va render ra man hinh
 function fetchData(element) {
     // Giả sử đây là phần logic để lấy dữ liệu sản phẩm từ server
     const id=element.getAttribute('data-id');
@@ -179,13 +178,15 @@ function fetchData(element) {
             const html=newArr.join('');
             list_products.innerHTML=html;
             count.innerHTML=remain;
-            
+            addCart();
         },
         error: function(xhr) {
+            // Xử lý lỗi nếu có
+            alert('False to loading data.');
         }
     });
 }
-// 
+//
 // loading san pham
 // tao html de render
 function getProduct(product){
@@ -229,7 +230,7 @@ function LoadMore(){
     const listLoad=document.querySelectorAll('.list_load_more');
     listLoad.forEach(load=>{
         const id=load.getAttribute('data-id');
-        
+
         load.addEventListener('click',()=>{
             const parent = load.parentElement;
             // console.log(parent);
@@ -255,6 +256,7 @@ function LoadMore(){
                     }else{
                         count.innerHTML=remain;
                     }
+                    addCart();
                 },
                 error: function(xhr) {
                     // Xử lý lỗi nếu có

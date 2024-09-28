@@ -105,5 +105,10 @@ Route::prefix('client/products')->group(function () {
 // Route cho trang chi tiết sản phẩm
 Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
 Route::get('/cart', [Carttemp::class, 'showCart'])->name('cart.show');
+// Product
 Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
-Route::get('/cart', [HomeCartController::class, 'showCart'])->name('cart.show');
+
+//Cart
+Route::get('/view-cart', [HomeCartController::class, 'showCart'])->name('cart.show');
+Route::post('/add-to-cart/{id}', [HomeCartController::class, 'addToCart'])->name('cart.store');
+

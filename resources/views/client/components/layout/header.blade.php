@@ -22,21 +22,69 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                     <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
                     <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                </svg>  
+                </svg>
                 <p class="text-center font-weight-bold header_top_right_shipping_space" >Giao Hàng</p>
             </div>
-            <div id="cart" class="d-flex align-items-center header_top_right_cart">
+{{--            <div id="cart" class="d-flex align-items-center header_top_right_cart cart_icon-header">--}}
+{{--                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">--}}
+{{--                    <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>--}}
+{{--                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>--}}
+{{--                </svg>--}}
+{{--                <p class="header_top_right_cart_count" >Giỏ hàng (<p id="cart_count" class="cart_count">{{$totalCart}}</p>)</p>--}}
+{{--                <div id="cart_list" class="cart_list">--}}
+{{--                    @foreach($cart as $cart_icon)--}}
+{{--                    <div class="d-flex flex-column cart_list_items" id = "cart-icon">--}}
+{{--                        <div class="d-flex list_items_item">--}}
+{{--                            <img src="{{ asset($cart_icon['product_image']) }}" alt="" class="item_img">--}}
+{{--                            <div class="d-flex flex-wrap flex-column item_content">--}}
+{{--                                <p class="item_content_text">{{ $cart_icon['product_name'] }}</p>--}}
+{{--                                <div class="d-flex justify-content-between content_dv">--}}
+{{--                                    <p class="item_content_text">DVT:</p>--}}
+{{--                                    <p class="item_content_text">{{ $cart_icon['product_unit'] }}</p>--}}
+{{--                                </div>--}}
+{{--                                <div class="d-flex justify-content-between item_content_price">--}}
+{{--                                    <p class="item_content_text">x {{ $cart_icon['product_quantity'] }}</p>--}}
+{{--                                    <p class="item_price">{{ $cart_icon['product_price'] }}</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
+{{--                    <div class="d-flex align-items-center justify-content-between cart_list_total">--}}
+{{--                        <p class="total_text">Có tổng số: {{$totalCart}} sản phẩm</p>--}}
+{{--                        <button class="btn total_detail">Xem chi tiết</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
+            <div id="cart" class="d-flex align-items-center header_top_right_cart cart_icon-header">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
                     <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
                     <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                 </svg>
-                <p class="header_top_right_cart_count" >Giỏ hàng (<p id="cart_count" class=" cart_count">{{$cart}}</p>)</p>
-                <div id="cart_list" class="cart_list hidden">
+                <p class="header_top_right_cart_count" >Giỏ hàng (<p id="cart_count" class=" cart_count">{{$totalCart}}</p>)</p>
+                <div id="cart_list" class="cart_list">
                     <div class=" d-flex flex-column cart_list_items">
+                        @foreach($carts as $cart)
+                            <div class="d-flex list_items_item">
+                                <img src="{{ asset($cart['product_image']) }}" alt="" class="item_img">
+                                <div class="d-flex flex-wrap flex-column item_content">
+                                    <p class="item_content_text">{{ $cart['product_name'] }}</p>
+                                    <div class="d-flex justify-content-between content_dv">
+                                        <p class="item_content_text">DVT:</p>
+                                        <p class="item_content_text">{{ $cart['product_unit'] }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between item_content_price">
+                                        <p class="item_content_text">x {{ $cart['product_quantity'] }}</p>
+                                        <p class="item_price">{{ $cart['product_price'] }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="d-flex align-items-center justify-content-between cart_list_total">
-                        <p class="total_text">Có tổng số: {{$cart}} sản phẩm</p>
-                        <button class="btn total_detail">Xem chi tiết</button>
+                        <p class="total_text">Có tổng số: {{$totalCart}} sản phẩm</p>
+                        <a href="{{route('cart.show')}}" class="btn total_detail">Xem chi tiết</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +113,7 @@
                                 </svg>
                                 Quản lý đơn hàng
                             </a>
-                            
+
                         </div>
                         <div class="user_menu_tab">
                             <a class="tab_link" href="">
@@ -113,7 +161,7 @@
                 </ul>
                 <div id="sub_list" class="menu_sub_list hidden">
                     <ul id="child_cat" type="none" class="menu_list_ul">
-                        
+
                     </ul>
                     <img src="{{asset('client/img/layout/fix_banner-1.jpg')}}" alt="" class="sub_list_img">
                 </div>
@@ -128,7 +176,7 @@
                     Sản phẩm đã mua
                 </a>
             @endif
-            
+
             <div  class="d-flex align-items-center header_buttom_help_new">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>

@@ -52,8 +52,8 @@ class AppServiceProvider extends ServiceProvider
             ['admin.products.create', 'admin.products.edit'], // Các view cần chia sẻ dữ liệu
             ProductComposer::class
         );
-        // 
-        View::composer(['*', '!admin/*'], 
+        //
+        View::composer(['*', '!admin/*'],
         ViewComposer::class);
     }
 }
