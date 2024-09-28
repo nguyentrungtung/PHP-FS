@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
-use App\Http\Controllers\Home\Carttemp;
 use App\Http\Controllers\Home\CategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
@@ -96,8 +95,6 @@ Route::group([], function () {
 // route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {
     Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
-    Route::get('add/{id}', [Carttemp::class,'store'])->name('client.add.cart');
-    Route::get('cart/show', [Carttemp::class,'show'])->name('client.add.cart.show');
 });
 // nhom route tuong tac voi cart
 Route::prefix('client/cart')->group(function () {

@@ -159,13 +159,14 @@ function fetchData(element) {
     const name=element.getAttribute('data-name');
     const content=element.querySelector('.list_content');
     const list_products=element.querySelector('.list_products');
-    console.log(name);
+    
     $.ajax({
         url: 'client/products/' + id + '/' + 0 + '/' + 10,
         type: 'GET',
         success: function(response) {
             list_products.innerHTML=changeData(id,response);
             addCart();
+            detail();
             if(countCats[id]['remain']>0){
                 content.innerHTML+=`<div data-id="${id}" class="list_load_more">
                     <p class="more_text">Xem Thêm <p class="more_text count">${countCats[id]['remain']}</p> sản phẩm </p>
@@ -210,8 +211,7 @@ function LoadMore(load,id,element){
             type: 'GET',
             success: function(response) {
                 const html=changeData(id,response);
-                console.log(list_products);
-                list_products.innerHTML+=html;
+                 list_products.innerHTML+=html;
                 addCart();
                 detail();
                 if(countCats[id]['remain']<=0){
@@ -280,15 +280,14 @@ function addCart(){
     const carts=document.querySelectorAll('.cart_add');
     carts.forEach(cart=>{
         if (!cart.dataset.hasClick) {
-            cart.addEventListener('click', function() {
+            cart.addEventListener('click', function(e) {
+                e.stopPropagation(); 
                 const id=cart.getAttribute('data-id');
-            console.log(id);
             $.ajax({
                 url: 'client/cart/add/' + id,
                 type: 'GET',
                 success: function(response) {
                     const counts=document.querySelectorAll('.cart_count');
-                    console.log([counts]);
                     counts.forEach(count=>{
                         count.innerHTML=parseInt(count.innerHTML)+1;
                     })
