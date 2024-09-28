@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
+use App\Http\Controllers\Home\Carttemp;
 use App\Http\Controllers\Home\CategoriesController;
+use App\Http\Controllers\Home\clientProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
@@ -96,20 +98,15 @@ Route::group([], function () {
 Route::prefix('client/products')->group(function () {
     Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
 });
-// nhom route tuong tac voi cart
-Route::prefix('client/cart')->group(function () {
-    Route::get('add/{id}', [HomeCartController::class,'store'])->name('client.add.cart');
-    Route::get('show', [HomeCartController::class,'show'])->name('client.cart.show');
-});
+
 //Home
-// Route cho trang chi tiết sản phẩm
-Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
-// Route::get('/cart', [Carttemp::class, 'showCart'])->name('cart.show');
-Route::get('/cart', [HomeCartController::class, 'showCart'])->name('cart.show');
+
 // Product
 Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
-
 //Cart
 Route::get('/view-cart', [HomeCartController::class, 'showCart'])->name('cart.show');
 Route::post('/add-to-cart/{id}', [HomeCartController::class, 'addToCart'])->name('cart.store');
+Route::get('/cart/update', [HomeCartController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/clear', [HomeCartController::class, 'clearCart'])->name('cart.clear');
+
 

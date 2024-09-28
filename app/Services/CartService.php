@@ -8,15 +8,16 @@ use App\Repositories\Contracts\RepositoryInterface\UnitRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
 use Illuminate\Http\Request;
 
-class CartService{
+class CartService
+{
     private $productRepositoryInterface;
     private $unitValueRepositoyInterface;
     private $productImageRopositoryInterface;
     private $uniRepositoryInterface;
     public function __construct(
         UnitRepositoryInterface $uniRepositoryInterface,
-        ProductRepositoryInterface $productRepositoryInterface, 
-        UnitValueRepositoryInterface $unitValueRepositoyInterface, 
+        ProductRepositoryInterface $productRepositoryInterface,
+        UnitValueRepositoryInterface $unitValueRepositoyInterface,
         ProductImageRepositoryInterface $productImageRopositoryInterface){
             $this->uniRepositoryInterface=$uniRepositoryInterface;
             $this->productRepositoryInterface = $productRepositoryInterface;
@@ -24,6 +25,7 @@ class CartService{
             $this->unitValueRepositoyInterface = $unitValueRepositoyInterface;
     }
 
+    //Thêm mới sản phẩm vào giỏ hàng
     public function addToCart($request, $id)
     {
         // Lấy hình ảnh sản phẩm, nếu có
@@ -35,7 +37,7 @@ class CartService{
             ], 404);
         }
 
-        $cart = session()->get('cart', []);
+        $cart = session()->get('carts', []);
         $productImage = $product->productImage->first()->image_url;
 
         // Cập nhật hoặc thêm mới sản phẩm vào giỏ hàng
@@ -53,23 +55,65 @@ class CartService{
             'product_price' => $request->price,
             'product_unit' => $request->unitName,
             'product_quantity' => $productQuantity,
+            'product_total' => $request->price * $productQuantity,
         ];
 
         // Cập nhật giỏ hàng vào session
-        session()->put('cart', $cart);
+        session()->put('carts', $cart);
 
         return response()->json([
             'status' => true,
             'message' => 'Sản phẩm đã được thêm vào giỏ hàng thành công',
             'data' => [
-                'cart' => $cart,
-                'cartListIcon' => view('client.components.cart-icon', ['cart' => $cart])->render(),
-                'cartList' => view('client.components.cart-list', ['cart' => $cart])->render(),
+                'carts' => $cart,
+                'cartListIcon' => view('client.components.cart-icon', ['carts' => $cart])->render(),
+                'cartList' => view('client.components.cart-list', ['carts' => $cart])->render(),
                 'count_number' => count($cart),
             ]
         ], 200);
     }
-    // 
+
+    //Cập nhật giỏ hàng
+    public function updateCart($request)
+    {
+        // Lấy thông tin sản phẩm từ request
+        $productId = $request->id;
+        $quantity = $request->quantity;
+
+        // Cập nhật số lượng sản phẩm trong giỏ hàng
+        $cart = session()->get('carts', []);
+
+        if (isset($cart[$productId])) {
+            $cart[$productId]['product_quantity'] = $quantity;
+            session()->put('carts', $cart);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Số lượng đã được cập nhật!',
+            'data' => [
+                'carts' => $cart,
+                'cartListIcon' => view('client.components.cart-icon', ['carts' => $cart])->render(),
+                'cartList' => view('client.components.cart-list', ['carts' => $cart])->render(),
+                'count_number' => count($cart),
+            ]
+        ], 200);
+    }
+
+
+    //Xóa giỏ hàng
+    public function clearCart()
+    {
+        // Xóa toàn bộ giỏ hàng
+        session()->forget('carts');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Giỏ hàng đã được xóa thành công'
+        ], 200);
+    }
+
+    //
     public function addCart($id){
         $cart=$this->getCart();
         // kiem tra san pham da co trong cart hay chua neu co se tang quantity len
@@ -86,7 +130,7 @@ class CartService{
         $img= $this->productImageRopositoryInterface->getMainImg($id);
         $unitValue= $this->unitValueRepositoyInterface->getByProductID($id);
         $unit=$this->uniRepositoryInterface->find($unitValue->unit_id);
-        // 
+        //
         $data=[
             'product_name'=> $product->product_name,
             'product_price'=> $product->product_price,

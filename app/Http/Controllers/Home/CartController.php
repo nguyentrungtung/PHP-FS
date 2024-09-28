@@ -21,12 +21,11 @@ class CartController extends Controller
         ProductRepositoryInterface $productRepositoryInterface,
     )
     {
-        $this->cartService = $cartService;
         $this->productService = $productService;
         $this->cartService = $cartService;
         $this->productRepositoryInterface = $productRepositoryInterface;
     }
-    // 
+    //
     public function count(){
         $cart= $this->cartService->getCart();
         $count=0;
@@ -40,19 +39,22 @@ class CartController extends Controller
      */
     public function showCart()
     {
-        $carts = $this->cartService->getCart();
-        return view('client.pages.cart-detail', compact('carts'));
-    }
-    // 
-    // Them san pham vao trong cart
-    public function store($id){
-        return $this->cartService->addCart($id);
-    }
-    // 
-    // lay du lieu cart de show trong short cart detail
-    // 
-    public function show(){
+//        $carts = session()->get('cart', []);
 
-        return $this->cartService->show();
+        return view('client.pages.cart-detail');
+    }
+
+    public function addToCart(Request $request, $id)
+    {
+        return $this->cartService->addToCart($request, $id);
+    }
+
+    public function updateCart(Request $request)
+    {
+        return $this->cartService->updateCart($request);
+    }
+
+    public function clearCart(){
+        return $this->cartService->clearCart();
     }
 }
