@@ -57,7 +57,6 @@ class CartController extends Controller
         }
         // Lưu lại giỏ hàng đã cập nhật vào session
         Session::put('user_carts', $userCarts);
-
     }
 
     /**

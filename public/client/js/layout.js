@@ -13,80 +13,24 @@ document.addEventListener("DOMContentLoaded",()=>{
     const host=document.getElementById("hostline");
     host.addEventListener("mouseenter",showHostline);
     host.addEventListener("mouseleave",hiddenHostline);
-    // 
+    //
     const formSearch=document.getElementById("form_search");
     const search=document.getElementById("search_input");
     formSearch.addEventListener('click',()=>{
         search.focus();
     })
-    
+
     search.addEventListener("focus",showEx);
     search.addEventListener("blur",hiddenEx);
-    // 
-    const cart=document.getElementById("cart");
-    cart.addEventListener("mouseenter",showCart);
-    cart.addEventListener("mouseleave",hiddenCart);
+    //
+    // const cart=document.getElementById("cart");
+    // cart.addEventListener("mouseenter",showCart);
+    // cart.addEventListener("mouseleave",hiddenCart);
     userMenu();
     selectShipping();
     const items=document.querySelectorAll(".sub");
     hoverParentCat(items);
 });
-
-function showCart(){
-    const cart=document.getElementById("cart_list");
-    if(cart.classList.contains("hidden")){
-        $.ajax({
-            url: 'client/products/cart/show',
-            type: 'GET',
-            success: function(response) {
-                console.log(response);
-                const products=response.products;
-                let newArr=[];
-                products.forEach(product => {
-                    newArr.push(getshortProduct(product));
-                });
-                const list=document.querySelector('.cart_list_items');
-                list.innerHTML=newArr.join('');
-            },
-            error: function(xhr) {
-                // Xử lý lỗi nếu có
-                alert('False to loading data.');
-            }
-        });
-        cart.classList.remove("hidden");
-    }
-}
-
-function getshortProduct(product){
-    console.log(product);
-    let price = product.price*product.count;
-    
-    price= new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(price);
-    return `<div class="d-flex list_items_item">
-        <img src="${product.img_url}" alt="" class="item_img">
-        <div class="d-flex flex-wrap flex-column item_content">
-            <p class="item_content_text">${product.name}</p>
-            <div class="d-flex justify-content-between content_dv">
-                <p class="item_content_text">DVT:</p>
-                <p class="item_content_text">Chai</p>
-            </div>
-            <div class="d-flex justify-content-between item_content_price">
-                <p class="item_content_text">x ${product.count}</p>
-                <p class="item_price">${price}</p>
-            </div>
-        </div>
-    </div>`;
-}
-
-function hiddenCart(){
-    const cart=document.getElementById("cart_list");
-    if(!cart.classList.contains("hidden")){
-        cart.classList.add("hidden");
-    }
-}
 
 function showEx(){
     const ex=document.getElementById("search_ex");
@@ -128,7 +72,7 @@ function showSubMenu(){
         menu.classList.remove("hidden");
     }
 }
-// 
+//
 function hiddenMenu(){
     const menu=document.getElementById("menu_list");
     const sub_menu=document.getElementById("sub_list");
@@ -138,7 +82,7 @@ function hiddenMenu(){
     if(!sub_menu.classList.contains("hidden")){
         sub_menu.classList.add("hidden");
     }
-    
+
 }
 function hoverParentCat(list){
     const menu=document.getElementById("sub_list");
@@ -160,12 +104,8 @@ function hoverParentCat(list){
             ul.innerHTML=html;
         })
     });
-    list.addEventListener('mouseenter',()=>{
-        
-
-    })
 }
-// 
+
 function userMenu(){
     const user=document.getElementById('user_zone');
     const menu=document.getElementById('user_menu');
@@ -176,7 +116,7 @@ function userMenu(){
         menu.classList.add('hidden');
     })
 }
-// 
+//
 function selectShipping() {
     const close=document.getElementById('close_shipping');
     const shipping=document.getElementById('shipping_select');
@@ -188,3 +128,34 @@ function selectShipping() {
         shipping.classList.add('hidden');
     });
 }
+
+// Hiển thị cart list
+document.addEventListener('DOMContentLoaded', function () {
+    const cartIconHeader = document.querySelector('.cart_icon-header');
+    const cartList = document.getElementById('cart_list');
+
+    // Khi hover vào `cart_icon-header` thì hiện `cart_list`
+    cartIconHeader.addEventListener('mouseenter', function () {
+        cartList.style.display = 'block';
+    });
+
+    // Khi rời chuột khỏi `cart_icon-header`
+    cartIconHeader.addEventListener('mouseleave', function () {
+        // Nếu không hover vào `cart_list` thì ẩn `cart_list`
+        if (!cartList.matches(':hover')) {
+            cartList.style.display = 'none';
+        }
+    });
+
+    // Khi rời chuột khỏi `cart_list` thì ẩn `cart_list`
+    cartList.addEventListener('mouseleave', function () {
+        cartList.style.display = 'none';
+    });
+});
+
+
+
+
+
+
+

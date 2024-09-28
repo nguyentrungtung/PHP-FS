@@ -30,8 +30,6 @@ class ProductComposer
         $brands = $this->brandRepositoryInterface->all();
         $units = $this->unitRepositoryInterface->all();
 
-        $view->with('categories', $categories)
-             ->with('brands', $brands)
-             ->with('units', $units);
+        $view->with(compact('categories', 'brands', 'units'));
     }
 }

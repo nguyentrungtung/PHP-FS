@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded",()=>{
     });
     LoadMore();
     addCart();
-    // 
+    //
 })
-// 
+//
 function countdown(){
     const sec=document.getElementById("countdown_sec");
     const hour=document.getElementById("countdown_hours");
@@ -33,21 +33,21 @@ function countdown(){
                     hourValue-=1;
                     if(hourValue<0){
                         secValue=-1;
-                        return; 
+                        return;
                     }
                     hour.innerHTML=hourValue;
                     minValue=59;
-                    
+
                 }
                 min.innerHTML=minValue;
                 secValue=60;
             }
             sec.innerHTML=secValue;
         }
-        
+
     },1000);
 }
-// 
+//
 function hoverPartner(){
     const listFartner=document.querySelectorAll(".partner_logo");
     listFartner.forEach(partner => {
@@ -59,7 +59,7 @@ function hoverPartner(){
         })
     });
 }
-// 
+//
 function bannerSlider(){
     const slides = document.querySelectorAll('.banners_slide_img');
     const dots = document.querySelectorAll('.switch_dot');
@@ -84,7 +84,7 @@ function bannerSlider(){
       slides.forEach((slide) => {
         slide.style.transform = `translateX(${(-currentSlide) * 100}%)`;
       });
-      
+
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentSlide);
       });
@@ -152,7 +152,7 @@ function partnerSlide(){
         }
     });
 }
-// 
+//
 function fetchData(element) {
     // Giả sử đây là phần logic để lấy dữ liệu sản phẩm từ server
     const id=element.getAttribute('data-id');
@@ -186,7 +186,7 @@ function fetchData(element) {
         }
     });
 }
-// 
+//
 function getProduct(product){
     const price = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
@@ -224,12 +224,12 @@ function getProduct(product){
         </div>
     `;
 }
-// 
+//
 function LoadMore(){
     const listLoad=document.querySelectorAll('.list_load_more');
     listLoad.forEach(load=>{
         const id=load.getAttribute('data-id');
-        
+
         load.addEventListener('click',()=>{
             const parent = load.parentElement;
             // console.log(parent);
@@ -276,26 +276,5 @@ const observer = new IntersectionObserver((entries, observer) => {
         }
     });
 }, { threshold: 0.3 }); // Chạy khi 10% element đã vào khung nhìn
-// 
-function addCart(){
-    const btns=document.querySelectorAll('.content_add');
-    console.log(btns);
-    btns.forEach(btn=>{
-        const id=btn.getAttribute('data-id');
-        btn.addEventListener('click',()=>{
-            $.ajax({
-                url: 'client/products/add/' + id,
-                type: 'GET',
-                success: function(response) {
-                    const cart=document.getElementById('cart_count');
-                    const count = parseInt(cart.innerHTML)+1;
-                    cart.innerHTML= count;
-                },
-                error: function(xhr) {
-                    // Xử lý lỗi nếu có
-                    alert('False to loading data.');
-                }
-            });
-        })
-    })
-}
+
+

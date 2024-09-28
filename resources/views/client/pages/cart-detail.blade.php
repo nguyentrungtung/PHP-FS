@@ -9,7 +9,6 @@
 @section('content')
     <div class="cart">
         <!-- <h2 class="cart__title mb-4">Giỏ Hàng Của Bạn</h2> -->
-
         <div class="cart__content row">
             <!-- Danh sách sản phẩm trong giỏ -->
             <div class="cart__products col-md-8">
@@ -17,9 +16,8 @@
                     <h4 class="cart__header-title">Sản phẩm trong giỏ</h4>
                 </div>
                 <div class="cart__body">
-                    <div class="row g-3">
-                        @foreach($carts as $cart)
-                            <!-- Sản phẩm 1 -->
+                    <div class="row g-3" id="cart-list">
+                    @foreach($carts as $cart)
                             <div class="cart__item col-12">
                                 <div
                                     class="cart__item-wrapper d-flex justify-content-between align-items-center border-bottom py-2 hover--box-shadow"
@@ -32,7 +30,7 @@
                                         />
                                         <div class="cart__item-produt_info">
                                             <h5 class="cart__item-name">
-                                               {{$cart['product_name']}}
+                                                {{$cart['product_name']}}
                                             </h5>
                                             <p class="cart__item-price">
                                                 Giá : <span class="text-danger">{{$cart['product_price']}}</span>
@@ -46,7 +44,7 @@
                                         <input
                                             type="number"
                                             class="form-control cart__item-quantity"
-                                            value="1"
+                                            value="{{$cart['product_quantity']}}"
                                             style="width: 80px"
                                         />
                                         <button class="btn btn-danger btn-sm mt-2 cart__item-remove">Xóa</button>
@@ -153,81 +151,6 @@
                                                             <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
                                                         </div>
                                                     </div>
-
-                                                    <!-- Coupon item 2 -->
-                                                    <div class="coupon-list__item coupon-item__after-active">
-                                                        <div class="coupon-list__logo">
-                                                            <img
-                                                                src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
-                                                                alt="logo coupon">
-                                                        </div>
-                                                        <div class="coupon-list__content ">
-                                                            <h5 class="coupon-list__title">Giảm giá 20%</h5>
-                                                            <p class="coupon-list__description">Áp dụng cho đơn hàng từ
-                                                                500.000đ</p>
-                                                            <p class="coupon-list__expiration-date"
-                                                               style="background-color: rgb(253, 151, 1);padding: 3px; width: 150px;border-radius: 4px;">
-                                                                HSD : <span>30.09.2024</span></p>
-                                                            <a class="coupon-list__promotional-terms" href="#">Điều kiện
-                                                                khuyến mại</a>
-                                                        </div>
-                                                        <div class="coupon-list__actions">
-                                                            <button
-                                                                class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
-                                                                Áp dụng
-                                                            </button>
-                                                            <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
-                                                        </div>
-                                                    </div>
-                                                    <div class="coupon-list__item coupon-item__after-active">
-                                                        <div class="coupon-list__logo">
-                                                            <img
-                                                                src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
-                                                                alt="logo coupon">
-                                                        </div>
-                                                        <div class="coupon-list__content ">
-                                                            <h5 class="coupon-list__title">Giảm giá 20%</h5>
-                                                            <p class="coupon-list__description">Áp dụng cho đơn hàng từ
-                                                                500.000đ</p>
-                                                            <p class="coupon-list__expiration-date"
-                                                               style="background-color: rgb(253, 151, 1);padding: 3px; width: 150px;border-radius: 4px;">
-                                                                HSD : <span>30.09.2024</span></p>
-                                                            <a class="coupon-list__promotional-terms" href="#">Điều kiện
-                                                                khuyến mại</a>
-                                                        </div>
-                                                        <div class="coupon-list__actions">
-                                                            <button
-                                                                class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
-                                                                Áp dụng
-                                                            </button>
-                                                            <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="coupon-list__item coupon-item__after-active">
-                                                        <div class="coupon-list__logo">
-                                                            <img
-                                                                src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
-                                                                alt="logo coupon">
-                                                        </div>
-                                                        <div class="coupon-list__content ">
-                                                            <h5 class="coupon-list__title">Giảm giá 20%</h5>
-                                                            <p class="coupon-list__description">Áp dụng cho đơn hàng từ
-                                                                500.000đ</p>
-                                                            <p class="coupon-list__expiration-date"
-                                                               style="background-color: rgb(253, 151, 1);padding: 3px; width: 150px;border-radius: 4px;">
-                                                                HSD : <span>30.09.2024</span></p>
-                                                            <a class="coupon-list__promotional-terms" href="#">Điều kiện
-                                                                khuyến mại</a>
-                                                        </div>
-                                                        <div class="coupon-list__actions">
-                                                            <button
-                                                                class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
-                                                                Áp dụng
-                                                            </button>
-                                                            <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <div class="modal-footer d-none">
                                                     <button type="button" class="btn btn-secondary"
@@ -248,6 +171,8 @@
                         </div>
                     </div>
                 </div>
+
+                {{--Ưu đãi sản phẩm--}}
                 <div class="row g-2 product-special-offer mt-5">
                     <div class="product-special-offer__title">
                         <hr/>
@@ -292,141 +217,10 @@
                             </div>
                             <!-- Product action -->
                             <div class="product-item__action">
-                                <a href="#" class="d-block btn-cart--add" data-url="">
+                                <a href="#" class="d-block btn__add-cart btn_add-cart" data-url="">
                                     <i class="fa-solid fa-cart-shopping"></i>
                                 </a>
-                                <a href="#" class="d-block btn-cart--add">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 product__item">
-                        <div class="card product-item">
-                            <div class="product-item__discount-wrap">
-                                <p class="product-item__discount-product">-30%</p>
-                                <img src="" alt="" class="product-item__discount-ship d-none">
-                            </div>
-                            <div class="product-item__img-wrap">
-                                <img
-                                    src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
-                                    class="product-item__img card-img-top"
-                                    alt="..."
-                                />
-                                <div class="d-none product-item__frame"></div>
-                            </div>
-                            <div class="card-body text-muted product-item__info">
-                                <p class="card-title product-item__name">CHERISH Thạch vị thơm gói 405G Mô tả ngắn về
-                                    sản phẩm này. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                                    pretium lectus nec urna consequat, a feugiat lectus aliquet.</p>
-                                <p class="card-text mb-1">ĐVT: Gói</p>
-                                <div class="product-item__promotion-info d-none">
-                                    <img class="product-item__promotion-info-image"
-                                         src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png"
-                                         alt="">
-                                    <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau
-                                        sàn MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
-                                </div>
-                                <div class="product-item__info-price d-flex">
-                                    <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000đ</p>
-                                    <span
-                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
-                                </div>
-                            </div>
-                            <!-- Product action -->
-                            <div class="product-item__action">
-                                <a href="#" class="d-block btn-cart--add" data-url="">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </a>
-                                <a href="#" class="d-block btn-cart--add">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 product__item">
-                        <div class="card product-item">
-                            <div class="product-item__discount-wrap">
-                                <p class="product-item__discount-product">-30%</p>
-                                <img src="" alt="" class="product-item__discount-ship d-none">
-                            </div>
-                            <div class="product-item__img-wrap">
-                                <img
-                                    src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
-                                    class="product-item__img card-img-top"
-                                    alt="..."
-                                />
-                                <div class="d-none product-item__frame"></div>
-                            </div>
-                            <div class="card-body text-muted product-item__info">
-                                <p class="card-title product-item__name">CHERISH Thạch vị thơm gói 405G Mô tả ngắn về
-                                    sản phẩm này. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                                    pretium lectus nec urna consequat, a feugiat lectus aliquet.</p>
-                                <p class="card-text mb-1">ĐVT: Gói</p>
-                                <div class="product-item__promotion-info d-none">
-                                    <img class="product-item__promotion-info-image"
-                                         src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png"
-                                         alt="">
-                                    <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau
-                                        sàn MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
-                                </div>
-                                <div class="product-item__info-price d-flex">
-                                    <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000đ</p>
-                                    <span
-                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
-                                </div>
-                            </div>
-                            <!-- Product action -->
-                            <div class="product-item__action">
-                                <a href="#" class="d-block btn-cart--add" data-url="">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </a>
-                                <a href="#" class="d-block btn-cart--add">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 product__item">
-                        <div class="card product-item">
-                            <div class="product-item__discount-wrap">
-                                <p class="product-item__discount-product">-30%</p>
-                                <img src="" alt="" class="product-item__discount-ship d-none">
-                            </div>
-                            <div class="product-item__img-wrap">
-                                <img
-                                    src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
-                                    class="product-item__img card-img-top"
-                                    alt="..."
-                                />
-                                <div class="d-none product-item__frame"></div>
-                            </div>
-                            <div class="card-body text-muted product-item__info">
-                                <p class="card-title product-item__name">CHERISH Thạch vị thơm gói 405G Mô tả ngắn về
-                                    sản phẩm này. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                                    pretium lectus nec urna consequat, a feugiat lectus aliquet.</p>
-                                <p class="card-text mb-1">ĐVT: Gói</p>
-                                <div class="product-item__promotion-info d-none">
-                                    <img class="product-item__promotion-info-image"
-                                         src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png"
-                                         alt="">
-                                    <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau
-                                        sàn MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
-                                </div>
-                                <div class="product-item__info-price d-flex">
-                                    <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000đ</p>
-                                    <span
-                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
-                                </div>
-                            </div>
-                            <!-- Product action -->
-                            <div class="product-item__action">
-                                <a href="#" class="d-block btn-cart--add" data-url="">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </a>
-                                <a href="#" class="d-block btn-cart--add">
+                                <a href="#" class="d-block btn__add-cart btn_add-cart">
                                     <i class="fa-regular fa-heart"></i>
                                 </a>
                             </div>
@@ -440,4 +234,5 @@
 
 @section('scripts')
     <script src="{{ url('client') }}/js/product.js"></script>
+    <script src="{{ url('client') }}/js/cart.js"></script>
 @endsection

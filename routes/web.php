@@ -70,7 +70,6 @@ Route::group(['prefix' => 'admin/products'], function () {
     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');  // Xóa sản phẩm
 });
 
-
 //
 Route::prefix('admin/units')->group(function () {
     Route::get('/', [AdminUnitController::class,'index'])->name('admin.units');
@@ -101,6 +100,10 @@ Route::prefix('client/products')->group(function () {
 });
 
 //Home
-// Route cho trang chi tiết sản phẩm
+// Product
 Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
-Route::get('/cart', [HomeCartController::class, 'showCart'])->name('cart.show');
+
+//Cart
+Route::get('/view-cart', [HomeCartController::class, 'showCart'])->name('cart.show');
+Route::post('/add-to-cart/{id}', [HomeCartController::class, 'addToCart'])->name('cart.store');
+
