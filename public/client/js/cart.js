@@ -62,6 +62,7 @@ $(document).ready(function () {
                     $('#count_cart--icon').empty();
                     $('#cart-list').empty();
                     $('#cart_empty--text').css('display', 'block');
+                    $('.cart__summary').css('display', 'none');
                     $('#cart_count').text(0)
                     $('#cart_list').css('opacity', 0);
                 }
@@ -126,9 +127,12 @@ $(document).ready(function () {
                     $('#count_cart--icon').html(response.data.cartListIcon);
                     // Cập nhật lại các thông số tổng
                     $('#cart_count').text(response.data.count_number);
-                    $('#cart__summary-subtotal').text(response.data.cartSummary.subtotal.toLocaleString('vi-VN') + '₫')
-                    $('#cart__summary-totalsaving').text(response.data.cartSummary.totalSaving.toLocaleString('vi-VN') + '₫')
-                    $('#cart__summary-totalprice').text(response.data.cartSummary.totalPrice.toLocaleString('vi-VN') + '₫')
+                    $('#cart__summary-subtotal').text(response.data.cartSummary.subtotal.toLocaleString('vi-VN') + '₫');
+                    $('#cart__summary-totalsaving').text(response.data.cartSummary.totalSaving.toLocaleString('vi-VN') + '₫');
+                    $('#cart__summary-totalprice').text(response.data.cartSummary.totalPrice.toLocaleString('vi-VN') + '₫');
+                    if(response.data.count_number <=0){
+                        $('cart__summary').css('display', 'none');
+                    }
                 }
             },
             error: function (xhr) {

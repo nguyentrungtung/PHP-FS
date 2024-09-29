@@ -32,7 +32,8 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cartSummary = $this->cartService->getCartSummary();
+        $carts = session()->get('carts', []);
+        $cartSummary = $this->cartService->getCartSummary($carts);
 
         return view('client.pages.cart-detail', [
             'subtotal' => $cartSummary['subtotal'],
