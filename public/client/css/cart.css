@@ -3,7 +3,7 @@
 }
 
 .cart__item-wrapper {
-    padding: 0 10px 0 0;
+    padding: 0 10px 0 10px;
 }
 
 .cart__item-image {

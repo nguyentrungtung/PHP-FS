@@ -253,8 +253,7 @@ a {
     width: 100px;
 }
 .cart_list {
-    /* display: none; */
-    display: flex;
+     /*display: none;*/
     position: absolute;
     flex-direction: column;
     border-radius: 5px;

@@ -26,35 +26,34 @@ class CartController extends Controller
         $this->productRepositoryInterface = $productRepositoryInterface;
     }
     //
-    public function count(){
-        $cart= $this->cartService->getCart();
-        $count=0;
-        foreach($cart as $item){
-            $count+=$item['product_quantity'];
-        }
-        return $count;
-    }
+
     /**
      * Display a listing of the resource.
      */
-    public function showCart()
+    public function index()
     {
-//        $carts = session()->get('cart', []);
+        $cartSummary = $this->cartService->getCartSummary();
 
-        return view('client.pages.cart-detail');
+        return view('client.pages.cart-detail', [
+            'subtotal' => $cartSummary['subtotal'],
+            'totalSaving' => $cartSummary['totalSaving'],
+            'totalPrice' => $cartSummary['totalPrice'],
+        ]);
     }
 
-    public function addToCart(Request $request, $id)
+    public function store(Request $request, $id)
     {
-        return $this->cartService->addToCart($request, $id);
+        return $this->cartService->store($request, $id);
     }
 
-    public function updateCart(Request $request)
+    public function update(Request $request)
     {
-        return $this->cartService->updateCart($request);
+        return $this->cartService->update($request);
     }
 
-    public function clearCart(){
-        return $this->cartService->clearCart();
+    public function delete()
+    {
+        return $this->cartService->delete();
     }
+
 }

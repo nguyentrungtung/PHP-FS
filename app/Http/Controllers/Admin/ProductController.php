@@ -53,7 +53,6 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $validatedData = $request->validated();
-//        $this->productService->createProduct($request->all());
         $this->productService->createProduct($validatedData);
         return redirect()->back()->with('success', 'Product created successfully!');
     }

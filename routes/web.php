@@ -104,9 +104,9 @@ Route::prefix('client/products')->group(function () {
 // Product
 Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
 //Cart
-Route::get('/view-cart', [HomeCartController::class, 'showCart'])->name('cart.show');
-Route::post('/add-to-cart/{id}', [HomeCartController::class, 'addToCart'])->name('cart.store');
-Route::get('/cart/update', [HomeCartController::class, 'updateCart'])->name('cart.update');
-Route::post('/cart/clear', [HomeCartController::class, 'clearCart'])->name('cart.clear');
+Route::get('/view-cart', [HomeCartController::class, 'index'])->name('cart.show');
+Route::post('/add-to-cart/{id}', [HomeCartController::class, 'store'])->name('cart.store');
+Route::get('/cart/update', [HomeCartController::class, 'update'])->name('cart.update');
+Route::post('/cart/clear', [HomeCartController::class, 'delete'])->name('cart.clear');
 
 
