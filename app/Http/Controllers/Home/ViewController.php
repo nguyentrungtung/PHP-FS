@@ -46,4 +46,12 @@ class ViewController extends Controller
         $remain=$data['remain'];
         return view('client.pages.search',compact('products','remain'));
     }
+    // 
+    public function login(){
+        return view('client.pages.login');
+    }
+    // 
+    public function regit(){
+        return view('client.pages.regit');
+    }
 }
