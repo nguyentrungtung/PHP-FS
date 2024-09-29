@@ -8,8 +8,8 @@
 
 @section('content')
     @php
-//                dd($carts);
-        //        dd($checkoutCartSummary);
+        //                dd($carts);
+                //        dd($checkoutCartSummary);
     @endphp
     <div class="checkout">
         <!-- Checkout Header -->

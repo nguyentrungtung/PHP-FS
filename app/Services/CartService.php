@@ -89,7 +89,7 @@ class CartService
         if (isset($cart[$productId])) {
             $cart[$productId]['product_quantity'] = $quantity;
             session()->put('carts', $cart);
-            $cartSummary = $this->getCartSummary();
+            $cartSummary = $this->getCartSummary($cart);
         }
 
         return response()->json([
@@ -112,6 +112,7 @@ class CartService
     {
         // Xóa toàn bộ giỏ hàng
         session()->forget('carts');
+        session()->forget('cartSummary');
 
         return response()->json([
             'status' => true,
@@ -120,10 +121,8 @@ class CartService
     }
 
     //lấy tổng quan chi tiết về giỏ hàng.
-    public function getCartSummary()
+    public function getCartSummary($carts = null)
     {
-        // Giả sử giỏ hàng của người dùng được lấy từ database
-        $carts = session()->get('carts', []);
         $subtotal = 0;  // Tạm tính giỏ hàng
         $totalSaving = 0; // Tiết kiệm được
         $totalPrice = 0;  // Tổng cộng
@@ -163,7 +162,7 @@ class CartService
             session()->put('carts', $cart);
         }
 
-        $cartSummary = $this->getCartSummary();
+        $cartSummary = $this->getCartSummary($cart);
 
         return response()->json([
             'status' => true,
