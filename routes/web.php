@@ -33,12 +33,12 @@ Route::get('/', [CategoriesController::class,'index'])->name('categories.index')
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
 Route::group(['prefix' => 'admin/coupons'], function () {
-    Route::get('/', [CouponController::class, 'index'])->name('coupons.index');                 // Danh sách các coupon
-    Route::get('/create', [CouponController::class, 'create'])->name('coupons.create');         // Hiển thị form tạo coupon
-    Route::post('/', [CouponController::class, 'store'])->name('coupons.store');                // Lưu coupon mới
-    Route::get('/{coupon}/edit', [CouponController::class, 'edit'])->name('coupons.edit');      // Hiển thị form chỉnh sửa coupon
-    Route::put('/{coupon}', [CouponController::class, 'update'])->name('coupons.update');       // Cập nhật coupon
-    Route::delete('/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');  // Xóa coupon
+    Route::get('/', [CouponController::class, 'index'])->name('coupons.index');
+    Route::get('/create', [CouponController::class, 'create'])->name('coupons.create');
+    Route::post('/', [CouponController::class, 'store'])->name('coupons.store');
+    Route::get('/{coupon}/edit', [CouponController::class, 'edit'])->name('coupons.edit');
+    Route::put('/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
+    Route::delete('/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
 });
 
 Route::prefix('admin/categories')->group(function () {
@@ -61,12 +61,12 @@ Route::prefix('admin/brands')->group(function () {
 
 
 Route::group(['prefix' => 'admin/products'], function () {
-    Route::get('/', [ProductController::class, 'index'])->name('products.index');                 // Danh sách các sản phẩm
-    Route::get('/create', [ProductController::class, 'create'])->name('products.create');         // Hiển thị form tạo sản phẩm
-    Route::post('/', [ProductController::class, 'store'])->name('products.store');                // Lưu sản phẩm mới
-    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');      // Hiển thị form chỉnh sửa sản phẩm
-    Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');       // Cập nhật sản phẩm
-    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');  // Xóa sản phẩm
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
 
 
@@ -92,12 +92,10 @@ Route::prefix('admin/customers')->group(function () {
 Route::group([], function () {
     Route::get('/',[ViewController::class,'index'])->name('web.home');
     Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');
-
 });
 // route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {
     Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
-    Route::get('/fillter', [ViewController::class,'fillter'])->name('web.category.fillter');
 });
 
 //Home
@@ -112,13 +110,19 @@ Route::post('/cart/clear', [HomeCartController::class, 'delete'])->name('cart.cl
 Route::post('/cart/remove/{id}', [HomeCartController::class, 'removeItem'])->name('cart.remove');
 Route::post('/cart/save-summary', [HomeCartController::class, 'saveSummary'])->name('cart.saveSummary');
 
-// Route hiển thị trang thanh toán
-Route::get('/checkout', [HomeCheckoutController::class, 'index'])->name('checkout');
-// Route xử lý thanh toán
-Route::post('/checkout/process', [HomeCheckoutController::class, 'store'])->name('checkout.store');
-// Route hiển thị trang xác nhận thanh toán thành công
-Route::get('/checkout/success', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('/', [HomeCartController::class, 'index'])->name('cart.show');
+    Route::post('/add/{id}', [HomeCartController::class, 'store'])->name('cart.store');
+    Route::get('/update', [HomeCartController::class, 'update'])->name('cart.update');
+    Route::post('/clear', [HomeCartController::class, 'delete'])->name('cart.clear');
+    Route::post('/remove/{id}', [HomeCartController::class, 'removeItem'])->name('cart.remove');
+    Route::post('/save-summary', [HomeCartController::class, 'saveSummary'])->name('cart.saveSummary');
+});
 
-
+Route::group(['prefix' => 'checkout'], function () {
+    Route::get('/', [HomeCheckoutController::class, 'index'])->name('checkout');
+    Route::post('/process', [HomeCheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/success', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+});
 
 
