@@ -22,7 +22,19 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('client.pages.checkout');
+//        dd(session()->get('cartSummary'));
+//        dd(session()->get('carts'));
+
+        // Lấy thông tin tosm tắt giỏ hàng từ session
+        $checkoutCartSummary = session()->get('cartSummary', []);
+
+        // Kiểm tra nếu session không tồn tại (người dùng chưa qua bước giỏ hàng)
+        if (empty($checkoutCartSummary)) {
+            return redirect()->route('cart.detail')->with('error', 'Bạn cần xem lại giỏ hàng trước khi thanh toán.');
+        }
+
+        // Truyền thông tin giỏ hàng cho view
+        return view('client.pages.checkout', compact('checkoutCartSummary'));
     }
 
     /**

@@ -17,19 +17,16 @@ $(document).ready(function () {
         let initItem = $('.product-details__unit-item');
         let unitName = initItem.text();
         let price = initItem.data("value");
-        let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         $.ajax({
             method: "POST",
             url: urlCart,
             dataType: "json",
             data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
                 quantity,
                 unitName,
                 price
-            },
-            headers: {
-                'X-CSRF-TOKEN': csrfToken // Gửi CSRF token
             },
             success: function (response) {
                 if (response.status) {
