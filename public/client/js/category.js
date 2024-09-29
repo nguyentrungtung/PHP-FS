@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     changeCat();
     addCart();
     detail();
-    
+    // lang nghe su kien scroll toi cuoi trang
     window.addEventListener('scroll', function() {
         const footer = document.querySelector('.footer');
         const footerTop = footer.getBoundingClientRect().top; // Vị trí trên cùng của footer
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         if (footerTop <= window.innerHeight && !footerVisible) {
             footerVisible = true; // Đánh dấu footer đã hiển thị
             if(!check){
-                fetchData(addProducts);
+                fetchData(ajax,true);
             }
         } 
         // Kiểm tra nếu cuộn lên khỏi footer
@@ -49,7 +49,7 @@ function changeData(response){
 // 
 let start=8;
 let value='';
-function fetchData(callback) {
+function fetchData(callback,add=false) {
     // Giả sử đây là phần logic để lấy dữ liệu sản phẩm từ server
     const element=document.querySelector('.products_list');
     const remain=element.getAttribute('data-remain');
@@ -57,38 +57,10 @@ function fetchData(callback) {
         check=true;
         return;
     }
-    callback(element);
-}
-// call ajax va them products moi vao view 
-function addProducts(element){
-    const id=element.getAttribute('data-id');
-    let data=[]
-    const list=document.querySelectorAll('.brand_fill');
-    list.forEach(item=>{
-        data.push(item.getAttribute('data-id'));
-    })
-    console.log(data);
-    $.ajax({
-        url: '/client/products/fillter', // Thay bằng route của bạn
-        type: 'GET',
-        data: {
-            _token: '{{ csrf_token() }}', // Laravel yêu cầu CSRF token
-            brands: data,
-            catId:id,
-            start:start,
-            limit:8,
-            sort:value
-        },
-        success: function(response) {
-            const html=changeData(response);
-            element.innerHTML+=html;
-            addCart();
-            detail();
-        }
-    });
+    callback(element,add);
 }
 // 
-function changeProducts(element){
+function ajax(element,add=false){
     const id=element.getAttribute('data-id');
     let data=[]
     const list=document.querySelectorAll('.brand_fill');
@@ -99,7 +71,7 @@ function changeProducts(element){
         url: '/client/products/fillter',
         type: 'GET',
         data: {
-            _token: '{{ csrf_token() }}', // Laravel yêu cầu CSRF token
+            _token: '{{ csrf_token() }}',
             brands: data,
             catId:id,
             start:start,
@@ -108,7 +80,11 @@ function changeProducts(element){
         },
         success: function(response) {
             const html=changeData(response);
-            element.innerHTML=html;
+            if(add){
+                element.innerHTML+=html;
+            }else{
+                element.innerHTML=html;
+            }
             addCart();
             detail();
         }
@@ -150,8 +126,6 @@ function productItem(product){
         </div>
     </div>`;
 }
-// 
-// 
 // them su kien click add san pham vao gio hang
 // 
 function addCart(){
@@ -199,6 +173,7 @@ function count2(list){
     console.log(Array.from(list.children)[0].childElementCount);
     return Math.ceil((Array.from(list.children)[0].childElementCount)/2)*80+50+'px'
 }
+// hien thi thong tin hide menu
 function drop(btn,element,list,cb){
     btn.addEventListener("click",()=>{
         btn.classList.toggle("dropdown");
@@ -221,11 +196,11 @@ function fillter(){
                 fill.classList.add("active");
                 value=fill.getAttribute('data-value');
             }
-            fetchData(changeProducts,value);
+            fetchData(ajax);
         });
     });
 }
-// 
+// loai bo fill va kiem tra phan tu duoc kick co phai phan tu dang duoc chon hay khong
 function removeFill(current){
     let check=false;
     value='';
@@ -270,14 +245,16 @@ function brandFillter(){
             }
             // lay ra danh sach cac brand dang duoc chon de fill
             let list=Array.from(brand_list.children);
+            // check de kiem tra phan tu duoc click da duoc trong truoc do hay chua
             let check = true;
             e.target.classList.toggle('active');
             const html=`<div data-id=\"${e.target.getAttribute('data-id')}\" class=\"brand_fill\"\>${e.target.getAttribute('data-value')} x</div>`
+            // neu phan tu duoc click khong co active (tuc la no vua duoc loai bo truoc do) thi khong them lai vao list
             if(!e.target.classList.contains("active")){
                 list=list.filter(item=>item.getAttribute('data-id')!==e.target.getAttribute('data-id'));
                 if(list.length===0){
                     fill.innerHTML='';
-                    fetchData(changeProducts);
+                    fetchData(ajax);
                     return;
                 }
                 check=false;
@@ -285,12 +262,12 @@ function brandFillter(){
             const arr=list.map(item=>item.outerHTML);
             if(check) arr.push(html);
             brand_list.innerHTML=arr.join('');
-            fetchData(changeProducts);
+            fetchData(ajax);
         })    
     });
 }
 // 
-// 
+// loai bo toan bo brand duoc chon va load lai du lieu
 function deleteFillBrand(fill,logos){
     const d_bnt=document.getElementById("delete");
     d_bnt.addEventListener('click',()=>{
@@ -302,10 +279,10 @@ function deleteFillBrand(fill,logos){
         });
         fill.innerHTML='';
         start=0;
-        fetchData(changeProducts);
+        fetchData(ajax);
     });
 }
-//
+//loai bo active khoi sub cat va tra ve tru neu doi tuong loai bo la doi tuong duoc click
 function remove(list,arr,current){
     let check=false;
     list.forEach(item=>{
@@ -320,8 +297,7 @@ function remove(list,arr,current){
     return [arr,check];
  
 } 
-// 
-
+// su kien thay doi muc sub cat
 function changeCat(){
     const url=document.getElementById('category_url');
     const list=document.querySelectorAll('.subcat_title');
@@ -345,7 +321,7 @@ function changeCat(){
             url.innerHTML=chooseArr.join(' / ');
             // thay doi lai start ve 0
             start=0;
-            fetchData(changeProducts);
+            fetchData(ajax);
 
         })
     })

@@ -20,10 +20,6 @@ class ViewController extends Controller
         $brands=$data['brands'];
         return view('client.home.home',compact('todays','brands'));
     }
-    // ham lay san pham de render ra man hinh
-    public function render($cat,$start,$limit){
-       return $this->service->render($cat,$start,$limit);
-    }
     // 
     public function fillter(Request $request){
         // return response()->json(['true']);   
@@ -31,7 +27,12 @@ class ViewController extends Controller
     }
     // 
     public function show($id){
-        $data=$this->service->getByCat($id,0,8);
+        $request = new Request([
+            'catId' => $id,
+            'start'=>0,
+            'limit'=>8,
+        ]);
+        $data=$this->service->getByCat($request);
         $products=$data['products'];
         $brands=$data['brands'];
         $remain=$data['remain'];

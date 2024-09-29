@@ -7,17 +7,20 @@
 @endsection
 @php
     $thisCat;
-    foreach ($categories as $cat )
+    // dd($categories);
+    foreach ($categories as $cat ){
         if($cat['id']==$id){
             $thisCat=$cat;
         }
-        if(!empty($cat['child'])){
+        if($cat['child']!==null){
             foreach ($cat['child'] as $child) {
                 if($child['id']==$id){
                     $thisCat=$child;
                 }
             }
         }
+    }
+        
 @endphp
 @section('content')
 <div class="d-flex category">
@@ -31,9 +34,11 @@
             </div>
             <div id="list_subcat" class="align-items-start list_subcat">
                 <div id="sublits" class="d-flex flex-column sublits  hidden">
-                    @foreach ($thisCat['child'] as $cat )
-                        <div data-value="{{$cat['name']}}" data-id="{{$cat['id']}}"  class="align-items-center subcat_title">{{$cat['name']}}</div>
-                    @endforeach
+                    @if (isset($thisCat['child']))
+                        @foreach ($thisCat['child'] as $cat )
+                            <div data-value="{{$cat['name']}}" data-id="{{$cat['id']}}"  class="align-items-center subcat_title">{{$cat['name']}}</div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

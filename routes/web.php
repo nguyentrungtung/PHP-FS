@@ -98,7 +98,6 @@ Route::group([], function () {
 });
 // route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {
-    Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
     Route::get('/fillter', [ViewController::class,'fillter'])->name('web.category.fillter');
 });
 

@@ -45,7 +45,11 @@ use Illuminate\Http\Request;
                 if($category->categories_parent_id===null){
                     $root[]=['id'=>$category->id,'name'=>$category->categories_name,'child'=>[]];
                 }else{
-                    $child[]=['id'=>$category->id,'name'=>$category->categories_name,'parent_id'=> $category->categories_parent_id];
+                    $child[]=['id'=>$category->id,
+                            'name'=>$category->categories_name,
+                            'parent_id'=> $category->categories_parent_id,
+                            'route'=>route('web.category',['id'=>$category->id])    
+                        ];
                 }
             }
             for($i= 0;$i<count($root);$i++){

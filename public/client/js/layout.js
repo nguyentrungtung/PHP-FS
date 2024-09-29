@@ -146,7 +146,7 @@ function hoverParentCat(list){
             const sublist =JSON.parse(cat.getAttribute('data-child'));
             const newList=[];
             sublist.forEach(item=>{
-                newList.push(`<a data-parent_id='${item['parent_id']}' href=""><li class="menu_list_ul_li text-capitalize">${item['name']}</li></a>`)
+                newList.push(`<a data-parent_id='${item['parent_id']}' href="${item['route']}"><li class="menu_list_ul_li text-capitalize">${item['name']}</li></a>`)
             })
             html=newList.join('');
             ul.innerHTML=html;

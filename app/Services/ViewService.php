@@ -7,6 +7,7 @@ use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterfa
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
+use Illuminate\Http\Request;
 
     class ViewService{
         private $productRopository;
@@ -39,14 +40,6 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
             // dd($todays);
             $brands= $this->brandRepository->all();
             return compact('todays','brands');
-        }
-        // 
-        public function render($cat,$start,$limit){
-            $data= $this->productRopository->render($cat,$start,$limit);
-            $products=$data['products'];
-            $remain= $data['remain'];
-            $products=$this->setData($data['products']);
-            return response()->json(['products'=> $products,'remain'=> $remain]);
         }
         // chuyen doi du lieu truoc khi tra ve controller 
         private function setData($data){
@@ -85,8 +78,8 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
         }
         //
         // 
-        public function getByCat($catId,$start,$limit){
-            $data = $this->productRopository->render($catId,$start,$limit);
+        public function getByCat(Request $request){
+            $data = $this->productRopository->fill($request);
             // dd($data);
             $products=$this->setData($data['products']);
             $remain=$data['remain'];
@@ -95,7 +88,7 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
         }
         // 
         public function fill($request){
-            $data= $this->productRopository->getByBrandsId($request);
+            $data= $this->productRopository->fill($request);
             $products=$this->setData($data['products']);
             $remain=$data['remain'];
             // dd($data);
