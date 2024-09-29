@@ -101,7 +101,7 @@ class CartService
                 'cartListIcon' => view('client.components.cart-icon', ['carts' => $cart])->render(),
                 'cartList' => view('client.components.cart-list', ['carts' => $cart])->render(),
                 'count_number' => count($cart),
-                'cartSummary' => $cartSummary ?? null
+                'cartSummary' => $cartSummary
             ]
         ], 200);
     }
@@ -120,7 +120,7 @@ class CartService
         ], 200);
     }
 
-    //lấy tổng quan chi tiết về giỏ hàng.
+    //lấy thông tin giá đơn hàng
     public function getCartSummary($carts = null)
     {
         $subtotal = 0;  // Tạm tính giỏ hàng
@@ -177,7 +177,7 @@ class CartService
         ]);
     }
 
-    // Lưu thong tin Summary từ cart detail
+    // Lưu thong tin Summary(price) từ cart detail
     public function saveSummary($request)
     {
         // Lưu thông tin tóm tắt giỏ hàng vào session

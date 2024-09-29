@@ -131,7 +131,9 @@ $(document).ready(function () {
                     $('#cart__summary-totalsaving').text(response.data.cartSummary.totalSaving.toLocaleString('vi-VN') + '₫');
                     $('#cart__summary-totalprice').text(response.data.cartSummary.totalPrice.toLocaleString('vi-VN') + '₫');
                     if(response.data.count_number <=0){
-                        $('cart__summary').css('display', 'none');
+                        $('.cart__summary').css('display', 'none');
+                        $('#btn_cart--clear').css('display', 'none');
+                        $('#cart_empty--text').css('display', 'block');
                     }
                 }
             },
