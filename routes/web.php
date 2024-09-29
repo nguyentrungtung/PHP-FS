@@ -92,10 +92,12 @@ Route::prefix('admin/customers')->group(function () {
 Route::group([], function () {
     Route::get('/',[ViewController::class,'index'])->name('web.home');
     Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');
+
 });
 // route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {
     Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
+    Route::get('/fillter', [ViewController::class,'fillter'])->name('web.category.fillter');
 });
 
 //Home
