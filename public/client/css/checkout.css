@@ -1,0 +1,292 @@
+/* Checkout Layout */
+.checkout {
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.checkout__header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.checkout__title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Section */
+.checkout__section {
+    margin-bottom: 30px;
+}
+
+.checkout__section-title,
+.checkout__summary-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Form Styles */
+.checkout__form {
+    padding: 0 10px;
+}
+
+.checkout__input-group {
+    margin-bottom: 15px;
+}
+
+.checkout__label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.checkout__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.checkout__input-radio {
+    margin-right: 10px;
+}
+
+/* Payment Methods */
+.checkout__section--method {
+    margin-bottom: 20px;
+}
+
+.checkout__method-cod,
+.checkout__method-online {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: rgb(242, 245, 249);
+    border-radius: 5px;
+    border: 2px solid rgb(230, 221, 221);
+    margin-bottom: 10px;
+    width: 300px;
+}
+
+.checkout__method-input {
+    margin: 10px;
+}
+
+.checkout__method-input:checked {
+    border: 2px solid red; /* Hiển thị border khi được checked */
+}
+
+.checkout__method-label {
+    padding: 10px 20px 10px 0;
+    width: inherit;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Actions */
+.checkout__actions {
+    text-align: center;
+}
+
+.checkout__button--submit {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.checkout__button:hover {
+    opacity: 0.9;
+}
+
+.order-summary {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 3px;
+    width: 100%;
+    margin: 0 auto;
+    color: rgba(0, 0, 0, 0.54);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
+    font-size: 14px;
+}
+
+.oder-list__product-cart {
+    max-height: 360px;
+    overflow: auto;
+    scroll-behavior: smooth;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.oder-list__product-item {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 14x;
+    font-weight: 500;
+}
+
+.order-list__product-item-name {
+    width: 190px !important;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-height: 31px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    text-align: center;
+    font-weight: inherit;
+}
+
+.order-summary__title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.order-summary__item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.order-summary__label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.order-summary__value {
+    font-size: 14x;
+    font-weight: 500;
+}
+
+.order-summary__item--total .order-summary__label,
+.order-summary__item--total .order-summary__value {
+    font-size: 14px;
+    color: #e53935;
+}
+
+.order-summary__value--total {
+    font-weight: bold;
+}
+
+.delivery-modal__header {
+    background-color: #eb1f3a;
+    padding: 10px;
+    color: #fff;
+}
+
+/* Modal thay đổi khu vực địa chỉ */
+.modal-content {
+    width: 678px !important;
+}
+
+.delivery-modal__description {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.delivery-modal__address {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.divider {
+    height: 8px;
+    background: rgb(210, 207, 207);
+    width: 100%;
+    border: transparent;
+}
+
+.delivery-modal__address span {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.delivery-modal__address-label {
+    font-weight: bold;
+}
+
+.delivery-modal__address-text {
+    color: #333;
+}
+
+.delivery-modal__change-address {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.delivery-modal__store {
+    height: auto;
+    max-height: 340px;
+    margin-top: 20px;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+.delivery-modal__store-title {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.delivery-modal__store-item {
+    display: flex;
+    align-items: stảt;
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.delivery-modal__store-item.active {
+    background-color: rgb(251, 230, 221);
+}
+
+.delivery-modal__store-item-info {
+    width: 450px;
+    text-align: justify;
+}
+
+.delivery-modal__item-hotline {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.delivery-modal__store-item-info p,
+.delivery-modal__item-hotline p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.delivery-modal__store-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.delivery-modal__store-address,
+.delivery-modal__store-phone {
+    font-size: 14px;
+    color: #555;
+}
+
+.delivery-modal__item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin: 0 10px;
+    background-color: white;
+    border-radius: 100%;
+}

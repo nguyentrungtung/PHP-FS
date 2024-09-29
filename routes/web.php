@@ -2,18 +2,17 @@
 
 use App\Http\Controllers\Admin\AdminBrandController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
-use App\Http\Controllers\Home\Carttemp;
 use App\Http\Controllers\Home\CategoriesController;
-use App\Http\Controllers\Home\clientProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
 use App\Http\Controllers\Admin\AdminCustomerController;
-use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\ViewController;
+use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CartController as HomeCartController;
+use App\Http\Controllers\Home\CheckoutController as HomeCheckoutController;
 
 
 /*
@@ -108,5 +107,16 @@ Route::get('/view-cart', [HomeCartController::class, 'index'])->name('cart.show'
 Route::post('/add-to-cart/{id}', [HomeCartController::class, 'store'])->name('cart.store');
 Route::get('/cart/update', [HomeCartController::class, 'update'])->name('cart.update');
 Route::post('/cart/clear', [HomeCartController::class, 'delete'])->name('cart.clear');
+Route::post('/cart/remove/{id}', [HomeCartController::class, 'removeItem'])->name('cart.remove');
+Route::post('/cart/save-summary', [HomeCartController::class, 'saveSummary'])->name('cart.saveSummary');
+
+// Route hiển thị trang thanh toán
+Route::get('/checkout', [HomeCheckoutController::class, 'index'])->name('checkout');
+// Route xử lý thanh toán
+Route::post('/checkout/process', [HomeCheckoutController::class, 'store'])->name('checkout.store');
+// Route hiển thị trang xác nhận thanh toán thành công
+Route::get('/checkout/success', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+
+
 
 

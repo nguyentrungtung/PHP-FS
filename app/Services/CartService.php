@@ -96,6 +96,7 @@ class CartService
             'status' => true,
             'message' => 'Số lượng đã được cập nhật!',
             'data' => [
+                'productId' => $productId,
                 'carts' => $cart,
                 'cartListIcon' => view('client.components.cart-icon', ['carts' => $cart])->render(),
                 'cartList' => view('client.components.cart-list', ['carts' => $cart])->render(),
@@ -117,6 +118,7 @@ class CartService
             'message' => 'Giỏ hàng đã được xóa thành công'
         ], 200);
     }
+
     //lấy tổng quan chi tiết về giỏ hàng.
     public function getCartSummary()
     {
@@ -140,12 +142,62 @@ class CartService
             $totalPrice += (int)$productPrice * (int)$productQuantity;
         }
 
-
         return [
             'subtotal' => $subtotal,
             'totalSaving' => $totalSaving,
             'totalPrice' => $totalPrice,
         ];
+    }
+
+    // Xóa item cart
+    public function removeItem(Request $request)
+    {
+        $productId = $request->id;
+
+        // Lấy giỏ hàng từ session
+        $cart = session()->get('carts', []);
+
+        // Kiểm tra xem sản phẩm có tồn tại trong giỏ hàng không và xóa
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+            session()->put('carts', $cart);
+        }
+
+        $cartSummary = $this->getCartSummary();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Sản phẩm đã được xóa khỏi giỏ hàng',
+            'data' => [
+                'productId' => $productId,
+                'carts' => $cart,
+                'cartListIcon' => view('client.components.cart-icon', ['carts' => $cart])->render(),
+                'count_number' => count($cart),
+                'cartSummary' => $cartSummary ?? null
+            ]
+        ]);
+    }
+
+    // Lưu thong tin Summary từ cart detail
+    public function saveSummary($request)
+    {
+        // Lưu thông tin tóm tắt giỏ hàng vào session
+        $cartSummary = [
+            'subtotal' => $request->subtotal,
+            'totalSaving' => $request->totalSaving,
+            'totalPrice' => $request->totalPrice,
+            'discount' => $request->discount
+        ];
+
+        session()->put('cartSummary', $cartSummary);
+//        dd(session()->get('cartSummary'));
+
+        return response()->json(
+            [
+                'status' => true,
+                'message' => 'Lưu thông tin summary thành công',
+            ]
+        );
     }
 
     //-----------------------------------

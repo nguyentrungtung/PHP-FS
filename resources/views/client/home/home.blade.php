@@ -73,7 +73,7 @@
                     @include('client.home.loading')
                 </div>
             </div>
-        </div>                
+        </div>
     @endfor
     <div class="d-flex flex-column home_partner">
         <div class="partner_title">
@@ -107,10 +107,11 @@
                     @include('client.home.loading')
                 </div>
             </div>
-        </div>                
+        </div>
     @endfor
 </div>
 @endsection
 @section('scripts')
     <script src="{{asset('client/js/home.js')}}"></script>
+    <script src="{{ url('client') }}/js/cart.js"></script>
 @endsection

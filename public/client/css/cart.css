@@ -128,6 +128,12 @@
     font-size: 17px;
 }
 
+.cart__summary{
+    border:1px solid #d3cece;
+    padding:20px;
+    border-radius: 5px;
+}
+
 .cart__summary-actions__bottom {
     display: flex;
     align-items: center;
