@@ -55,4 +55,11 @@ use App\Repositories\BaseRepository;
         private function createImg($file,$path){
             $file->move(public_path('img/brands'), $path);
         }
+        // /lay brand cua cac san pham
+        public function getByProductIds($data){
+            $brandIds = collect($data)->pluck('brand_id')->unique();
+            // dd($brandIds);
+            // Lấy danh sách các brand có id nằm trong brandIds
+            return $this->model->whereIn('id', $brandIds)->get();
+        }
     }

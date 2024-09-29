@@ -2,6 +2,7 @@
     namespace App\Services;
 
 use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitRepositoryInterface;
@@ -13,19 +14,22 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
         private $unitRepository;
         private $unitValueRepository;
         private $productImageRepository;
+        private $categoryRepository;
 
         public function __construct(
             ProductRepositoryInterface $productRopository,
             BrandRepositoryInterface $brandRepository,
             UnitRepositoryInterface $unitRepository,
             ProductImageRepositoryInterface $productImageRepository,
-            UnitValueRepositoryInterface $unitValueRepository
+            UnitValueRepositoryInterface $unitValueRepository,
+            CategoryRepositoryInterface $categoryRepository
         ) {
             $this->productRopository = $productRopository;
             $this->brandRepository = $brandRepository;
             $this->unitRepository = $unitRepository;
             $this->productImageRepository = $productImageRepository;
             $this->unitValueRepository = $unitValueRepository;
+            $this->categoryRepository = $categoryRepository;
         }
         // 
         public function index(){
@@ -58,7 +62,8 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
                 $price=number_format($product->product_price, 0, ',', '.') . ' ₫';
                 $response[]=['id'=>$product->id,
                     'product_name'=> $product->product_name,
-                    'sale'=>$sale, 
+                    'sale'=>$sale,
+                    'brand_id'=>$product->brand_id,
                     'product_price'=>$price,
                     'product_old_price'=>$old,
                     'product_unit'=>$this->getUnit($product->id),
@@ -77,5 +82,23 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
             $unitValue=$this->unitValueRepository->getByProductID($productId);
             $unit=$this->unitRepository->find($unitValue->unit_id);
             return $unit->unit_name;
+        }
+        //
+        // 
+        public function getByCat($catId,$start,$limit){
+            $data = $this->productRopository->render($catId,$start,$limit);
+            // dd($data);
+            $products=$this->setData($data['products']);
+            $remain=$data['remain'];
+            $brands= $this->brandRepository->getByProductIds($products);
+            return compact('products','remain','brands');
+        }
+        // 
+        public function fill($request){
+            $data= $this->productRopository->getByBrandsId($request);
+            $products=$this->setData($data['products']);
+            $remain=$data['remain'];
+            // dd($data);
+            return response()->json(['products'=> $products,'remain'=> $remain]);
         }
     }

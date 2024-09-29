@@ -7,9 +7,7 @@ body{
 }
 .category{
     width: 100vw;
-    padding: 0 10vw;
     min-height: 100vh;
-    background: #dcdcdc;
 }
 .detail_list{
     padding: 10px;
@@ -17,7 +15,7 @@ body{
     border-bottom: 1px solid rgb(184, 184, 184);
 }
 .categoty_detai{
-    width: 25%;
+    width: 20%;
     border-right:1px solid rgb(184, 184, 184);
     background: white;
 }
@@ -77,9 +75,17 @@ body{
     transition: height 0.5s ease;
 }
 .brand_logo{
+    width: 75px;
+    height: 75px;
     border: 1px solid white;
     margin: 1px;
-    object-fit: fill;
+    object-fit: scale-down;
+}
+.list_products{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    width: 100%;
 }
 .loadmore{
     width: 100%;
@@ -91,7 +97,7 @@ body{
 }
 .categoty_content{
     background: white;
-    width: 100%;
+    width: 65%;
 }
 .content_fillter_sale{
     height: 50px;
@@ -150,4 +156,10 @@ body{
     color: #e82428;
     cursor: pointer;
     width: 100px;
+}
+.products_list{
+    display: grid;
+    grid-template-columns: repeat(4,2fr);
+    gap: 5px;
+    padding-bottom: 10px;
 }
