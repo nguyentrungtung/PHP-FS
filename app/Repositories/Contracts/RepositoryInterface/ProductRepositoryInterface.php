@@ -12,4 +12,8 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function productRelate($productId);
     // 
     public function getToday();
+    // 
+    public function getByCatId($catId);
+    // 
+    public function getByBrandsId($request);
 }

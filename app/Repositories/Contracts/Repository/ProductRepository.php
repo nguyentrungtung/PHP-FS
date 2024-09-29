@@ -8,6 +8,7 @@ use App\Models\ProductImage;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
@@ -61,5 +62,48 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         ->get();
         return compact('remain','products');
     }
-
+    // 
+    public function getByCatId($catId){
+        return $this->model->where('category_id', $catId)->get();
+    }
+    // lay cac san pham co brand tuong ung
+    public function getByBrandsId($request){
+        $brands=$request->input('brands');
+        $sort=$request->input('sort');
+        $start=$request->input('start');
+        $limit=$request->input('limit');
+        $catId=$request->input('catId');
+        // $brands=['1'];
+        // $sort='sale';
+        // $cart=13;
+        // $start=0;
+        // $limit= 20;
+        // lay danh sach cac cat con cua cat hien tai
+        $categoryIds = Categories::where('categories_parent_id', $catId)->pluck('id');
+        // Khởi tạo query với điều kiện category_id là $catId hoặc nằm trong danh sách category con
+        $query = $this->model->where(function($query) use ($catId, $categoryIds) {
+            $query->where('category_id', $catId)
+                  ->orWhereIn('category_id', $categoryIds);
+        });
+        if ($brands!==null) {
+            // dd($brands);
+            $query->whereIn('brand_id', $brands);
+        }
+        if($sort!==null){
+            if($sort==='sale'){
+                $query= $query->orderBy(DB::raw('product_price_old / product_price'), 'desc');
+            }
+            // if($sort=== 'order'){
+            //     $query= $query->join('orderdetail', 'products.id', '=', 'orderdetail.product_id') // Join bảng products và orderdetail
+            //     ->select('products.*', DB::raw('SUM(orderdetail.quantity) as total_sold')) // Tính tổng số lượng bán
+            //     ->groupBy('products.id') // Nhóm theo id sản phẩm
+            //     ->orderBy('total_sold', 'desc'); // Sắp xếp theo tổng số lượng bán giảm dần
+            // }
+        }
+        
+        $count = $query->count();
+        $remain=$count - (int)($start+$limit);
+        $products= $query->skip($start)->take($limit)->get();
+        return compact('products','remain');
+    }
 }
