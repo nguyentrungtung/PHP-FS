@@ -100,9 +100,5 @@ class ProductService
     {
         return $this->productRepositoryInterface->productRelate($productId);
     }
-    // 
-    public function render($cat,$start,$limit){
-        return $this->productRepositoryInterface->render($cat,$start,$limit);
-    }
 
 }

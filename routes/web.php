@@ -90,12 +90,15 @@ Route::prefix('admin/customers')->group(function () {
 });
 // nhom route cho trang web chinh
 Route::group([], function () {
-    Route::get('/',[ViewController::class,'index'])->name('web.home');
-    Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');
+    Route::get('/',[ViewController::class,'index'])->name('web.home');//man hinh chinh
+    Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');//man hinh phan loai san pham
+    Route::get('/search', [ViewController::class,'search'])->name('web.search');//man hinh tim kiem san pham
+    
+
 });
 // route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {
-    Route::get('/{cat}/{start}/{limit}', [ViewController::class,'render'])->name('client.products.render');
+    Route::get('/fillter', [ViewController::class,'fillter'])->name('web.category.fillter');
 });
 
 //Home

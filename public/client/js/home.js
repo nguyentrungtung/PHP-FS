@@ -158,32 +158,26 @@ function fetchData(element) {
     const name=element.getAttribute('data-name');
     const content=element.querySelector('.list_content');
     const list_products=element.querySelector('.list_products');
-    
+    ajax([id,list_products,content,name,element],addProducts)
+}
+// 
+function ajax(elements,callback){
+    const [id]=elements;
     $.ajax({
-        url: 'client/products/' + id + '/' + 0 + '/' + 10,
+        url: '/client/products/fillter',
         type: 'GET',
-        success: function(response) {
-            list_products.innerHTML=changeData(id,response);
-            addCart();
-            detail();
-            if(countCats[id]['remain']>0){
-                content.innerHTML+=`<div data-id="${id}" class="list_load_more">
-                    <p class="more_text">Xem Thêm <p class="more_text count">${countCats[id]['remain']}</p> sản phẩm </p>
-                    <p class="more_text cat_name">${name}</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
-                      </svg>
-                </div>`;
-                const load =content.querySelector('.list_load_more');
-                LoadMore(load,id,element);
-                
-            }
+        data:{
+            _token: '{{ csrf_token() }}',
+            catId:id,
+            start:countCats[id]?countCats[id]['start']:0,
+            limit:10
         },
-        error: function(xhr) {
+        success: function(response) {
+            callback(elements,response);
         }
     });
 }
-// 
+// chuyen doi du lieu truoc khi render ra man hinh
 function changeData(id,response){
     const products=(response.products);
     const remain=(response.remain);
@@ -199,31 +193,65 @@ function changeData(id,response){
     }
     return newArr.join('');
 }
+// them san pham va loai bo phan loading
+function addProducts(elements,response){
+    const[id,list_products,content,name,element]=elements;
+    list_products.innerHTML=changeData(id,response);
+    if(countCats[id]['remain']>0){
+        content.innerHTML+=`<div data-id="${id}" class="list_load_more">
+            <p class="more_text">Xem Thêm <p class="more_text count">${countCats[id]['remain']}</p> sản phẩm </p>
+            <p class="more_text cat_name">${name}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
+              </svg>
+        </div>`;
+        const load =content.querySelector('.list_load_more');
+        LoadMore(load,id,element);
+    }
+    addCart();
+    detail();
+}
+// load them san pham vao danh sach
+function loadProducts(element,response){
+    const [id,load,list_products,count]=element;
+    const html=changeData(id,response);
+    list_products.innerHTML+=html;
+    addCart();
+    detail();
+    if(countCats[id]['remain']<=0){
+        load.classList.add('hidden');
+    }else{
+        count.innerHTML=countCats[id]['remain'];
+    }
+}
 // loading san pham
 // lay them san pham neu san pham do con
 function LoadMore(load,id,element){
     load.addEventListener('click',()=>{
         const count=load.querySelector('.count');
         const list_products=element.querySelector('.list_products');
-        $.ajax({
-            url: 'client/products/' + id + '/' + countCats[id]['start'] + '/' + 10,
-            type: 'GET',
-            success: function(response) {
-                const html=changeData(id,response);
-                 list_products.innerHTML+=html;
-                addCart();
-                detail();
-                if(countCats[id]['remain']<=0){
-                    load.classList.add('hidden');
-                }else{
-                    count.innerHTML=countCats[id]['remain'];
-                }
-            },
-            error: function(xhr) {
-                // Xử lý lỗi nếu có
-                alert('False to loading data.');
-            }
-        });
+        ajax([id,load,list_products,count],loadProducts)
+        // $.ajax({
+        //     url: '/client/products/fillter',
+        //     type: 'GET',
+        //     data:{
+        //         _token: '{{ csrf_token() }}',
+        //         catId:id,
+        //         start:countCats[id]?countCats[id]['start']:0,
+        //         limit:10
+        //     },
+        //     success: function(response) {
+        //         const html=changeData(id,response);
+        //         list_products.innerHTML+=html;
+        //         addCart();
+        //         detail();
+        //         if(countCats[id]['remain']<=0){
+        //             load.classList.add('hidden');
+        //         }else{
+        //             count.innerHTML=countCats[id]['remain'];
+        //         }
+        //     }
+        // });
     })
 }
 // tao html de render

@@ -67,7 +67,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $this->model->where('category_id', $catId)->get();
     }
     // lay cac san pham co brand tuong ung
-    public function getByBrandsId($request){
+    public function fill($request){
         $brands=$request->input('brands');
         $sort=$request->input('sort');
         $start=$request->input('start');
@@ -85,10 +85,12 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             $query->where('category_id', $catId)
                   ->orWhereIn('category_id', $categoryIds);
         });
+        // kiem tran brands co rong hay khong
         if ($brands!==null) {
             // dd($brands);
             $query->whereIn('brand_id', $brands);
         }
+        // kiem tra sort co rong hay khong
         if($sort!==null){
             if($sort==='sale'){
                 $query= $query->orderBy(DB::raw('product_price_old / product_price'), 'desc');
@@ -105,5 +107,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $remain=$count - (int)($start+$limit);
         $products= $query->skip($start)->take($limit)->get();
         return compact('products','remain');
+    }
+    // 
+    // tim kiem san pham theo ten
+    public function search($value){
+        $count = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])->count();
+        $remain=$count - 8;
+        $products = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])
+        ->get();
+        return compact('remain','products');
     }
 }

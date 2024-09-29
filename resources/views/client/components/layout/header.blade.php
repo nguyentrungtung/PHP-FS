@@ -2,11 +2,11 @@
         <div class="d-flex justify-content-between align-items-center haeder_top" >
             <div class="d-flex align-items-center header_top_left">
                 <a class="home_link" href="{{route('web.home')}}"><img class="header_top_left_logo" src="{{ asset('client/img/layout/winm_logo.png') }}" alt=""></a>
-                <form id="form_search" class="header_top_left_search" action="">
+                <form id="form_search" class="header_top_left_search" method="GET" action="{{route('web.search')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                       </svg>
-                    <input id="search_input" class="header_top_left_search_input" placeholder="Giao hàng nhanh ..." type="text" >
+                    <input name='search' id="search_input" class="header_top_left_search_input" placeholder="Giao hàng nhanh ..." type="text" >
                     <div id="search_ex" class="search_ex hidden">
                         <h2 class="text-uppercase search_current_title">Tìm kiếm gần đây</h2>
                         <div class="d-flex flex-wrap search_current">
