@@ -20,31 +20,36 @@
                         <div class="row g-2" id="cart-list">
                             @foreach($carts as $product_id => $cart)
                                 <div class="cart__item col-12" data-id="{{$product_id}}">
-                                    <div class="cart__item-wrapper d-flex justify-content-between align-items-center border-bottom  hover--box-shadow">
+                                    <div
+                                        class="cart__item-wrapper d-flex justify-content-between align-items-center border-bottom  hover--box-shadow">
                                         <div class="cart__item-info d-flex align-items-center">
                                             <img
-                                                    src="{{ $cart['product_image'] }}"
-                                                    class="cart__item-image"
-                                                    alt="Sản phẩm {{ $cart['product_name'] }}"
+                                                src="{{ $cart['product_image'] }}"
+                                                class="cart__item-image"
+                                                alt="Sản phẩm {{ $cart['product_name'] }}"
                                             />
                                             <div class="cart__item-product-info">
                                                 <h5 class="cart__item-name">{{ $cart['product_name'] }}</h5>
                                                 <p class="cart__item-price">
-                                                    Giá: <span class="text-danger">{{ number_format($cart['product_price'], 0, ',', '.') }} đ</span>
+                                                    Giá: <span class="text-danger" style="font-size: 14px; font-weight: 500; color:black">{{ number_format($cart['product_price'], 0, ',', '.') }} đ</span>
+                                                    @if(isset($cart['product_price_old']))
+                                                        <span
+                                                            class="d-inline-block ms-3" style="font-size: 14px; font-weight: 500; color:#696363; text-decoration: line-through;">{{number_format($cart['product_price_old'])}}đ</span>
+                                                    @endif
                                                 </p>
                                                 <p class="cart__item-unit">
-                                                    ĐVT: <span class="text-danger">{{ $cart['product_unit'] }}</span>
+                                                    ĐVT: <span class="text-danger"  style="font-size: 14px; font-weight: 500; color:black">{{ $cart['product_unit'] }}</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="cart__item-actions d-flex flex-column align-items-end">
                                             <input
-                                                    type="number"
-                                                    class="form-control cart__item-quantity"
-                                                    value="{{ $cart['product_quantity'] }}"
-                                                    min="1"
-                                                    style="width: 80px"
-                                                    data-url_update_cart="{{route('cart.update')}}"
+                                                type="number"
+                                                class="form-control cart__item-quantity"
+                                                value="{{ $cart['product_quantity'] }}"
+                                                min="1"
+                                                style="width: 80px"
+                                                data-url_update_cart="{{route('cart.update')}}"
                                             />
                                             {{--                                            <button class="btn btn-danger btn-sm mt-2 cart__item-remove" data-url="{{ route('cart.remove', $cart['id']) }}">Xóa</button>--}}
                                         </div>
@@ -78,10 +83,10 @@
                             Tổng sản phẩm: <span class="text-danger float-end">{{$totalCart}}</span>
                         </p>
                         <p class="cart__summary-total-price-estimated">
-                            Tạm tính giỏ hàng: <span class="text-danger float-end">30.000đ</span>
+                            Tạm tính giỏ hàng: <span class="text-danger float-end" id = "cart__summary-subtotal">{{number_format($subtotal)}}đ</span>
                         </p>
                         <p class="cart__summary-total-price-saving">
-                            Tiết kiệm được: <span class="text-danger float-end">700.000đ</span>
+                            Tiết kiệm được: <span class="text-danger float-end" id = "cart__summary-totalsaving">{{number_format($totalSaving)}}đ</span>
                         </p>
                         <p class="cart__summary-shopping-fee">
                             Phí vận chuyển: <span class="text-danger float-end">20.000đ</span>
@@ -91,13 +96,14 @@
                         </p>
                         <hr/>
                         <h5 class="cart__summary-total mb-4">
-                            Tổng cộng: <span class="text-danger">900.000đ</span>
+                            Tổng cộng: <span class="text-danger" id = "cart__summary-totalprice">{{number_format($totalPrice)}}đ</span>
                         </h5>
+                        {{--Chọn voucher--}}
                         <div class="cart__summary-actions text-center">
                             <div class="cart__summary-actions__top">
                                 <div class="cart__discount-code">
                                     <a href="#" class="btn cart__discount-code__left"><i
-                                                class="fa-solid fa-ticket me-1"></i> Khuyến mại</a>
+                                            class="fa-solid fa-ticket me-1"></i> Khuyến mại</a>
                                     <a href="#" class="btn btn-danger cart__discount-code__btn" data-bs-toggle="modal"
                                        data-bs-target="#exampleModal">Chọn mã Voucher</a>
 
@@ -109,20 +115,20 @@
                                                 <div class="modal-header"
                                                      style="background-color: rgb(235, 31, 58) !important; padding: 8px 7px !important;">
                                                     <button
-                                                            style="width: 20px; margin-right: 10px; color: rgb(255, 255, 255)!important"
-                                                            type="button"
-                                                            class="btn-close"
-                                                            data-bs-dismiss="modal"
-                                                            aria-label="Close"
+                                                        style="width: 20px; margin-right: 10px; color: rgb(255, 255, 255)!important"
+                                                        type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Close"
                                                     ></button>
                                                     <div class="form-search_coupon">
                                                         <input
-                                                                type="email"
-                                                                class="form-control"
-                                                                id="exampleInputEmail1"
-                                                                aria-describedby="emailHelp"
-                                                                placeholder="Nhập mã khuyến mại"
-                                                                style="padding:6px 6px 6px 10px;
+                                                            type="email"
+                                                            class="form-control"
+                                                            id="exampleInputEmail1"
+                                                            aria-describedby="emailHelp"
+                                                            placeholder="Nhập mã khuyến mại"
+                                                            style="padding:6px 6px 6px 10px;
                                                                     border:none;
                                                                     "
                                                         />
@@ -137,8 +143,8 @@
                                                     <div class="coupon-list__item coupon-item__after-active">
                                                         <div class="coupon-list__logo">
                                                             <img
-                                                                    src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
-                                                                    alt="logo coupon">
+                                                                src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
+                                                                alt="logo coupon">
                                                         </div>
                                                         <div class="coupon-list__content ">
                                                             <h5 class="coupon-list__title">Giảm giá 20%</h5>
@@ -152,7 +158,7 @@
                                                         </div>
                                                         <div class="coupon-list__actions">
                                                             <button
-                                                                    class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
+                                                                class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
                                                                 Áp dụng
                                                             </button>
                                                             <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
@@ -198,9 +204,9 @@
                             </div>
                             <div class="product-item__img-wrap">
                                 <img
-                                        src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
-                                        class="product-item__img card-img-top"
-                                        alt="..."
+                                    src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
+                                    class="product-item__img card-img-top"
+                                    alt="..."
                                 />
                                 <div class="d-none product-item__frame"></div>
                             </div>
@@ -219,7 +225,7 @@
                                 <div class="product-item__info-price d-flex">
                                     <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000đ</p>
                                     <span
-                                            class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
+                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
                                 </div>
                             </div>
                             <!-- Product action -->

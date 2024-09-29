@@ -82,6 +82,9 @@ $(document).ready(function () {
                 $('#cart_count').text(response.data.count_number);
                 $('#count_cart--icon').html(response.data.cartListIcon);
                 $('#cart-list').html(response.data.cartList);
+                $('#cart__summary-subtotal').text(response.data.cartSummary.subtotal.toLocaleString('vi-VN') + '₫')
+                $('#cart__summary-totalsaving').text(response.data.cartSummary.totalSaving.toLocaleString('vi-VN') + '₫')
+                $('#cart__summary-totalprice').text(response.data.cartSummary.totalPrice.toLocaleString('vi-VN') + '₫')
             },
             error: function(error) {
                 console.error('Đã có lỗi xảy ra:', error);

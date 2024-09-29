@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         View::composer(
-            ['admin.products.create', 'admin.products.edit'], // Các view cần chia sẻ dữ liệu
+            ['admin.products.create', 'admin.products.edit', 'admin.products.index'], // Các view cần chia sẻ dữ liệu
             ProductComposer::class
         );
         //

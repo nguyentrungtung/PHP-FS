@@ -17,9 +17,12 @@
                             <select class="form-select select2" id="category_id" name="category_id">
                                 <option value="">Chọn danh mục</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>
-                                        {{ $category->categories_name }}
-                                    </option>
+                                    <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                                    @if(isset($category['child']) && count($category['child']) > 0)
+                                        @foreach($category['child'] as $child)
+                                            <option value="{{ $child['id'] }}">-- {{ $child['name'] }}</option>
+                                        @endforeach
+                                    @endif
                                 @endforeach
                             </select>
                             @error('category_id')
