@@ -94,11 +94,11 @@
                 </p>
                 <p class="product-details__product-price">
                     <span class="product-details__title inline-block">Giá : </span>
-                    <span class="text-danger fs-5 fw-bold" id="product_price--detail">{{ number_format($product->product_price) }}đ</span>
+                    <span class="text-danger fs-5 fw-bold" id="product_price--detail">{{ number_format($product->product_price) }}₫</span>
                 </p>
                 <p class="product-details__text-ship">
                     <span class="product-details__title inline-block">Vận chuyển : </span>
-                    <span class="inline-block">Miễn phí giao hàng cho đơn từ 300.000đ.
+                    <span class="inline-block">Miễn phí giao hàng cho đơn từ 300.000₫.
                     Giao hàng trong 2 giờ.</span>
                 </p>
                 <div class="product-details__text-type">
@@ -218,11 +218,11 @@
                                 <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau sàn
                                     MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
                             </div>
-                            <p class="card-text text-danger fw-bold">30.000đ</p>
+                            <p class="card-text text-danger fw-bold">30.000₫</p>
                         </div>
                         <!-- Product action -->
                         <div class="product-item__action">
-                            <a href="#" class="d-block btn__add-cart btn_add-cart" data-url="">
+                            <a href="#" class="d-block btn__add-cart btn_add-cart" data-url="{{ route('cart.store',['id' => $productRelate->id]) }}">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
                             <a href="#" class="d-block btn__add-cart btn_add-cart">

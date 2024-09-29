@@ -18,44 +18,7 @@
                 <div class="cart__body">
                     @if(count($carts))
                         <div class="row g-2" id="cart-list">
-                            @foreach($carts as $product_id => $cart)
-                                <div class="cart__item col-12" data-id="{{$product_id}}">
-                                    <div
-                                        class="cart__item-wrapper d-flex justify-content-between align-items-center border-bottom  hover--box-shadow">
-                                        <div class="cart__item-info d-flex align-items-center">
-                                            <img
-                                                src="{{ $cart['product_image'] }}"
-                                                class="cart__item-image"
-                                                alt="Sản phẩm {{ $cart['product_name'] }}"
-                                            />
-                                            <div class="cart__item-product-info">
-                                                <h5 class="cart__item-name">{{ $cart['product_name'] }}</h5>
-                                                <p class="cart__item-price">
-                                                    Giá: <span class="text-danger" style="font-size: 14px; font-weight: 500; color:black">{{ number_format($cart['product_price'], 0, ',', '.') }} đ</span>
-                                                    @if(isset($cart['product_price_old']))
-                                                        <span
-                                                            class="d-inline-block ms-3" style="font-size: 14px; font-weight: 500; color:#696363; text-decoration: line-through;">{{number_format($cart['product_price_old'])}}đ</span>
-                                                    @endif
-                                                </p>
-                                                <p class="cart__item-unit">
-                                                    ĐVT: <span class="text-danger"  style="font-size: 14px; font-weight: 500; color:black">{{ $cart['product_unit'] }}</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="cart__item-actions d-flex flex-column align-items-end">
-                                            <input
-                                                type="number"
-                                                class="form-control cart__item-quantity"
-                                                value="{{ $cart['product_quantity'] }}"
-                                                min="1"
-                                                style="width: 80px"
-                                                data-url_update_cart="{{route('cart.update')}}"
-                                            />
-                                            {{--                                            <button class="btn btn-danger btn-sm mt-2 cart__item-remove" data-url="{{ route('cart.remove', $cart['id']) }}">Xóa</button>--}}
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                            @include('client.components.cart-list')
                             <a href="#" class="mt-3 btn btn-outline-danger text-decoration-underline"
                                data-url="{{ route('cart.clear') }}" id="btn_cart--clear" style="width: max-content">Xóa
                                 giỏ hàng</a>
@@ -79,24 +42,24 @@
                         <h4 class="cart__summary-header-title">Tóm tắt Giỏ Hàng</h4>
                     </div>
                     <div class="cart__summary-body">
-                        <p class="cart__summary-total-products">
-                            Tổng sản phẩm: <span class="text-danger float-end">{{$totalCart}}</span>
+                        <p class="cart__summary-total-products d-none">
+                            Tổng sản phẩm: <span class="float-end">{{$totalCart}}</span>
                         </p>
                         <p class="cart__summary-total-price-estimated">
-                            Tạm tính giỏ hàng: <span class="text-danger float-end" id = "cart__summary-subtotal">{{number_format($subtotal)}}đ</span>
+                            Tạm tính giỏ hàng: <span class="float-end" id = "cart__summary-subtotal">{{number_format($subtotal)}}₫</span>
                         </p>
                         <p class="cart__summary-total-price-saving">
-                            Tiết kiệm được: <span class="text-danger float-end" id = "cart__summary-totalsaving">{{number_format($totalSaving)}}đ</span>
+                            Tiết kiệm được: <span class="float-end" id = "cart__summary-totalsaving">{{number_format($totalSaving)}}₫</span>
                         </p>
-                        <p class="cart__summary-shopping-fee">
-                            Phí vận chuyển: <span class="text-danger float-end">20.000đ</span>
+                        <p class="cart__summary-shopping-fee d-none">
+                            Phí vận chuyển: <span class="float-end">20.000₫</span>
                         </p>
                         <p class="cart__summary-coupon"></p>
-                        Khuyến mại: <span class="text-danger float-end">10.000đ</span>
+                        Khuyến mại: <span class="float-end" id = "cart__summary-discount">10.000₫</span>
                         </p>
                         <hr/>
-                        <h5 class="cart__summary-total mb-4">
-                            Tổng cộng: <span class="text-danger" id = "cart__summary-totalprice">{{number_format($totalPrice)}}đ</span>
+                        <h5 class="cart__summary-total mb-4" style = "font-size:18px">
+                            Tổng cộng: <span class="text-danger" id = "cart__summary-totalprice" style = "font-size:18px; float: right">{{number_format($totalPrice)}}₫</span>
                         </h5>
                         {{--Chọn voucher--}}
                         <div class="cart__summary-actions text-center">
@@ -179,7 +142,7 @@
                             <div class="cart__summary-actions__bottom mt-2">
                                 <a href="#" class="btn btn-primary cart__continue-shopping translate--y">Tiếp tục mua
                                     sắm</a>
-                                <a href="#" class="btn btn-danger cart__checkout translate--y">Thanh toán</a>
+                                <a href="#" class="btn btn-danger cart__checkout translate--y"  id="btn-checkout_cart-detail" data-url_save_summary = "{{route('cart.saveSummary')}}">Thanh toán</a>
                             </div>
                         </div>
                     </div>
@@ -223,9 +186,9 @@
                                         sàn MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
                                 </div>
                                 <div class="product-item__info-price d-flex">
-                                    <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000đ</p>
+                                    <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000₫</p>
                                     <span
-                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000đ</span>
+                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000₫</span>
                                 </div>
                             </div>
                             <!-- Product action -->
@@ -246,7 +209,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ url('client') }}/js/product.js"></script>
+{{--    <script src="{{ url('client') }}/js/product.js"></script>--}}
     <script src="{{ url('client') }}/js/cart.js"></script>
 @endsection
 

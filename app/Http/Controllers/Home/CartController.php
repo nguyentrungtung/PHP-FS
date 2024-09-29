@@ -56,4 +56,15 @@ class CartController extends Controller
         return $this->cartService->delete();
     }
 
+    public function removeItem(Request $request)
+    {
+        return $this->cartService->removeItem($request);
+    }
+
+    //lưu thông tin summary
+    public function saveSummary(Request $request)
+    {
+        return $this->cartService->saveSummary($request);
+    }
+
 }

@@ -35,22 +35,7 @@
                     @if(count($carts))
                     <div id="cart_list" class="cart_list">
                         <div class=" d-flex flex-column cart_list_items" id = "count_cart--icon">
-                            @foreach($carts as $cart)
-                                <div class="d-flex list_items_item">
-                                    <img src="{{ asset($cart['product_image']) }}" alt="" class="item_img">
-                                    <div class="d-flex flex-wrap flex-column item_content">
-                                        <p class="item_content_text">{{ $cart['product_name'] }}</p>
-                                        <div class="d-flex justify-content-between content_dv">
-                                            <p class="item_content_text">DVT:</p>
-                                            <p class="item_content_text">{{ $cart['product_unit'] }}</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between item_content_price">
-                                            <p class="item_content_text">x {{ $cart['product_quantity'] }}</p>
-                                            <p class="item_price">{{ number_format($cart['product_total']) }}đ</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                            @include('client.components.cart-icon')
                         </div>
                         <div class="d-flex align-items-center justify-content-between cart_list_total">
                             <p class="total_text">Có tổng số: {{$totalCart}} sản phẩm</p>
