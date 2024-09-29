@@ -101,4 +101,12 @@ use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
             // dd($data);
             return response()->json(['products'=> $products,'remain'=> $remain]);
         }
+        // tim kiem san pham theo ten
+        public function search($request){
+            $value=$request->input('search');
+            $data=$this->productRopository->search($value);
+            $products=$this->setData($data['products']);
+            $remain=$data['remain'];
+            return compact('remain','products');
+        }
     }

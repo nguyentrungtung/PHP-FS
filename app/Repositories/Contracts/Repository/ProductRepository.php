@@ -106,4 +106,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $products= $query->skip($start)->take($limit)->get();
         return compact('products','remain');
     }
+    // 
+    // tim kiem san pham theo ten
+    public function search($value){
+        $count = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])->count();
+        $remain=$count - 8;
+        $products = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])
+        ->get();
+        return compact('remain','products');
+    }
 }

@@ -40,6 +40,9 @@ class ViewController extends Controller
     }
     // 
     public function search(Request $request){
-
+        $data=$this->service->search($request);
+        $products=$data['products'];
+        $remain=$data['remain'];
+        return view('client.pages.search',compact('products','remain'));
     }
 }
