@@ -11,6 +11,11 @@ function changePrice(value, ob) {
     const $productNameDetail = $('#product_name--detail');
     $productNameDetail.text(`${originalNameProduct} - ${$(ob).text()}`);
     $('#product_price--detail').text(parseFloat(value).toLocaleString('vi-VN') + '₫');
+    // Xử lý việc thay đổi lớp active cho đơn vị sản phẩm
+    if (!$(ob).hasClass('active')) {
+        $('.product-details__unit-item').removeClass('active'); // Xóa lớp active khỏi tất cả các phần tử
+        $(ob).addClass('active'); // Thêm lớp active cho phần tử được chọn
+    }
 
     // Thay đổi giá trị data-unit_name
     const newUnitName = $(ob).text();
