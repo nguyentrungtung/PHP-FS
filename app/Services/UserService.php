@@ -32,4 +32,12 @@
             }
             return false;
         }
+        // 
+        public function update(Request $request){
+            $id=Auth::user()->id;
+            $request->validate([
+                'customer_email' => 'required|email',             // Kiểm tra định dạng email hợp lệ
+            ]);
+            return $this->customerRepository->update($id,$request->except('_token'));
+        }
     }

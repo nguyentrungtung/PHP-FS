@@ -31,14 +31,14 @@
                 <div class="list_products">
                     @foreach ($todays as $product )
                         <div class="col-lg-1-5">
-                            <div class="card product-item">
-                                @if ($product['sale']!==0)
-                                    <div class="product-item__discount-wrap">
-                                        <p class="product-item__discount-product">- {{$product['sale']}}%</p>
-                                        <img src="" alt="" class="product-item__discount-ship d-none">
-                                    </div>
-                                @endif
-                                <div class="card product-item">
+                            <div data-id="{{$product['id']}}" class="card product-item">
+                                <a href="{{$product['detail_url']}}" class="detail_link">
+                                    @if ($product['sale']!==0)
+                                        <div class="product-item__discount-wrap">
+                                            <p class="product-item__discount-product">- {{$product['sale']}}%</p>
+                                            <img src="" alt="" class="product-item__discount-ship d-none">
+                                        </div>
+                                    @endif
                                     <div class="product-item__img-wrap">
                                         <div class="product-item__img-wrap">
                                             <img
@@ -59,16 +59,17 @@
                                         <p class="card-text text-danger fw-bold">{{ number_format($product['product_price']) }}
                                             đ</p>
                                     </div>
-                                    <!-- Product action -->
-                                    <div class="product-item__action">
-                                        <a href="#" class="d-block btn__add-cart btn_add-cart"
-                                           data-url="{{ route('cart.store',['id' => $product['id']]) }}">
-                                            <i class="fa-solid fa-cart-shopping"></i>
-                                        </a>
-                                        <a href="#" class="d-block btn__add-cart btn_add-cart">
-                                            <i class="fa-regular fa-heart"></i>
-                                        </a>
-                                    </div>
+                                </a>
+                                
+                                <!-- Product action -->
+                                <div class="product-item__action">
+                                    <a href="#" class="d-block btn__add-cart btn_add-cart"
+                                       data-url="{{ $product['add_url'] }}">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </a>
+                                    <a href="#" class="d-block btn__add-cart btn_add-cart">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>

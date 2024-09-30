@@ -263,7 +263,7 @@ a {
     color: black;
     background: #ffffff;
     padding: 10px 20px;
-    z-index: 10;
+    z-index: 1000000000000000;
     box-shadow: 0 0 20px 5px rgb(0 0 0 / 54%);
 }
 

@@ -12,8 +12,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     fillter();
     brandFillter();
     changeCat();
-    addCart();
-    detail();
     // lang nghe su kien scroll toi cuoi trang
     window.addEventListener('scroll', function() {
         const footer = document.querySelector('.footer');
@@ -85,85 +83,56 @@ function ajax(element,add=false){
             }else{
                 element.innerHTML=html;
             }
-            addCart();
-            detail();
         }
     });
 }
 // 
 // 
 function productItem(product){
-    return `<div class="col-lg-1-5">
+    return `
+        <div class="col-lg-1-5">
             <div data-id="${product.id}" class="card product-item">
-                ${product.sale!==0?`
-                <div class="product-item__discount-wrap">
-                    <p class="product-item__discount-product">- ${product.sale}%</p>
-                    <img src="" alt="" class="product-item__discount-ship d-none">
-                </div>`:''}
-                <div class="product-item__img-wrap">
-                    <img
-                        src="${product.product_image}"
-                        class="product-item__img card-img-top"
-                        alt="..."
-                    />
-                    <div class="product-item__frame d-none"></div>
-                </div>
-                <div class="card-body text-muted product-item__info">
-                    <p class="card-title product-item__name">${product.product_name}</p>
-                    <p class="card-text mb-1">ĐVT: ${product.product_unit}</p>
-                    <div class="product-item__info-price d-flex">
-                        <p class="card-text text-danger fw-bold product-item__price-new m-0">${product.product_price}</p>
-                        ${product.product_old_price!=0?`<span class="product-item__price-old ms-4 text-decoration-line-through">${product.product_old_price}</span>`:''}
+                <a href="${product.detail_url}" class="detail_link">
+                    ${product.sale!==0?
+                        `<div class="product-item__discount-wrap">
+                            <p class="product-item__discount-product">- ${product.sale}%</p>
+                            <img src="" alt="" class="product-item__discount-ship d-none">
+                        </div>`:''}
+                    <div class="product-item__img-wrap">
+                        <div class="product-item__img-wrap">
+                            <img
+                                src="${product.product_image}"
+                                class="product-item__img card-img-top"
+                                alt="..."
+                            />
+                            <div class="product-item__frame d-none"></div>
+                        </div>
+                        <div class="product-item__frame d-none"></div>
                     </div>
-                </div>
+                    <div class="card-body text-muted product-item__info">
+                        <p class="card-title product-item__name">${product.product_name}</p>
+
+                        <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
+                            data-value="${product.product_price}">${product.product_unit}</span>
+                        </p>
+                        <p class="card-text text-danger fw-bold">${product.product_price}
+                            đ</p>
+                    </div>
+                </a>
+                
                 <!-- Product action -->
                 <div class="product-item__action">
-                    <i data-id="${product.id}" class="d-block btn-cart--add fa-solid fa-cart-shopping cart_add"></i>
-                    <a href="#" class="d-block btn-cart--add" >
+                    <a href="#" class="d-block btn__add-cart btn_add-cart"
+                       data-url="${product.add_url}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                    <a href="#" class="d-block btn__add-cart btn_add-cart">
                         <i class="fa-regular fa-heart"></i>
                     </a>
                 </div>
+            </div>
         </div>
-    </div>`;
-}
-// them su kien click add san pham vao gio hang
-// 
-function addCart(){
-    const carts=document.querySelectorAll('.cart_add');
-    carts.forEach(cart=>{
-        if (!cart.dataset.hasClick) {
-            cart.addEventListener('click', function(e) {
-                e.stopPropagation(); 
-                const id=cart.getAttribute('data-id');
-            $.ajax({
-                url: 'client/cart/add/' + id,
-                type: 'GET',
-                success: function(response) {
-                    const counts=document.querySelectorAll('.cart_count');
-                    counts.forEach(count=>{
-                        count.innerHTML=parseInt(count.innerHTML)+1;
-                    })
-                }
-            });
-            });
-            cart.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
-        }
-    })
-}
-//  
-// ham bat su kien xem thong tin san pham
-// 
-function detail(){
-    const items=document.querySelectorAll('.product-item'); 
-    items.forEach(item=>{
-        if (!item.dataset.hasClick) {
-            item.addEventListener('click', function() {
-                const id=item.getAttribute('data-id');
-                window.location.pathname = '/product/'+id;
-            });
-            item.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
-        }
-    })
+    `;
 }
 // 
 function count1(list){
