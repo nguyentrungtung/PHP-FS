@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -53,20 +54,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         ->take(10)
         ->get();
     }
-    //
-    public function render($cat,$start,$limit){
-        $categoryIds = Categories::where('categories_parent_id', $cat)->pluck('id');
-        $count = $this->model::where('category_id', $cat)->orWhereIn('category_id', $categoryIds)->count();
-        $remain=$count - (int)($start+$limit);
-        $products = $this->model
-        ->where('category_id', $cat)
-        ->orWhereIn('category_id', $categoryIds)
-        ->skip($start)
-        ->take($limit)
-        ->get();
-        return compact('remain','products');
-    }
-    //
+    // 
     public function getByCatId($catId){
         return $this->model->where('category_id', $catId)->get();
     }
@@ -120,5 +108,39 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $products = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])
         ->get();
         return compact('remain','products');
+    }
+    // 
+    public function getByOrderId($orderId){
+        $userID = Auth::user()->id;
+        $products = $this->model
+        ->whereHas('orderDetails.order', function ($query) use ($userID, $orderId) {
+        // Lọc theo orderId và customer_id
+        $query->where('id', $orderId) // Lọc theo order_id
+              ->where('customer_id', $userID); // Kiểm tra customer_id có trùng với userID
+        })
+        ->with([
+            'productImage' => function ($query) {
+                $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
+            },
+            'orderDetails' => function ($query) {
+                $query->select('product_id', 'quantity'); // Lấy product_id và quantity từ order_details
+            }
+        ])
+        ->paginate(10); // Phân trang 10 sản phẩm mỗi trang
+        // dd($products);
+        return $products;
+    }
+    // 
+    public function getByOrderIds(){
+        $userID=Auth::user()->id;
+        $products = $this->model
+        ->whereHas('orderDetails.order.customer', function ($query) use ($userID) {
+            $query->where('id', $userID); // Lấy các đơn hàng mà customer_id bằng userID
+        })
+        ->with(['productImage' => function ($query) {
+            $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
+        }])
+        ->paginate(10); // Phân trang 10 sản phẩm mỗi trang
+        return $products;
     }
 }

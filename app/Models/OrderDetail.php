@@ -15,16 +15,12 @@ class OrderDetail extends Model
         'quantity',
         'price',
     ];
-
-    public function order()
-    {
-        return $this->belongsTo(Order::class, 'order_id');
-    }
-
-    // Quan hệ với bảng Product (1-n: Một sản phẩm có nhiều chi tiết đơn hàng)
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
-
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

@@ -59,44 +59,4 @@ function bannerSlider(){
     // Khởi tạo vị trí ban đầu
     updateSlidePosition();
     autoSlide();
-    addCart();
-    detail();
-}
-// 
-function addCart(){
-  const carts=document.querySelectorAll('.cart_add');
-  carts.forEach(cart=>{
-      if (!cart.dataset.hasClick) {
-          cart.addEventListener('click', function(e) {
-              e.stopPropagation(); 
-              const id=cart.getAttribute('data-id');
-          $.ajax({
-              url: 'client/cart/add/' + id,
-              type: 'GET',
-              success: function(response) {
-                  const counts=document.querySelectorAll('.cart_count');
-                  counts.forEach(count=>{
-                      count.innerHTML=parseInt(count.innerHTML)+1;
-                  })
-              }
-          });
-          });
-          cart.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
-      }
-  })
-}
-//  
-// ham bat su kien xem thong tin san pham
-// 
-function detail(){
-  const items=document.querySelectorAll('.product-item'); 
-  items.forEach(item=>{
-      if (!item.dataset.hasClick) {
-          item.addEventListener('click', function() {
-              const id=item.getAttribute('data-id');
-              window.location.pathname = '/product/'+id;
-          });
-          item.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
-      }
-  })
 }

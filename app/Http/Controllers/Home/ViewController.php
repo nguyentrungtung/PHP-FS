@@ -54,4 +54,23 @@ class ViewController extends Controller
     public function regit(){
         return view('client.pages.regit');
     }
+    // 
+    public function account(){
+        return view('client.pages.account.views.accountDetail');
+    }
+    // 
+    public function orders(){
+        $orders=$this->service->getOrders();
+        return view('client.pages.account.views.bill',compact('orders'));
+    }
+    // 
+    public function buys(){
+        $products=$this->service->getProductsByOrders();
+        return view('client.pages.account.views.buy',compact('products'));
+    }
+    // 
+    public function orderDetail($id){
+        $products=$this->service->getProductsByOrder($id);
+        return view('client.pages.account.views.orderDetail',compact('products'));
+    }
 }

@@ -98,11 +98,16 @@ Route::group([], function () {
     Route::get('/',[ViewController::class,'index'])->name('web.home');//man hinh chinh
     Route::get('/category/{id}', [ViewController::class,'show'])->name('web.category');//man hinh phan loai san pham
     Route::get('/search', [ViewController::class,'search'])->name('web.search');//man hinh tim kiem san pham
-    Route::get('/login',[ViewController::class,'login'])->name('web.login');
+    Route::get('/login',[ViewController::class,'login'])->name('login');
     Route::get('/regit',[ViewController::class,'regit'])->name('web.regit');
     Route::get('/user/login',[UserController::class,'login'])->name('web.user.login');
     Route::get('/user/regit',[UserController::class,'regit'])->name('web.user.regit');
     Route::get('/user/logout',[UserController::class,'logout'])->name('web.user.logout');
+    Route::get('/account',[ViewController::class,'account'])->name('web.user.account')->middleware('auth');
+    Route::post('/account/update',[UserController::class,'update'])->name('web.account.update')->middleware('auth');
+    Route::get('/account/orders',[ViewController::class,'orders'])->name('web.user.order')->middleware('auth');
+    Route::get('/account/buys',[ViewController::class,'buys'])->name('web.user.buys')->middleware('auth');
+    Route::get('/account/order/detail/{id}',[ViewController::class,'orderDetail'])->name('web.user.order.detail')->middleware('auth');
 });
 // route lay danh sach san pham phia client ajax
 Route::prefix('client/products')->group(function () {

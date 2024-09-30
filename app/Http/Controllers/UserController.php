@@ -37,4 +37,13 @@ class UserController extends Controller
         Auth::logout(); // Đăng xuất người dùng
         return redirect()->route('web.home');
     }
+    //update thong tin tai khoan nguoi dung
+    public function update(Request $request){
+        $user=$this->service->update($request);
+        if($user){
+           return redirect()->back()->with('reload', true)->with('success', 'Dữ liệu đã được lưu thành công!');;
+        }
+        return redirect()->back();
+    } 
+
 }

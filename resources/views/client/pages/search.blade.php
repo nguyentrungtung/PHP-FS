@@ -49,34 +49,42 @@
                 @foreach ($products as $product )
                 <div class="col-lg-1-5">
                     <div data-id="{{$product['id']}}" class="card product-item">
-                        @if ($product['sale']!==0)
-                        <div class="product-item__discount-wrap">
-                            <p class="product-item__discount-product">- {{$product['sale']}}%</p>
-                            <img src="" alt="" class="product-item__discount-ship d-none">
-                        </div>
-                        @endif
-                        <div class="product-item__img-wrap">
-                            <img
-                                src="{{asset($product['product_image'])}}"
-                                class="product-item__img card-img-top"
-                                alt="..."
-                            />
-                            <div class="product-item__frame d-none"></div>
-                        </div>
-                        <div class="card-body text-muted product-item__info">
-                            <p class="card-title product-item__name">{{$product['product_name']}}</p>
-                            <p class="card-text mb-1">ĐVT: {{$product['product_unit']}}</p>
-                            <div class="product-item__info-price d-flex">
-                                <p class="card-text text-danger fw-bold product-item__price-new m-0">{{$product['product_price']}}</p>
-                                @if ($product['product_old_price']!==0)
-                                <span class="product-item__price-old ms-4 text-decoration-line-through">{{$product['product_old_price']}}</span>
-                                @endif
+                        <a href="{{$product['detail_url']}}" class="detail_link">
+                            @if ($product['sale']!==0)
+                                <div class="product-item__discount-wrap">
+                                    <p class="product-item__discount-product">- {{$product['sale']}}%</p>
+                                    <img src="" alt="" class="product-item__discount-ship d-none">
+                                </div>
+                            @endif
+                            <div class="product-item__img-wrap">
+                                <div class="product-item__img-wrap">
+                                    <img
+                                        src="{{asset($product['product_image'])}}"
+                                        class="product-item__img card-img-top"
+                                        alt="..."
+                                    />
+                                    <div class="product-item__frame d-none"></div>
+                                </div>
+                                <div class="product-item__frame d-none"></div>
                             </div>
-                        </div>
+                            <div class="card-body text-muted product-item__info">
+                                <p class="card-title product-item__name">{{ $product['product_name'] }}</p>
+
+                                <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
+                                                                     data-value="{{ $product['product_price'] }}">{{ $product['product_unit'] }}</span>
+                                </p>
+                                <p class="card-text text-danger fw-bold">{{ number_format($product['product_price']) }}
+                                    đ</p>
+                            </div>
+                        </a>
+                        
                         <!-- Product action -->
                         <div class="product-item__action">
-                            <i data-id="{{$product['id']}}" class="d-block btn-cart--add fa-solid fa-cart-shopping cart_add"></i>
-                            <a href="#" class="d-block btn-cart--add" >
+                            <a href="#" class="d-block btn__add-cart btn_add-cart"
+                               data-url="{{ $product['add_url'] }}">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+                            <a href="#" class="d-block btn__add-cart btn_add-cart">
                                 <i class="fa-regular fa-heart"></i>
                             </a>
                         </div>
@@ -91,4 +99,5 @@
 @section('scripts')
     <script src="{{asset('client/js/search.js')}}"></script>
     <script src="{{asset('client/js/layout.js')}}"></script>
+    <script src="{{ url('client') }}/js/cart.js"></script>
 @endsection

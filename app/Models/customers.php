@@ -24,4 +24,7 @@ class customers extends Authenticatable
         'password',
         // 'remember_token',
     ];
+    public function orders(){
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
 }
