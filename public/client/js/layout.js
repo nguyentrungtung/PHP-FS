@@ -36,19 +36,19 @@ function showCart(){
     const cart=document.getElementById("cart_list");
     console.log(cart);
     if(cart.classList.contains("hidden")){
-        $.ajax({
-            url: 'client/cart/show',
-            type: 'GET',
-            success: function(response) {
-                console.log('check');
-                let newArr=[];
-                Object.values(response).forEach(product => {
-                    newArr.push(changeCartData(product));
-                });
-                const list=document.querySelector('.cart_list_items');
-                list.innerHTML=newArr.join('');
-            }
-        });
+        // $.ajax({
+        //     url: 'client/cart/show',
+        //     type: 'GET',
+        //     success: function(response) {
+        //         console.log('check');
+        //         let newArr=[];
+        //         Object.values(response).forEach(product => {
+        //             newArr.push(changeCartData(product));
+        //         });
+        //         const list=document.querySelector('.cart_list_items');
+        //         list.innerHTML=newArr.join('');
+        //     }
+        // });
         cart.classList.remove("hidden");
     }
 }

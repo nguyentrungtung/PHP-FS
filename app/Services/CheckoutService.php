@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OrderDetail;
 use App\Repositories\Contracts\RepositoryInterface\OrderDetailRepositoryInterface;
@@ -11,27 +12,26 @@ class CheckoutService
 {
     private $orderRepositoryInterface;
     private $orderDetailRepositoryInterface;
+    private $productRepositoryInterface;
 
     public function __construct(
         OrderRepositoryInterface       $orderRepositoryInterface,
         OrderDetailRepositoryInterface $orderDetailRepositoryInterface,
+        ProductRepositoryInterface      $productRepositoryInterface,
     )
     {
         $this->orderRepositoryInterface = $orderRepositoryInterface;
         $this->orderDetailRepositoryInterface = $orderDetailRepositoryInterface;
+        $this->productRepositoryInterface = $productRepositoryInterface;
     }
 
     public function processCheckout($request, $carts)
     {
-//        $customers = Auth::customers();
-//        if (Auth::check()) {
-//            $customer_id = $customers->id;
-//        }else{
-//            $customer_id = null;
-//        }
+        $customerId = Auth::check() ? Auth::id() : null;
 
         // Dữ liệu cho đơn hàng
         $orderData = [
+            'customer_id' => $customerId,
             'customer_name' => $request->name,
             'customer_phone' => $request->phone,
             'customer_address' => $request->address,
@@ -54,6 +54,16 @@ class CheckoutService
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
+
+            // Cập nhât product quantity
+            $product = $this->productRepositoryInterface->find($productId);
+            if ($product) {
+                $newQuantity = $product->product_quantity - $cart['product_quantity'];
+                if ($newQuantity < 0) {
+                    $newQuantity = 0; // Đảm bảo số lượng không âm
+                }
+                $product->update(['product_quantity' => $newQuantity]);
+            }
         }
 
         // Lưu chi tiết đơn hàng vào bảng 'order_details'

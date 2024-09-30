@@ -6,6 +6,7 @@ use App\Http\Controllers\Home\CategoriesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\AdminUnitController;
 use App\Http\Controllers\Admin\AdminCustomerController;
@@ -69,6 +70,10 @@ Route::group(['prefix' => 'admin/products'], function () {
     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
 
+Route::group(['prefix' => 'admin/order'], function () {
+    Route::get('/', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/create', [OrderController::class, 'create'])->name('order.detail');
+});
 
 //
 Route::prefix('admin/units')->group(function () {

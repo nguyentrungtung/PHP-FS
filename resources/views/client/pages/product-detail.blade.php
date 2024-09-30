@@ -109,11 +109,12 @@
                                 $price = $product->product_price;
                                 $priceUnit = (int)$price * (int)$unitValue->value
                             @endphp
-                            <li class="product-details__unit-item btn btn-danger" data-value="{{$priceUnit}}"
-                                value="{{$priceUnit}}"
+                            <li class="product-details__unit-item btn btn-danger"
+                                value="{{$priceUnit}}" data-price_unit = "{{ $priceUnit }}"
                                 onclick="changePrice(this.value, this)">{{$unitValue->unit->unit_name}}
                             </li>
                         @endforeach
+
                     </ul>
                 </div>
 
@@ -136,8 +137,9 @@
                     </div>
                 </div>
                 <button class="btn btn-danger translate--y btn-lg product-quantity__selector--add btn_add-cart"
-                        data-url="{{ route('cart.store',['id' => $product->id]) }}">
-                    Thêm vào giỏ hàng
+                        data-url="{{ route('cart.store',['id' => $product->id]) }}"
+                        data-product_price="{{ $product->product_price }}"
+                        data-unit_name="{{ $product->unitValues->first()->unit->unit_name }}">Thêm vào giỏ hàng
                 </button>
         </div>
     </div>
@@ -218,11 +220,15 @@
                                 <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau sàn
                                     MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
                             </div>
-                            <p class="card-text text-danger fw-bold">30.000₫</p>
+                            <p class="card-text text-danger fw-bold">{{ number_format($productRelate->product_price) }}
+                                đ</p>
                         </div>
                         <!-- Product action -->
                         <div class="product-item__action">
-                            <a href="#" class="d-block btn__add-cart btn_add-cart" data-url="{{ route('cart.store',['id' => $productRelate->id]) }}">
+                            <a href="#" class="d-block btn__add-cart btn_add-cart"
+                               data-unit_name="{{ $productRelate->unitValues->first()->unit->unit_name }}"
+                               data-url="{{ route('cart.store',['id' => $productRelate->id]) }}"
+                               data-product_price="{{$productRelate->product_price}}">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
                             <a href="#" class="d-block btn__add-cart btn_add-cart">

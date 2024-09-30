@@ -46,20 +46,21 @@
                             Tổng sản phẩm: <span class="float-end">{{$totalCart}}</span>
                         </p>
                         <p class="cart__summary-total-price-estimated">
-                            Tạm tính giỏ hàng: <span class="float-end" id = "cart__summary-subtotal">{{number_format($subtotal)}}₫</span>
+                            Tạm tính giỏ hàng: <span class="float-end" id="cart__summary-subtotal">{{number_format($subtotal)}}₫</span>
                         </p>
                         <p class="cart__summary-total-price-saving">
-                            Tiết kiệm được: <span class="float-end" id = "cart__summary-totalsaving">{{number_format($totalSaving)}}₫</span>
+                            Tiết kiệm được: <span class="float-end" id="cart__summary-totalsaving">{{number_format($totalSaving)}}₫</span>
                         </p>
                         <p class="cart__summary-shopping-fee d-none">
                             Phí vận chuyển: <span class="float-end">20.000₫</span>
                         </p>
                         <p class="cart__summary-coupon"></p>
-                        Khuyến mại: <span class="float-end" id = "cart__summary-discount">10.000₫</span>
+                        Khuyến mại: <span class="float-end" id="cart__summary-discount">10.000₫</span>
                         </p>
                         <hr/>
-                        <h5 class="cart__summary-total mb-4" style = "font-size:18px">
-                            Tổng cộng: <span class="text-danger" id = "cart__summary-totalprice" style = "font-size:18px; float: right">{{number_format($totalPrice)}}₫</span>
+                        <h5 class="cart__summary-total mb-4" style="font-size:18px">
+                            Tổng cộng: <span class="text-danger" id="cart__summary-totalprice"
+                                             style="font-size:18px; float: right">{{number_format($totalPrice)}}₫</span>
                         </h5>
                         {{--Chọn voucher--}}
                         <div class="cart__summary-actions text-center">
@@ -104,32 +105,37 @@
                                                 <div class="modal-body coupon-list">
                                                     <!-- Coupon item  -->
                                                     @foreach($coupons as $coupon)
-                                                    <div class="coupon-list__item coupon-item__after-active">
-                                                        <div class="coupon-list__logo">
-                                                            <img
-                                                                src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
-                                                                alt="logo coupon">
+                                                        <div class="coupon-list__item coupon-item__after-active">
+                                                            <div class="coupon-list__logo">
+                                                                <img
+                                                                    src="https://hcm.fstorage.vn/images/2024/08/logo-unilever-20240828093508.png"
+                                                                    alt="logo coupon">
+                                                            </div>
+                                                            <div class="coupon-list__content ">
+                                                                @if($coupon->discount_type == 'percentage')
+                                                                    <h5 class="coupon-list__title">Giảm
+                                                                        giá {{number_format($coupon->discount_value)}}
+                                                                        %</h5>
+                                                                @endif
+                                                                <p class="coupon-list__description">Áp dụng cho đơn hàng
+                                                                    từ
+                                                                    {{number_format($coupon->min_order_value)}}đ</p>
+                                                                <p class="coupon-list__expiration-date text-center"
+                                                                   style="background-color: rgb(253, 151, 1);padding: 3px; width: 150px;border-radius: 4px;">
+                                                                    HSD : <span>{{$coupon->end_date}}</span></p>
+                                                                <a class="coupon-list__promotional-terms d-none"
+                                                                   href="#">Điều
+                                                                    kiện
+                                                                    khuyến mại</a>
+                                                            </div>
+                                                            <div class="coupon-list__actions">
+                                                                <button
+                                                                    class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
+                                                                    Áp dụng
+                                                                </button>
+                                                                <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
+                                                            </div>
                                                         </div>
-                                                        <div class="coupon-list__content ">
-                                                            @if($coupon->discount_type == 'percentage')
-                                                            <h5 class="coupon-list__title">Giảm giá {{number_format($coupon->discount_value)}}%</h5>
-                                                            @endif
-                                                            <p class="coupon-list__description">Áp dụng cho đơn hàng từ
-                                                                {{number_format($coupon->min_order_value)}}đ</p>
-                                                            <p class="coupon-list__expiration-date text-center"
-                                                               style="background-color: rgb(253, 151, 1);padding: 3px; width: 150px;border-radius: 4px;">
-                                                                HSD : <span>{{$coupon->end_date}}</span></p>
-                                                            <a class="coupon-list__promotional-terms" href="#">Điều kiện
-                                                                khuyến mại</a>
-                                                        </div>
-                                                        <div class="coupon-list__actions">
-                                                            <button
-                                                                class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
-                                                                Áp dụng
-                                                            </button>
-                                                            <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
-                                                        </div>
-                                                    </div>
                                                     @endforeach
                                                 </div>
                                                 <div class="modal-footer d-none">
@@ -144,9 +150,12 @@
                                 </div>
                             </div>
                             <div class="cart__summary-actions__bottom mt-2">
-                                <a href="{{ route('web.home') }}" class="btn btn-primary cart__continue-shopping translate--y">Tiếp tục mua
+                                <a href="{{ route('web.home') }}"
+                                   class="btn btn-primary cart__continue-shopping translate--y">Tiếp tục mua
                                     sắm</a>
-                                <a href="#" class="btn btn-danger cart__checkout translate--y"  id="btn-checkout_cart-detail" data-url_save_summary = "{{route('cart.saveSummary')}}">Thanh toán</a>
+                                <a href="#" class="btn btn-danger cart__checkout translate--y"
+                                   id="btn-checkout_cart-detail" data-url_save_summary="{{route('cart.saveSummary')}}">Thanh
+                                    toán</a>
                             </div>
                         </div>
                     </div>
@@ -163,49 +172,49 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6 product__item">
-                        <div class="card product-item">
-                            <div class="product-item__discount-wrap">
-                                <p class="product-item__discount-product">-30%</p>
-                                <img src="" alt="" class="product-item__discount-ship d-none">
-                            </div>
-                            <div class="product-item__img-wrap">
-                                <img
-                                    src="https://hcm.fstorage.vn/images/2022/thach-trai-cay-vfoods-tong-hop-1kg.jpg"
-                                    class="product-item__img card-img-top"
-                                    alt="..."
-                                />
-                                <div class="d-none product-item__frame"></div>
-                            </div>
-                            <div class="card-body text-muted product-item__info">
-                                <p class="card-title product-item__name">CHERISH Thạch vị thơm gói 405G Mô tả ngắn về
-                                    sản phẩm này. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                                    pretium lectus nec urna consequat, a feugiat lectus aliquet.</p>
-                                <p class="card-text mb-1">ĐVT: Gói</p>
-                                <div class="product-item__promotion-info d-none">
-                                    <img class="product-item__promotion-info-image"
-                                         src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png"
-                                         alt="">
-                                    <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau
-                                        sàn MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
+
+                    @foreach($specialOffers as $specialOffer)
+                        <div class="col-md-6 product__item">
+                            <div class="card product-item">
+                                <div class="product-item__discount-wrap">
+                                    <p class="product-item__discount-product">-30%</p>
+                                    <img src="" alt="" class="product-item__discount-ship d-none">
                                 </div>
-                                <div class="product-item__info-price d-flex">
-                                    <p class="card-text text-danger fw-bold product-item__price-new m-0">30.000₫</p>
-                                    <span
-                                        class="product-item__price-old ms-4 text-decoration-line-through">49.000₫</span>
+                                <div class="product-item__img-wrap">
+                                    @foreach($specialOffer->productImage as $product_image)
+                                        @if($product_image->image_type == 'main')
+                                            <!-- Main Product Image -->
+                                            <img
+                                                id="mainImage"
+                                                src="{{ asset($product_image->image_url) }}"
+                                                class="product-info__image product-item__img card-img-top"
+                                                alt="Main Product Image"
+                                            />
+                                        @endif
+                                    @endforeach
+                                    <div class="d-none product-item__frame"></div>
+
                                 </div>
-                            </div>
-                            <!-- Product action -->
-                            <div class="product-item__action">
-                                <a href="#" class="d-block btn__add-cart btn_add-cart" data-url="">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </a>
-                                <a href="#" class="d-block btn__add-cart btn_add-cart">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
+                                <div class="card-body text-muted product-item__info">
+                                    <p class="card-title product-item__name">{{$specialOffer->product_name}}</p>
+                                    <p class="card-text mb-1">
+                                        ĐVT: {{$specialOffer->unitValues->first()->unit->unit_name}}</p>
+                                    <p class="card-text text-danger fw-bold">{{ number_format($specialOffer->product_price) }}
+                                        ₫</p>
+                                </div>
+                                <!-- Product action -->
+                                <div class="product-item__action">
+                                    <a href="#" class="d-block btn__add-cart btn_add-cart"
+                                       data-url="{{ route('cart.store',['id' => $specialOffer->id]) }}">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </a>
+                                    <a href="#" class="d-block btn__add-cart btn_add-cart">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -213,7 +222,7 @@
 @endsection
 
 @section('scripts')
-{{--    <script src="{{ url('client') }}/js/product.js"></script>--}}
+    {{--    <script src="{{ url('client') }}/js/product.js"></script>--}}
     <script src="{{ url('client') }}/js/cart.js"></script>
 @endsection
 

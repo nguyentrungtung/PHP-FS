@@ -12,11 +12,10 @@ $(document).ready(function () {
     // Thêm sản phẩm vào giỏ hàng
     function addToCart(event) {
         event.preventDefault();
-        let urlCart = $(this).data("url");
-        let quantity = $('#input-quantity').val();
-        let initItem = $('.product-details__unit-item');
-        let unitName = initItem.text();
-        let price = initItem.data("value");
+        var urlCart = $(this).data("url");
+        var quantity = $('#input-quantity').val();
+        var unitName = $(this).data("unit_name");
+        var price = $(this).data("product_price");
         if(!quantity){
             quantity = 1;
         }
@@ -91,7 +90,6 @@ $(document).ready(function () {
             $(this).val(availableQuantity); // Đặt lại giá trị về số lượng tối đa có sẵn
             newQuantity = availableQuantity; // Cập nhật newQuantity về giá trị có sẵn
         }
-
 
         $.ajax({
             type: 'GET',

@@ -8,10 +8,17 @@ let originalNameProduct = document.getElementById('product_name--detail').innerT
 
 // Thay đổi giá và tên sản phẩm khi chọn loại sản phẩm
 function changePrice(value, ob) {
-    const productNameDetail = document.getElementById('product_name--detail');
-    productNameDetail.innerText = `${originalNameProduct} - ${ob.innerText}`;
-    document.getElementById('product_price--detail').innerText = value.toLocaleString('vi-VN') + '₫';
+    const $productNameDetail = $('#product_name--detail');
+    $productNameDetail.text(`${originalNameProduct} - ${$(ob).text()}`);
+    $('#product_price--detail').text(parseFloat(value).toLocaleString('vi-VN') + '₫');
+
+    // Thay đổi giá trị data-unit_name
+    const newUnitName = $(ob).text();
+    const newPrice = $(ob).data('price_unit');
+    $('.btn_add-cart').attr('data-unit_name', newUnitName.trim());
+    $('.btn_add-cart').attr('data-product_price', newPrice);
 }
+
 
 // Hiển thị tab khi được chọn
 function showTab(tabId) {
