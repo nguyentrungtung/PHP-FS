@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         observer.observe(target); // Theo dõi từng phần tử
     });
     addCart();
-    detail();
-    // 
+    // detail();
+    //
 })
 // dem nguoc thoi gian
 function countdown(){
@@ -160,7 +160,7 @@ function fetchData(element) {
     const list_products=element.querySelector('.list_products');
     ajax([id,list_products,content,name,element],addProducts)
 }
-// 
+//
 function ajax(elements,callback){
     const [id]=elements;
     $.ajax({
@@ -300,15 +300,15 @@ const observer = new IntersectionObserver((entries, observer) => {
         }
     });
 }, { threshold: 0.3 });
-// 
+//
 // them su kien click add san pham vao gio hang
-// 
+//
 function addCart(){
     const carts=document.querySelectorAll('.cart_add');
     carts.forEach(cart=>{
         if (!cart.dataset.hasClick) {
             cart.addEventListener('click', function(e) {
-                e.stopPropagation(); 
+                e.stopPropagation();
                 const id=cart.getAttribute('data-id');
             $.ajax({
                 url: 'client/cart/add/' + id,
@@ -325,18 +325,18 @@ function addCart(){
         }
     })
 }
-//  
+//
 // ham bat su kien xem thong tin san pham
-// 
-function detail(){
-    const items=document.querySelectorAll('.product-item'); 
-    items.forEach(item=>{
-        if (!item.dataset.hasClick) {
-            item.addEventListener('click', function() {
-                const id=item.getAttribute('data-id');
-                window.location.pathname = '/product/'+id;
-            });
-            item.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
-        }
-    })
-}
+//
+// function detail(){
+//     const items=document.querySelectorAll('.product-item');
+//     items.forEach(item=>{
+//         if (!item.dataset.hasClick) {
+//             item.addEventListener('click', function() {
+//                 const id=item.getAttribute('data-id');
+//                 window.location.pathname = '/product/'+id;
+//             });
+//             item.dataset.hasClick = "true"; // Đánh dấu đã gán sự kiện
+//         }
+//     })
+// }

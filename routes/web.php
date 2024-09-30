@@ -107,7 +107,7 @@ Route::prefix('client/products')->group(function () {
 //Home
 
 // Product
-Route::get('/product/{id}', [HomeProductController::class, 'productDetail'])->name('product.show');
+Route::get('/product/{id}', [HomeProductController::class, 'index'])->name('product.show');
 //Cart
 Route::get('/view-cart', [HomeCartController::class, 'index'])->name('cart.show');
 Route::post('/add-to-cart/{id}', [HomeCartController::class, 'store'])->name('cart.store');

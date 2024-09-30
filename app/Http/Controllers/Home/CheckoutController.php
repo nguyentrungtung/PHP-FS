@@ -51,7 +51,8 @@ class CheckoutController extends Controller
      */
     public function checkoutSuccess()
     {
-        return view('client.pages.cart-detail');
+//        return view('client.pages.cart-detail');
+        return redirect()->route('web.home');
     }
 
 }

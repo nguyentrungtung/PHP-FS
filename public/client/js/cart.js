@@ -17,6 +17,9 @@ $(document).ready(function () {
         let initItem = $('.product-details__unit-item');
         let unitName = initItem.text();
         let price = initItem.data("value");
+        if(!quantity){
+            quantity = 1;
+        }
 
         $.ajax({
             method: "POST",
@@ -79,6 +82,16 @@ $(document).ready(function () {
         var newQuantity = $(this).val();
         var cartItemId = $(this).closest('.cart__item').data('id');
         let urlUpdateCart = $(this).data("url_update_cart");
+        // số lượng sản phẩm còn
+        let availableQuantity = parseInt($(this).data('available-quantity'));
+
+        // Kiểm tra xem số lượng mới có lớn hơn số lượng có sẵn không
+        if (newQuantity > availableQuantity) {
+            alert('Số lượng không được vượt quá số lượng có sẵn: ' + availableQuantity);
+            $(this).val(availableQuantity); // Đặt lại giá trị về số lượng tối đa có sẵn
+            newQuantity = availableQuantity; // Cập nhật newQuantity về giá trị có sẵn
+        }
+
 
         $.ajax({
             type: 'GET',

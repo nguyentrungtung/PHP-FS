@@ -43,13 +43,17 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->get();
     }
 
-    // 
+    public function specialOffers(){
+        return  $this->model->where('created_at', '>=', now()->subDays(30))->limit(4)->get();
+    }
+
+    //
     public function getToday(){
         return $this->model::whereDate('created_at', Carbon::today())
         ->take(10)
         ->get();
     }
-    // 
+    //
     public function render($cat,$start,$limit){
         $categoryIds = Categories::where('categories_parent_id', $cat)->pluck('id');
         $count = $this->model::where('category_id', $cat)->orWhereIn('category_id', $categoryIds)->count();
@@ -62,7 +66,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         ->get();
         return compact('remain','products');
     }
-    // 
+    //
     public function getByCatId($catId){
         return $this->model->where('category_id', $catId)->get();
     }
@@ -102,7 +106,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             //     ->orderBy('total_sold', 'desc'); // Sắp xếp theo tổng số lượng bán giảm dần
             // }
         }
-        
+
         $count = $query->count();
         $remain=$count - (int)($start+$limit);
         $products= $query->skip($start)->take($limit)->get();

@@ -32,7 +32,7 @@ use Illuminate\Http\Request;
             $this->unitValueRepository = $unitValueRepository;
             $this->categoryRepository = $categoryRepository;
         }
-        // 
+        //
         public function index(){
             $data=$this->productRopository->getToday();
             // dd($data);
@@ -41,23 +41,22 @@ use Illuminate\Http\Request;
             $brands= $this->brandRepository->all();
             return compact('todays','brands');
         }
-        // chuyen doi du lieu truoc khi tra ve controller 
+        // chuyen doi du lieu truoc khi tra ve controller
         private function setData($data){
             $response=[];
             foreach ($data as $product) {
                 if(isset($product->product_price_old)){
-                    $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;  
-                    $old=number_format($product->product_price_old, 0, ',', '.') . ' ₫';
+                    $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;
+                    $old=number_format($product->product_price_old, 0, ',', '.') ;
                 }else{
                     $sale= 0;
                     $old=0;
                 }
-                $price=number_format($product->product_price, 0, ',', '.') . ' ₫';
                 $response[]=['id'=>$product->id,
                     'product_name'=> $product->product_name,
                     'sale'=>$sale,
                     'brand_id'=>$product->brand_id,
-                    'product_price'=>$price,
+                    'product_price'=>$product->product_price,
                     'product_old_price'=>$old,
                     'product_unit'=>$this->getUnit($product->id),
                     'product_image'=>$this->getMainImg($product->id)
@@ -77,7 +76,7 @@ use Illuminate\Http\Request;
             return $unit->unit_name;
         }
         //
-        // 
+        //
         public function getByCat(Request $request){
             $data = $this->productRopository->fill($request);
             // dd($data);
@@ -86,7 +85,7 @@ use Illuminate\Http\Request;
             $brands= $this->brandRepository->getByProductIds($products);
             return compact('products','remain','brands');
         }
-        // 
+        //
         public function fill($request){
             $data= $this->productRopository->fill($request);
             $products=$this->setData($data['products']);
