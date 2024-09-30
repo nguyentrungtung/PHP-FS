@@ -103,18 +103,23 @@
                 </p>
                 <div class="product-details__text-type">
                     <span class="product-details__title inline-block">Chọn loại : </span>
+                    @php
+                        $unitCount = count($product->unitValues); // Đếm số lượng đơn vị
+                    @endphp
+
                     <ul class="product-details__unit-list">
-                        @foreach($product->unitValues as $unitValue)
+                        @foreach($product->unitValues as $index => $unitValue)
                             @php
                                 $price = $product->product_price;
-                                $priceUnit = (int)$price * (int)$unitValue->value
+                                $priceUnit = (int)$price * (int)$unitValue->value;
+                                // Kiểm tra điều kiện để xác định trạng thái active
+                                $isActive = ($unitCount === 1) || ($index === 0);
                             @endphp
-                            <li class="product-details__unit-item btn btn-danger"
-                                value="{{$priceUnit}}" data-price_unit = "{{ $priceUnit }}"
-                                onclick="changePrice(this.value, this)">{{$unitValue->unit->unit_name}}
+                            <li class="product-details__unit-item {{ $isActive ? 'active' : '' }}"
+                                value="{{ $priceUnit }}" data-price_unit="{{ $priceUnit }}"
+                                onclick="changePrice(this.value, this)">{{ $unitValue->unit->unit_name }}
                             </li>
                         @endforeach
-
                     </ul>
                 </div>
 
@@ -136,11 +141,13 @@
                         </button>
                     </div>
                 </div>
+                @if($product->product_quantity > 0)
                 <button class="btn btn-danger translate--y btn-lg product-quantity__selector--add btn_add-cart"
                         data-url="{{ route('cart.store',['id' => $product->id]) }}"
                         data-product_price="{{ $product->product_price }}"
                         data-unit_name="{{ $product->unitValues->first()->unit->unit_name }}">Thêm vào giỏ hàng
                 </button>
+                @endif
         </div>
     </div>
 
@@ -226,6 +233,8 @@
                         <!-- Product action -->
                         <div class="product-item__action">
                             <a href="#" class="d-block btn__add-cart btn_add-cart"
+                               data-product_id = "{{$productRelate->id}}"
+                               data-available_stock = "{{ $productRelate->product_quantity }}"
                                data-unit_name="{{ $productRelate->unitValues->first()->unit->unit_name }}"
                                data-url="{{ route('cart.store',['id' => $productRelate->id]) }}"
                                data-product_price="{{$productRelate->product_price}}">

@@ -32,18 +32,16 @@ class CartService
     {
 //        dd($request->all());
         $product = $this->productRepositoryInterface->find($id);
-
-        if (!$product) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Sản phẩm không tồn tại.',
-            ], 404);
+        $quantity = $request->quantity;
+        // Kiểm tra tồn kho
+        if ((int)$quantity > (int)$product->product_quantity) {
+            return response()->json(['status' => false, 'message' => 'Số lượng vượt quá tồn kho!']);
         }
 
         $cart = session()->get('carts', []);
         $productImage = $product->productImage->first()->image_url;
         // Cập nhật hoặc thêm mới sản phẩm vào giỏ hàng
-        $productQuantity = isset($cart[$id]) ? $cart[$id]['product_quantity'] + $request->quantity : $request->quantity;
+        $productQuantity = isset($cart[$id]) ? $cart[$id]['product_quantity'] + $quantity : $quantity;
 
         if ($productQuantity < 1) {
             return response()->json([
@@ -201,57 +199,21 @@ class CartService
         );
     }
 
-    //-----------------------------------
-    public function addCart($id)
+    //Kiểm tra và cập nhật số lượng sản phẩm trong giỏ hàng so với số lượng sản phẩm có sẵn.
+    public function checkAndUpdateCartQuantities($carts)
     {
-        $cart = $this->getCart();
-        // kiem tra san pham da co trong cart hay chua neu co se tang quantity len
-        if (isset($cart[$id])) {
-            $cart[$id]['product_quantity'] = (int)$cart[$id]['product_quantity'] + 1;
-            session()->put('cart', $cart);
-            return;
+        foreach ($carts as $productId => $item) {
+            $product = $this->productRepositoryInterface->find($productId);
+            if ($product) {
+                // Kiểm tra số lượng trong giỏ hàng với tồn kho
+                if ($item['product_quantity'] > $product->product_quantity) {
+                    // nếu số lượng trong giỏ hàng vượt quá tồn kho
+                    $carts[$productId]['product_quantity'] = $product->product_quantity; // Cập nhật lại số lượng trong mảng carts
+                }
+            }
         }
-        // tao data cua san pham de luu vao cart
-        $product = $this->productRepositoryInterface->find($id);
-        if (!$product) {
-            return false;
-        }
-        $img = $this->productImageRopositoryInterface->getMainImg($id);
-        $unitValue = $this->unitValueRepositoyInterface->getByProductID($id);
-        $unit = $this->uniRepositoryInterface->find($unitValue->unit_id);
-        //
-        $data = [
-            'product_name' => $product->product_name,
-            'product_price' => $product->product_price,
-            'product_image' => $img->image_url,
-            'product_unit' => $unit->unit_name,
-            'product_quantity' => 1
-        ];
-        $cart[$id] = $data;
-        session()->put('cart', $cart);
-        return response()->json(['status' => true,
-            'message' => 'Sản phẩm đã được thêm vào giỏ hàng thành công',]);
-    }
 
-    // lay cart tu session
-    public function getCart()
-    {
-        if (session()->has('cart')) {
-            return session()->get('cart');
-        }
-        return [];
+        return $carts; // Trả về giỏ hàng đã được cập nhật
     }
-
-    // lay thong tin san pham de show mini cart
-    public function show()
-    {
-        $cart = $this->getCart();
-        return array_map(function ($item) {
-            $item['product_image'] = asset($item['product_image']);
-            return $item;
-        }, $cart);
-    }
-
-    //lấy tổng quan chi tiết về giỏ hàng
 
 }

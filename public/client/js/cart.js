@@ -16,8 +16,17 @@ $(document).ready(function () {
         var quantity = $('#input-quantity').val();
         var unitName = $(this).data("unit_name");
         var price = $(this).data("product_price");
+        var availableStock = $(this).data("available_stock");
+        var productId = $(this).data("product_id");
+
         if(!quantity){
             quantity = 1;
+        }
+
+        // Kiểm tra tồn kho trước khi thêm vào giỏ hàng
+        if (quantity > availableStock) {
+            alert("Sản phẩm đã hết hàng hoặc số lượng vượt quá tồn kho hiện tại.");
+            return;
         }
 
         $.ajax({
@@ -37,7 +46,7 @@ $(document).ready(function () {
                     $('#count_cart--icon').html(response.data.cartListIcon);
                     $('#cart-list').html(response.data.cartList);
                 } else {
-                    alert("Không thể thêm sản phẩm vào giỏ hàng");
+                    alert(response.message);
                 }
             },
             error: function () {

@@ -21,7 +21,7 @@ class CartController extends Controller
         ProductService             $productService,
         CartService                $cartService,
         ProductRepositoryInterface $productRepositoryInterface,
-        CouponRepositoryInterface $couponRepositoryInterface,
+        CouponRepositoryInterface  $couponRepositoryInterface,
     )
     {
         $this->productService = $productService;
@@ -39,9 +39,13 @@ class CartController extends Controller
         $carts = session()->get('carts', []);
         $cartSummary = $this->cartService->getCartSummary($carts);
         //Sản phẩm ưu đãi
-        $specialOffers  = $this->productService->specialOffers();
+        $specialOffers = $this->productService->specialOffers();
         $coupons = $this->couponRepositoryInterface->all();
-//        dd($coupons);
+        // check số lượng khi thêm sản phẩm vào giỏ
+        $cartNew = $this->cartService->checkAndUpdateCartQuantities($carts);
+
+        // Cập nhật session với giỏ hàng đã điều chỉnh
+        session()->put('carts', $cartNew);
 
         return view('client.pages.cart-detail', [
             'subtotal' => $cartSummary['subtotal'],
@@ -49,6 +53,7 @@ class CartController extends Controller
             'totalPrice' => $cartSummary['totalPrice'],
             'specialOffers' => $specialOffers,
             'coupons' => $coupons,
+            'carts' => $carts
         ]);
     }
 
