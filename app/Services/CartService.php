@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\RepositoryInterface\CouponRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitRepositoryInterface;
@@ -14,17 +15,21 @@ class CartService
     private $unitValueRepositoyInterface;
     private $productImageRopositoryInterface;
     private $uniRepositoryInterface;
+    private $couponRepositoryInterface;
 
     public function __construct(
         UnitRepositoryInterface         $uniRepositoryInterface,
         ProductRepositoryInterface      $productRepositoryInterface,
         UnitValueRepositoryInterface    $unitValueRepositoyInterface,
-        ProductImageRepositoryInterface $productImageRopositoryInterface)
+        ProductImageRepositoryInterface $productImageRopositoryInterface,
+        CouponRepositoryInterface $couponRepositoryInterface
+    )
     {
         $this->uniRepositoryInterface = $uniRepositoryInterface;
         $this->productRepositoryInterface = $productRepositoryInterface;
         $this->productImageRopositoryInterface = $productImageRopositoryInterface;
         $this->unitValueRepositoyInterface = $unitValueRepositoyInterface;
+        $this->couponRepositoryInterface = $couponRepositoryInterface;
     }
 
     //Thêm mới sản phẩm vào giỏ hàng
@@ -215,5 +220,33 @@ class CartService
 
         return $carts; // Trả về giỏ hàng đã được cập nhật
     }
+
+    public function applyCoupon($request)
+    {
+        $couponId = $request->coupon_id;
+        $carts = session()->get('carts', []);
+        $coupon = $this->couponRepositoryInterface->find($couponId);
+
+        if (!$coupon) {
+            return response()->json(['success' => false, 'message' => 'Mã giảm giá không hợp lệ.']);
+        }
+
+        // Kiểm tra các điều kiện áp dụng mã giảm giá
+        $totalAmount = $this->getCartSummary($carts)['totalPrice'];
+        if ($totalAmount < $coupon->min_order_value) {
+            return response()->json(['success' => false, 'message' => 'Đơn hàng không đủ điều kiện áp dụng mã giảm giá.']);
+        }
+
+        // Cập nhật thông tin mã giảm giá vào session hoặc database
+        session()->put('applied_coupon', $couponId);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Mã giảm giá đã được áp dụng!',
+            'discount' => $coupon->discount_value,
+            'discount_type' => $coupon->discount_type,
+        ]);
+    }
+
 
 }

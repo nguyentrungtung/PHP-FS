@@ -36,6 +36,8 @@
                                     name="name"
                                     placeholder="Nhập họ tên đầy đủ"
                                 />
+
+                                <span id="name-error" class="error-message text-danger"></span>
                             </div>
                             <div class="checkout__input-group">
                                 <label class="checkout__label" for="phone"
@@ -48,6 +50,8 @@
                                     name="phone"
                                     placeholder="Nhập số điện thoại"
                                 />
+
+                                <span id="phone-error" class="error-message text-danger"></span>
                             </div>
                             {{--Đổi khu vực - modal ....--}}
                             <div class="checkout__input-group">
@@ -61,6 +65,8 @@
                                     name="address"
                                     placeholder="Nhập số nhà, tên đường"
                                 />
+
+                                <span id="address-error" class="error-message text-danger"></span>
                             </div>
                             <!-- Phương thức thanh toán -->
                             <div class="checkout__section checkout__section--methods">
@@ -142,7 +148,10 @@
                             <table class="table oder-list__product-item">
                                 <thead>
                                 <tr>
-                                    <th scope="col" colspan="3" class="text-center">Sản phẩm</th>
+{{--                                    <th scope="col" colspan="3" class="text-center">Sản phẩm</th>--}}
+                                    <th scope="col" class="text-center">Tên sản phẩm</th>
+                                    <th scope="col" class="text-center">Ảnh</th>
+                                    <th scope="col" class="text-center">Số lượng</th>
                                     <th scope="col" class="text-center">Giá</th>
                                 </tr>
                                 </thead>
