@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const brand_btn=document.getElementById("brand_btn");
     const brand_list_logo=document.getElementById("brand_list_logo");
     const list_content=document.getElementById("list_content");
+    // if(sublist){}
     drop(title_btn,list_subcat,sublist,count1);
     drop(brand_btn,brand_list_logo,list_content,count2);
     fillter();
@@ -51,9 +52,11 @@ function fetchData(callback,add=false) {
     // Giả sử đây là phần logic để lấy dữ liệu sản phẩm từ server
     const element=document.querySelector('.products_list');
     const remain=element.getAttribute('data-remain');
-    if(remain<=0){
-        check=true;
-        return;
+    if(add){
+        if(remain<=0){
+            check=true;
+            return;
+        }
     }
     callback(element,add);
 }
@@ -83,6 +86,9 @@ function ajax(element,add=false){
             }else{
                 element.innerHTML=html;
             }
+        },
+        error: function(error) {
+            console.error('Error:', error); // Bắt lỗi và in ra lỗi
         }
     });
 }
@@ -115,7 +121,7 @@ function productItem(product){
                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
                             data-value="${product.product_price}">${product.product_unit}</span>
                         </p>
-                        <p class="card-text text-danger fw-bold">${product.product_price}
+                        <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
                             đ</p>
                     </div>
                 </a>
@@ -165,6 +171,7 @@ function fillter(){
                 fill.classList.add("active");
                 value=fill.getAttribute('data-value');
             }
+            
             fetchData(ajax);
         });
     });
@@ -272,7 +279,6 @@ function changeCat(){
     const list=document.querySelectorAll('.subcat_title');
     const product_list=document.querySelector('.products_list');
     let chooseArr=url.innerHTML.split(' / ');
-    console.log(list);
     list.forEach(item=>{
         item.addEventListener('click',(e)=>{
             // loai bo active va khiem tra phan tu loai bo co phai phan tu hien tai duoc click hay khong

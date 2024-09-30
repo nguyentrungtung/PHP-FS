@@ -233,6 +233,7 @@ function LoadMore(load,id,element){
 }
 // tao html de render
 function productItem(product){
+    console.log(product);
     return `
         <div class="col-lg-1-5">
             <div data-id="${product.id}" class="card product-item">
@@ -259,7 +260,7 @@ function productItem(product){
                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
                             data-value="${product.product_price}">${product.product_unit}</span>
                         </p>
-                        <p class="card-text text-danger fw-bold">${product.product_price}
+                        <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
                             đ</p>
                     </div>
                 </a>

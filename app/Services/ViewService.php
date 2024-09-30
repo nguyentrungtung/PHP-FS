@@ -54,7 +54,7 @@ use Illuminate\Http\Request;
             foreach ($data as $product) {
                 if(isset($product->product_price_old)){
                     $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;
-                    $old=number_format($product->product_price_old, 0, ',', '.') ;
+                    $old=number_format($product->product_price_old, 2, '.') ;
                 }else{
                     $sale=0;
                     $old=0;
@@ -105,10 +105,25 @@ use Illuminate\Http\Request;
         // tim kiem san pham theo ten
         public function search($request){
             $value=$request->input('search');
+            // lay ra history search
+            $searchHistory = session()->get('search', []);
+            // 
+            if (!empty($value) && !in_array($value, $searchHistory)) {
+                // Thêm giá trị tìm kiếm vào mảng
+                $searchHistory[] = $value;
+        
+                // Nếu mảng có nhiều hơn 5 phần tử, loại bỏ phần tử đầu tiên
+                if (count($searchHistory) > 5) {
+                    array_shift($searchHistory); // Loại bỏ phần tử đầu tiên
+                }
+        
+                // Cập nhật session với mảng tìm kiếm mới
+                session()->put('search', $searchHistory);
+            }
             $data=$this->productRopository->search($value);
-            $products=$this->setData($data['products']);
-            $remain=$data['remain'];
-            return compact('remain','products');
+            $products=$this->setData($data);
+            // dd($products);
+            return $products;
         }
         // 
         public function getOrders(){

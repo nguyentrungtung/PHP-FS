@@ -21,7 +21,8 @@ class ViewComposer
         $categories = $this->categoriesController->index();
         $totalCart = count(session()->get('carts',[]));
         $carts = session()->get('carts', []);
-
-        $view->with(compact('categories', 'carts', 'totalCart'));
+        $historySearch=session()->get('search',[]);
+        // dd($historySearch);
+        $view->with(compact('categories', 'carts', 'totalCart','historySearch'));
     }
 }
