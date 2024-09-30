@@ -20,19 +20,12 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-       
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function productDetail(string $id)
+    public function index($id)
     {
         $product = $this->productService->getProductById($id);
         $productRelates = $this->productService->productRelate($id);
 
         return view('client.pages.product-detail', compact('product', 'productRelates'));
     }
+
 }

@@ -61,6 +61,7 @@ class CheckoutService
 
         // Xóa giỏ hàng khỏi phiên
         session()->forget('carts');
+        session()->forget('cartSummary');
 
         // Trả về phản hồi hoặc chuyển hướng
         return redirect()->route('checkout.success')->with('success', 'Đặt hàng thành công!');

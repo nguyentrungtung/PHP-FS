@@ -30,7 +30,7 @@ class CartService
     //Thêm mới sản phẩm vào giỏ hàng
     public function store($request, $id)
     {
-
+//        dd($request->all());
         $product = $this->productRepositoryInterface->find($id);
 
         if (!$product) {
@@ -45,6 +45,7 @@ class CartService
 
         // Cập nhật hoặc thêm mới sản phẩm vào giỏ hàng
         $productQuantity = isset($cart[$id]) ? $cart[$id]['product_quantity'] + $request->quantity : $request->quantity;
+
         if ($productQuantity < 1) {
             return response()->json([
                 'status' => false,
@@ -60,7 +61,7 @@ class CartService
             'product_unit' => $request->unitName,
             'product_quantity' => $productQuantity,
             'product_total' => $request->price * $productQuantity,
-            'available_quantity' => $product->product_quantity, // Lưu số lượng có sẵn của sản phẩm
+            'available_quantity' => $product->product_quantity,
         ];
 
         // Cập nhật giỏ hàng vào session
@@ -135,7 +136,7 @@ class CartService
 
             if (isset($cart['product_price_old'])) {
                 $subtotal += (int)$cart['product_price_old'] * (int)$productQuantity;
-                $totalSaving += (int)($cart['product_price_old'] - $productPrice) * (int)$productQuantity;
+                $totalSaving += (int)($cart['product_price_old'] - (int)$productPrice) * (int)$productQuantity;
             } else {
                 $subtotal += (int)$productPrice * (int)$productQuantity;
             }

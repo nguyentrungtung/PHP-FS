@@ -11,11 +11,11 @@
                 <div class="cart__item-product-info">
                     <h5 class="cart__item-name">{{ $cart['product_name'] }}</h5>
                     <p class="cart__item-price">
-                        Giá: <span class="text-danger" style="font-size: 14px; font-weight: 500; color:black">{{ number_format($cart['product_price'], 0, ',', '.') }} ₫</span>
+                        Giá: <span class="text-danger" style="font-size: 14px; font-weight: 500; color:black">{{ number_format($cart['product_price']) }} ₫</span>
                         @if(isset($cart['product_price_old']))
                             <span
                                 class="d-inline-block ms-3"
-                                style="font-size: 14px; font-weight: 500; color:#696363; text-decoration: line-through;">{{number_format($cart['product_price_old'])}}₫</span>
+                                style="font-size: 14px; font-weight: 500; color:#696363; text-decoration: line-through;">{{ number_format($cart['product_price_old']) }}₫</span>
                         @endif
                     </p>
                     <p class="cart__item-unit">

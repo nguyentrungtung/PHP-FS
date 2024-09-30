@@ -17,6 +17,9 @@ $(document).ready(function () {
         let initItem = $('.product-details__unit-item');
         let unitName = initItem.text();
         let price = initItem.data("value");
+        if(!quantity){
+            quantity = 1;
+        }
 
         $.ajax({
             method: "POST",
