@@ -118,13 +118,6 @@ Route::prefix('client/products')->group(function () {
 
 // Product
 Route::get('/product/{id}', [HomeProductController::class, 'index'])->name('product.show');
-//Cart
-Route::get('/view-cart', [HomeCartController::class, 'index'])->name('cart.show');
-Route::post('/add-to-cart/{id}', [HomeCartController::class, 'store'])->name('cart.store');
-Route::get('/cart/update', [HomeCartController::class, 'update'])->name('cart.update');
-Route::post('/cart/clear', [HomeCartController::class, 'delete'])->name('cart.clear');
-Route::post('/cart/remove/{id}', [HomeCartController::class, 'removeItem'])->name('cart.remove');
-Route::post('/cart/save-summary', [HomeCartController::class, 'saveSummary'])->name('cart.saveSummary');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/', [HomeCartController::class, 'index'])->name('cart.show');
