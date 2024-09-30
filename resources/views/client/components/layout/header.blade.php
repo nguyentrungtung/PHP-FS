@@ -10,8 +10,9 @@
                     <div id="search_ex" class="search_ex hidden">
                         <h2 class="text-uppercase search_current_title">Tìm kiếm gần đây</h2>
                         <div class="d-flex flex-wrap search_current">
-                            <div class="current_value">Bánh trung thu</div>
-                            <div class="current_value">Sữa</div>
+                            @foreach ($historySearch as $value )
+                                <div data-value="{{$value}}" class="current_value">{{$value}}</div>
+                            @endforeach
                         </div>
                         <h2 class="text-uppercase search_current_title">Từ khóa gợi ý</h2>
                     </div>

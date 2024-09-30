@@ -17,6 +17,7 @@ class ViewController extends Controller
     public function index(){
         $data=$this->service->index();
         $todays=$data['todays'];
+        // dd($todays);
         $brands=$data['brands'];
         return view('client.home.home',compact('todays','brands'));
     }
@@ -25,7 +26,7 @@ class ViewController extends Controller
         // return response()->json(['true']);   
         return $this->service->fill($request);
     }
-    // 
+    // man hinh cac san pham phan loai theo cat id
     public function show($id){
         $request = new Request([
             'catId' => $id,
@@ -41,10 +42,8 @@ class ViewController extends Controller
     }
     // 
     public function search(Request $request){
-        $data=$this->service->search($request);
-        $products=$data['products'];
-        $remain=$data['remain'];
-        return view('client.pages.search',compact('products','remain'));
+        $products=$this->service->search($request);
+        return view('client.pages.search',compact('products'));
     }
     // 
     public function login(){

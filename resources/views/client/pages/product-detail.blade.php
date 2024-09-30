@@ -221,14 +221,8 @@
                             {{--                            @foreach($productRelate->unitValues as $unitValue)--}}
                             <p class="card-text mb-1">ĐVT: {{$productRelate->unitValues->first()->unit->unit_name}}</p>
                             {{--                            @endforeach--}}
-                            <div class="product-item__promotion-info">
-                                <img class="product-item__promotion-info-image"
-                                     src="https://hcm.fstorage.vn/images/2024/09/10170556-20240911031445.png" alt="">
-                                <p class="product-item__promotion-info-text">Mua 2 Chai được tặng 1 chai Nước lau sàn
-                                    MaxKleen ngàn hoa ngọt ngào chai 1kg</p>
-                            </div>
-                            <p class="card-text text-danger fw-bold">{{ number_format($productRelate->product_price) }}
-                                đ</p>
+                            
+                            <p class="card-text text-danger fw-bold">30.000₫</p>
                         </div>
                         <!-- Product action -->
                         <div class="product-item__action">
