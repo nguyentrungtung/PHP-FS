@@ -83,4 +83,8 @@ class CartController extends Controller
         return $this->cartService->saveSummary($request);
     }
 
+    public function applyCoupon(Request $request){
+        return $this->cartService->applyCoupon($request);
+    }
+
 }

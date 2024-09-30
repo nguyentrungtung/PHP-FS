@@ -126,6 +126,7 @@ Route::group(['prefix' => 'cart'], function () {
     Route::post('/clear', [HomeCartController::class, 'delete'])->name('cart.clear');
     Route::post('/remove/{id}', [HomeCartController::class, 'removeItem'])->name('cart.remove');
     Route::post('/save-summary', [HomeCartController::class, 'saveSummary'])->name('cart.saveSummary');
+    Route::post('/apply-coupon', [HomeCartController::class, 'applyCoupon'])->name('apply.coupon');
 });
 
 Route::group(['prefix' => 'checkout'], function () {

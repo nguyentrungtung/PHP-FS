@@ -19,7 +19,7 @@ $(document).ready(function () {
         var availableStock = $(this).data("available_stock");
         var productId = $(this).data("product_id");
 
-        if(!quantity){
+        if (!quantity) {
             quantity = 1;
         }
 
@@ -150,7 +150,7 @@ $(document).ready(function () {
                     $('#cart__summary-subtotal').text(response.data.cartSummary.subtotal.toLocaleString('vi-VN') + '₫');
                     $('#cart__summary-totalsaving').text(response.data.cartSummary.totalSaving.toLocaleString('vi-VN') + '₫');
                     $('#cart__summary-totalprice').text(response.data.cartSummary.totalPrice.toLocaleString('vi-VN') + '₫');
-                    if(response.data.count_number <=0){
+                    if (response.data.count_number <= 0) {
                         $('.cart__summary').css('display', 'none');
                         $('#btn_cart--clear').css('display', 'none');
                         $('#cart_empty--text').css('display', 'block');
@@ -196,6 +196,54 @@ $(document).ready(function () {
         });
     }
 
+    // sử dụng coupon
+    function applyCoupon(event) {
+        event.preventDefault();
+        var couponId = $(this).data('coupon-id');
+        var url = $(this).data('url_coupon');
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                coupon_id: couponId,
+            },
+            success: function (response) {
+                if (response.status) {
+                    alert(response.message); // Thông báo thành công
+                    // Cập nhật tổng giá trị đơn hàng
+                    var discount = response.discount; // Giá trị giảm giá
+                    var discountType = response.discount_type; // Loại giảm giá (phần trăm hoặc giá cố định)
+                    var totalPriceElement = $('#cart__summary-totalprice'); // lấy giá đơn hàng
+                    var currentTotal = parseFloat(totalPriceElement.text().replace(/[^0-9.-]+/g, ""));
+                    var newTotal;
+
+                    // Kiểm tra loại giảm giá
+                    if (discountType == 'percentage') {
+                        // Giảm giá theo phần trăm
+                        newTotal = currentTotal - (currentTotal * (discount / 100));
+                    } else if (discountType == 'fixed') {
+                        // Giảm giá theo giá cố định
+                        newTotal = currentTotal - discount;
+                    }
+
+                    // tổng không âm
+                    newTotal = Math.max(newTotal, 0);
+
+                    // Cập nhật giá trị mới
+                    totalPriceElement.text(newTotal.toLocaleString('vi-VN') + '₫'); // Cập nhật giá trị mới
+                    var discountAmount = currentTotal - newTotal; // Tính số tiền được giảm
+                    $('#cart__summary-discount').text(discountAmount.toLocaleString('vi-VN') + '₫'); // Cập nhật giá trị khuyến mại
+                } else {
+                    alert(response.message); // Thông báo lỗi
+                }
+            },
+            error: function (xhr) {
+                alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+            }
+        });
+    }
 
     // Đăng ký sự kiện click cho nút thêm vào giỏ hàng
     $(document).on("click", ".btn_add-cart", addToCart);
@@ -211,4 +259,7 @@ $(document).ready(function () {
 
     //
     $(document).on("click", "#btn-checkout_cart-detail", saveSummary);
+
+    // Đăng ký sự kiện click cho nút sử dụng coupon
+    $(document).on("click", ".coupon-list__btn--apply", applyCoupon);
 });

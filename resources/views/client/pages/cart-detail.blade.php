@@ -55,7 +55,7 @@
                             Phí vận chuyển: <span class="float-end">20.000₫</span>
                         </p>
                         <p class="cart__summary-coupon"></p>
-                        Khuyến mại: <span class="float-end" id="cart__summary-discount">10.000₫</span>
+                        Khuyến mại: <span class="float-end" id="cart__summary-discount">0₫</span>
                         </p>
                         <hr/>
                         <h5 class="cart__summary-total mb-4" style="font-size:18px">
@@ -87,9 +87,7 @@
                                                     ></button>
                                                     <div class="form-search_coupon">
                                                         <input
-                                                            type="email"
                                                             class="form-control"
-                                                            id="exampleInputEmail1"
                                                             aria-describedby="emailHelp"
                                                             placeholder="Nhập mã khuyến mại"
                                                             style="padding:6px 6px 6px 10px;
@@ -130,10 +128,15 @@
                                                             </div>
                                                             <div class="coupon-list__actions">
                                                                 <button
-                                                                    class="coupon-list__btn btn btn-danger coupon-list__btn--apply">
-                                                                    Áp dụng
+                                                                    class="coupon-list__btn btn btn-danger coupon-list__btn--apply"
+                                                                    data-url_coupon = "{{ route('apply.coupon') }}"
+                                                                    data-coupon-id="{{ $coupon->id }}
+                                                                ">
+                                                                Áp dụng
                                                                 </button>
-                                                                <!-- <button class="coupon-list__btn btn btn-danger coupon-list__btn--save">Lưu mã</button> -->
+                                                                <!-- <button class=" coupon-list__btn btn btn-danger
+                                                                    coupon-list__btn--save
+                                                                ">Lưu mã</button> -->
                                                             </div>
                                                         </div>
                                                     @endforeach
