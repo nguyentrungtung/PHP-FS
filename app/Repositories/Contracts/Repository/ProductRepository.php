@@ -65,13 +65,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $start=$request->input('start');
         $limit=$request->input('limit');
         $catId=$request->input('catId');
-        // $brands=['1'];
+        // // $brands=['1'];
         // $sort='sale';
-        // $cart=13;
+        // $catId=3;
         // $start=0;
-        // $limit= 20;
+        // $limit= 10;
         // lay danh sach cac cat con cua cat hien tai
         $categoryIds = Categories::where('categories_parent_id', $catId)->pluck('id');
+        // dd($categoryIds);
         // Khởi tạo query với điều kiện category_id là $catId hoặc nằm trong danh sách category con
         $query = $this->model->where(function($query) use ($catId, $categoryIds) {
             $query->where('category_id', $catId)
@@ -87,15 +88,26 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             if($sort==='sale'){
                 $query= $query->orderBy(DB::raw('product_price_old / product_price'), 'desc');
             }
-            // if($sort=== 'order'){
-            //     $query= $query->join('orderdetail', 'products.id', '=', 'orderdetail.product_id') // Join bảng products và orderdetail
-            //     ->select('products.*', DB::raw('SUM(orderdetail.quantity) as total_sold')) // Tính tổng số lượng bán
-            //     ->groupBy('products.id') // Nhóm theo id sản phẩm
-            //     ->orderBy('total_sold', 'desc'); // Sắp xếp theo tổng số lượng bán giảm dần
-            // }
+            if($sort=== 'order'){
+                $query->join('order_details', 'products.id', '=', 'order_details.product_id')
+                ->select(
+                    'products.id', 
+                    'products.product_name', 
+                    'products.product_price', 
+                    'products.product_price_old',
+                    DB::raw('SUM(order_details.quantity) as total_sold')
+                )
+                ->groupBy(
+                    'products.id', 
+                    'products.product_name', 
+                    'products.product_price', 
+                    'products.product_price_old',
+                )->orderBy('total_sold', 'desc');
+                // dd(count($query->get()));
+            }
         }
 
-        $count = $query->count();
+        $count = count($query->get());
         $remain=$count - (int)($start+$limit);
         $products= $query->skip($start)->take($limit)->get();
         return compact('products','remain');
@@ -103,11 +115,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     // 
     // tim kiem san pham theo ten
     public function search($value){
-        $count = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])->count();
-        $remain=$count - 8;
-        $products = $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])
+        return  $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])
         ->get();
-        return compact('remain','products');
     }
     // 
     public function getByOrderId($orderId){

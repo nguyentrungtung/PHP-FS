@@ -54,7 +54,7 @@
                                         <p class="card-title product-item__name">{{ $product['product_name'] }}</p>
 
                                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
-                                                                             data-value="{{ $product['product_price'] }}">{{ $product['product_unit'] }}</span>
+                                         data-value="{{ $product['product_price'] }}">{{ $product['product_unit'] }}</span>
                                         </p>
                                         <p class="card-text text-danger fw-bold">{{ number_format($product['product_price']) }}
                                             đ</p>

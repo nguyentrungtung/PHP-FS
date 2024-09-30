@@ -19,9 +19,15 @@ document.addEventListener("DOMContentLoaded",()=>{
     formSearch.addEventListener('click',()=>{
         search.focus();
     })
-
+    // Bắt sự kiện click ra ngoài form
+    document.addEventListener('click', (event) => {
+        if (!formSearch.contains(event.target)) {
+            // Nếu click không nằm trong form, thực hiện hành động tương ứng
+            hiddenEx(); // Ẩn danh sách tìm kiếm (nếu có)
+        }
+    });
     search.addEventListener("focus",showEx);
-    search.addEventListener("blur",hiddenEx);
+    // search.addEventListener("blur",hiddenEx);
     //
     const cart=document.getElementById("cart");
     cart.addEventListener("mouseenter",showCart);
@@ -30,6 +36,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     selectShipping();
     const items=document.querySelectorAll(".sub");
     hoverParentCat(items);
+    searchValue();
 });
 
 function showCart(){
@@ -88,7 +95,26 @@ function showEx(){
         ex.classList.remove("hidden");
     }
 }
-
+// 
+function search(){
+    const values=document.querySelectorAll('.current_value');
+    values.forEach(value=>{
+        value.addEventListener('click',()=>{
+            $.ajax({
+                url: '/search',
+                type: 'GET',
+                data:{
+                    'search':value.innerHTML
+                },
+                success: function(response) {
+                    $('.main-content').html(response); // Cập nhật nội dung trang bằng phản hồi
+                    window.history.pushState({ path: '/search' }, '', '/search'); 
+                }
+            })
+        })
+    })
+}
+// 
 function hiddenEx(){
     const ex=document.getElementById("search_ex");
     if(!ex.classList.contains("hidden")){
@@ -175,4 +201,19 @@ function selectShipping() {
     close.addEventListener("click",()=>{
         shipping.classList.add('hidden');
     });
+}
+// bat su kien an cac search value
+function searchValue(){
+    const values=document.querySelectorAll('.current_value');
+    const input=document.getElementById('search_input');
+    const form=document.getElementById('form_search');
+    console.log(values);
+    values.forEach(item=>{
+        item.addEventListener('click',(e)=>{
+            input.focus();
+            console.log('check');
+            input.value=item.getAttribute('data-value');
+            form.submit();
+        })
+    })
 }
