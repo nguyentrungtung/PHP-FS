@@ -15,4 +15,10 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $this->model = $model;
         parent::__construct($model);
     }
+    // 
+    public function getOrdersByUserId($userId){
+        return $this->model->with(['customer'=>function($query)use ($userId){
+            $query->where('id', $userId);
+        }])->paginate(10);
+    }
 }

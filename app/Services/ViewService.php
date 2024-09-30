@@ -3,10 +3,12 @@
 
 use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\OrderRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\UnitValueRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
     class ViewService{
@@ -16,6 +18,8 @@ use Illuminate\Http\Request;
         private $unitValueRepository;
         private $productImageRepository;
         private $categoryRepository;
+        // 
+        private $orderRepository;
 
         public function __construct(
             ProductRepositoryInterface $productRopository,
@@ -23,7 +27,8 @@ use Illuminate\Http\Request;
             UnitRepositoryInterface $unitRepository,
             ProductImageRepositoryInterface $productImageRepository,
             UnitValueRepositoryInterface $unitValueRepository,
-            CategoryRepositoryInterface $categoryRepository
+            CategoryRepositoryInterface $categoryRepository,
+            OrderRepositoryInterface $orderRepository
         ) {
             $this->productRopository = $productRopository;
             $this->brandRepository = $brandRepository;
@@ -31,6 +36,7 @@ use Illuminate\Http\Request;
             $this->productImageRepository = $productImageRepository;
             $this->unitValueRepository = $unitValueRepository;
             $this->categoryRepository = $categoryRepository;
+            $this->orderRepository = $orderRepository;
         }
         // 
         public function index(){
@@ -46,18 +52,16 @@ use Illuminate\Http\Request;
             $response=[];
             foreach ($data as $product) {
                 if(isset($product->product_price_old)){
-                    $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;  
-                    $old=number_format($product->product_price_old, 0, ',', '.') . ' ₫';
+                    $sale=round(round($product->product_price_old / $product->product_price, 2)-1,1)*100;
+                    $old=$product->product_price_old;
                 }else{
-                    $sale= 0;
                     $old=0;
                 }
-                $price=number_format($product->product_price, 0, ',', '.') . ' ₫';
                 $response[]=['id'=>$product->id,
                     'product_name'=> $product->product_name,
                     'sale'=>$sale,
                     'brand_id'=>$product->brand_id,
-                    'product_price'=>$price,
+                    'product_price'=>$product->product_price,
                     'product_old_price'=>$old,
                     'product_unit'=>$this->getUnit($product->id),
                     'product_image'=>$this->getMainImg($product->id)
@@ -101,5 +105,23 @@ use Illuminate\Http\Request;
             $products=$this->setData($data['products']);
             $remain=$data['remain'];
             return compact('remain','products');
+        }
+        // 
+        public function getOrders(){
+            $id=Auth::user()->id;
+            return $this->orderRepository->getOrdersByUserId($id);
+        }
+        // 
+        public function getProductsByOrders(){
+            $id=Auth::user()->id;
+            $products=$this->productRopository->getByOrderIds();
+            // $products=$this->setData($data);
+            // dd($products);
+            return $products;
+        }
+        //
+        public function getProductsByOrder($id){
+            $products=$this->productRopository->getByOrderId($id);
+            return $products;
         }
     }

@@ -49,4 +49,8 @@ class Product extends Model
     public function units(){
         return $this->hasMany(Unit::class);
     }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

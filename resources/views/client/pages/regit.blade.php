@@ -94,7 +94,7 @@
                                 </form>
                                 <div class="register-page__footer mt-3 text-center">
                                     <p class="register-page__text">
-                                        Đã có tài khoản? <a href="{{route('web.login')}}" class="register-page__link">Đăng nhập ngay</a>
+                                        Đã có tài khoản? <a href="{{route('login')}}" class="register-page__link">Đăng nhập ngay</a>
                                     </p>
                                 </div>
                             </div>

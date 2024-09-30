@@ -7,7 +7,6 @@ use App\Repositories\BaseRepositoryInterface;
 interface ProductRepositoryInterface extends BaseRepositoryInterface
 {
     public function generateSKU($categoryId);
-    public function render($cat,$start,$limit);
     // 
     public function productRelate($productId);
     // 
@@ -18,4 +17,8 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
     public function fill($request);
     // 
     public function search($value);
+    // 
+    public function getByOrderId($orderId);
+    // 
+    public function getByOrderIds();
 }

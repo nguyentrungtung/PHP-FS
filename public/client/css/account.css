@@ -1,0 +1,107 @@
+body{
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+.account{
+    width: 100vw;
+    padding: 0 10vw;
+    min-height: 100vh;
+    
+    background: #dcdcdc;
+}
+.account_nav{
+    background: white;
+    width: 20%;
+    padding: 20px 0;
+}
+.nav_item_title{
+    margin: 0 10px;
+    padding: 0;
+}
+.account_nav_item{
+    cursor: pointer;
+    color: gray;
+    padding: 8px 10px;
+    background: white;
+    &:hover{
+        color: #e82428;
+        background: #eaeaea;
+    }
+}
+.account_view{
+    width: 80%;
+    padding: 20px 0;
+    background: white;
+}
+.form-content{
+    margin: 5px 0;
+    padding: 0;
+}
+.account_detail{
+    width: 100%;
+}
+.account_detail_tabs{
+    width: 100%;
+    border-bottom: 1px solid grey;
+    position: relative;
+}
+.detail_tabs_tab{
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+}
+.active{
+    color: #e82428 !important;
+}
+.move{
+    position: absolute;
+    width: 150px;
+    height: 3px;
+    bottom: 0;
+    border-radius: 10px;
+    transition: left 0.5s ease;
+    background: #e82428;
+}
+.hidden{
+    display: none !important;
+}
+.detail_content_view{
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+}
+.content_input{
+    width: 65%;
+}
+.gender_radio{
+    width: 200px;
+    align-items: center;
+    justify-content: space-around;
+}
+.gender{
+    margin: 0;
+}
+.btn_account{
+    background: #e82428;
+    width: 100px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+.btn_account--disabled{
+    width: 100px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    color: rgb(85, 85, 85);
+    background: rgb(219, 219, 219);
+    
+}
+.nullbill{
+    height: 250px;
+    object-fit: contain;
+}
+.account_title{
+    margin: 10px 20px;
+}

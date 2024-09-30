@@ -20,4 +20,11 @@ class Order extends Model
         'order_date',
         'order_note'
     ];
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+    public function customer(){
+        return $this->belongsTo(customers::class, 'customer_id', 'id');
+    }
 }
