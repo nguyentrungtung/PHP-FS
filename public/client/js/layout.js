@@ -13,16 +13,16 @@ document.addEventListener("DOMContentLoaded",()=>{
     const host=document.getElementById("hostline");
     host.addEventListener("mouseenter",showHostline);
     host.addEventListener("mouseleave",hiddenHostline);
-    // 
+    //
     const formSearch=document.getElementById("form_search");
     const search=document.getElementById("search_input");
     formSearch.addEventListener('click',()=>{
         search.focus();
     })
-    
+
     search.addEventListener("focus",showEx);
     search.addEventListener("blur",hiddenEx);
-    // 
+    //
     const cart=document.getElementById("cart");
     cart.addEventListener("mouseenter",showCart);
     cart.addEventListener("mouseleave",hiddenCart);
@@ -122,7 +122,7 @@ function showSubMenu(){
         menu.classList.remove("hidden");
     }
 }
-// 
+//
 function hiddenMenu(){
     const menu=document.getElementById("menu_list");
     const sub_menu=document.getElementById("sub_list");
@@ -132,7 +132,7 @@ function hiddenMenu(){
     if(!sub_menu.classList.contains("hidden")){
         sub_menu.classList.add("hidden");
     }
-    
+
 }
 function hoverParentCat(list){
     const menu=document.getElementById("sub_list");
@@ -153,7 +153,7 @@ function hoverParentCat(list){
         })
     });
 }
-// 
+//
 function userMenu(){
     const user=document.getElementById('user_zone');
     const menu=document.getElementById('user_menu');
@@ -164,7 +164,7 @@ function userMenu(){
         menu.classList.add('hidden');
     })
 }
-// 
+//
 function selectShipping() {
     const close=document.getElementById('close_shipping');
     const shipping=document.getElementById('shipping_select');

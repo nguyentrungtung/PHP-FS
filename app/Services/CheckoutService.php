@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\OrderDetail;
 use App\Repositories\Contracts\RepositoryInterface\OrderDetailRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\OrderRepositoryInterface;
@@ -23,6 +23,13 @@ class CheckoutService
 
     public function processCheckout($request, $carts)
     {
+//        $customers = Auth::customers();
+//        if (Auth::check()) {
+//            $customer_id = $customers->id;
+//        }else{
+//            $customer_id = null;
+//        }
+
         // Dữ liệu cho đơn hàng
         $orderData = [
             'customer_name' => $request->name,

@@ -32,6 +32,7 @@
                     min="1"
                     style="width: 80px"
                     data-url_update_cart="{{route('cart.update')}}"
+                    data-available-quantity="{{ $cart['available_quantity'] }}"
                 />
                 <button style ="background-color:white; border:none; padding:4px" class="text-danger btn-sm mt-3 cart__item-remove translate--y" data-url="{{ route('cart.remove', $product_id) }}"><i class="fa-regular fa-trash-can"></i></button>
             </div>

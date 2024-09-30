@@ -30,6 +30,7 @@ class CartService
     //Thêm mới sản phẩm vào giỏ hàng
     public function store($request, $id)
     {
+
         $product = $this->productRepositoryInterface->find($id);
 
         if (!$product) {
@@ -59,6 +60,7 @@ class CartService
             'product_unit' => $request->unitName,
             'product_quantity' => $productQuantity,
             'product_total' => $request->price * $productQuantity,
+            'available_quantity' => $product->product_quantity, // Lưu số lượng có sẵn của sản phẩm
         ];
 
         // Cập nhật giỏ hàng vào session

@@ -8,14 +8,18 @@ interface ProductRepositoryInterface extends BaseRepositoryInterface
 {
     public function generateSKU($categoryId);
     public function render($cat,$start,$limit);
-    // 
+    //
     public function productRelate($productId);
-    // 
+    //
     public function getToday();
-    // 
+    //
     public function getByCatId($catId);
-    // 
+    //
+    public function getByBrandsId($request);
+
+    public function specialOffers();
+    //
     public function fill($request);
-    // 
+    //
     public function search($value);
 }
