@@ -42,7 +42,6 @@ class CartService
 
         $cart = session()->get('carts', []);
         $productImage = $product->productImage->first()->image_url;
-
         // Cập nhật hoặc thêm mới sản phẩm vào giỏ hàng
         $productQuantity = isset($cart[$id]) ? $cart[$id]['product_quantity'] + $request->quantity : $request->quantity;
 

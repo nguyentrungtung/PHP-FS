@@ -15,7 +15,7 @@ class UserController extends Controller
     public function __construct(UserService $service){
         $this->service = $service;
     }
-    // 
+    //
     public function regit(Request $request){
         // dd($request->input());
         $user=$this->service->regit($request);
@@ -24,15 +24,15 @@ class UserController extends Controller
         auth()->login($user);
         return redirect()->route('web.home');
     }
-    // 
+    //
     public function login(Request $request){
-        
+
         if($this->service->login($request)){
             return redirect()->route('web.home');
         };
         return redirect()->back()->withErrors('Login failed! Please check your credentials.');
     }
-    // 
+    //
     public function logout(){
         Auth::logout(); // Đăng xuất người dùng
         return redirect()->route('web.home');
