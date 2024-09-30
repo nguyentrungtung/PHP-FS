@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                             <div class="cart__summary-actions__bottom mt-2">
-                                <a href="#" class="btn btn-primary cart__continue-shopping translate--y">Tiếp tục mua
+                                <a href="{{ route('web.home') }}" class="btn btn-primary cart__continue-shopping translate--y">Tiếp tục mua
                                     sắm</a>
                                 <a href="#" class="btn btn-danger cart__checkout translate--y"  id="btn-checkout_cart-detail" data-url_save_summary = "{{route('cart.saveSummary')}}">Thanh toán</a>
                             </div>
