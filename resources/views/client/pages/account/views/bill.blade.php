@@ -12,7 +12,7 @@
             <tr>
               <th scope="col">Đơn hàng</th>
               <th scope="col">Ngày mua</th>
-              <th scope="col">Tổng sản phẩm</th>
+              <th scope="col">Tổng tiền</th>
               <th scope="col">Tình trạng</th>
               <th scope="col">Action</th>
             </tr>
@@ -24,7 +24,7 @@
                     <tr style="height: 30px;">
                         <th scope="row">{{$order->id}}</th>
                         <td>{{$order->created_at}}</td>
-                        <td>{{$order->total}}</td>
+                        <td>{{number_format($order->total)}}</td>
                         <td>{{$order->status}}</td>
                         <td><a href="{{route('web.user.order.detail',['id'=>$order->id])}}" class="btn btn-primary">Detail</a></td>
                     </tr>
