@@ -19,12 +19,12 @@
           </thead>
           <tbody id="bill_rows">
             @if(isset($orders) && count($orders) > 0)
-                @foreach ($orders as $order)
+                @foreach ($orders as $key => $order)
                 <a href="">
                     <tr style="height: 30px;">
-                        <th scope="row">{{$order->id}}</th>
+                        <th scope="row">{{$key+1}}</th>
                         <td>{{$order->created_at}}</td>
-                        <td>{{number_format($order->total)}}</td>
+                        <td>{{number_format($order->total)}} đ</td>
                         <td>{{$order->status}}</td>
                         <td><a href="{{route('web.user.order.detail',['id'=>$order->id])}}" class="btn btn-primary">Detail</a></td>
                     </tr>
