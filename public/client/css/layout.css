@@ -74,6 +74,11 @@ a {
 .header_top_right_cart {
     margin: 0 20px;
 }
+
+.header_top_right_cart:hover .cart_list{
+    display: block;
+}
+
 .header_top_right_cart_count,
 .header_top_right_user_name,
 .header_buttom_menu_title,
@@ -253,7 +258,7 @@ a {
     width: 100px;
 }
 .cart_list {
-     /*display: none;*/
+     display: none;
     position: absolute;
     flex-direction: column;
     border-radius: 5px;

@@ -64,13 +64,13 @@ handleQuantityInput();
 $(document).ready(function () {
     const owl = $('.owl-carousel');
     owl.owlCarousel({
-        loop: true,
+        // loop: true,
         margin: 10,
         nav: false,
         dots: true,
-        autoplay: true,
-        autoplayTimeout: 1500,
-        autoplaySpeed: 500,
+        // autoplay: true,
+        // autoplayTimeout: 1500,
+        // autoplaySpeed: 500,
         responsive: {
             0: {items: 1},
             600: {items: 3},

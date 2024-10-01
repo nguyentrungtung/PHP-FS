@@ -146,22 +146,26 @@
                     </div>
                 </div>
                 @if($product->product_quantity > 0)
-                    <button type="button" id="liveToastBtn" class="liveToastBtn btn btn-danger translate--y btn-lg product-quantity__selector--add btn_add-cart"
+                    <button type="button" id="liveToastBtn"
+                            class="liveToastBtn btn btn-danger translate--y btn-lg product-quantity__selector--add btn_add-cart"
                             data-url="{{ route('cart.store',['id' => $product->id]) }}"
                             data-product_price="{{ $product->product_price }}"
                             data-unit_name="{{ $product->unitValues->first()->unit->unit_name }}">Thêm vào giỏ hàng
                     </button>
-
+                    {{--Toast message--}}
                     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="liveToast" class="liveToast toast" role="alert" aria-live="assertive" aria-atomic="true" style ="width: 270px">
-                            <div class="toast-header" style ="padding: 4px 10px">
-                                <img style ="width:20px; height:20px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s" class="rounded me-2" alt="...">
-                                <strong class="me-auto ">...</strong>
+                        <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true"
+                             style="width: max-content">
+                            <div class="toast-header" style="padding: 3px 10px; background-color: rgb(149,230,177)">
+                                <img style="width:20px; height:20px"
+                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s"
+                                     class="rounded me-2" alt="...">
+                                <strong class="me-auto ">....</strong>
                                 <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                        aria-label="Close" style ="font-size: 12px"></button>
+                                        aria-label="Close" style="font-size: 12px"></button>
                             </div>
-                            <div class="toast-body text-success" >
-                                Đã thêm vào giỏ hàng Thành công
+                            <div class="toast-body text-success">
+
                             </div>
                         </div>
                     </div>
@@ -259,32 +263,34 @@
                             <a href="#" class="d-block btn__add-cart btn_add-cart">
                                 <i class="fa-regular fa-heart"></i>
                             </a>
-
-                            <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                                <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true">
-                                    <div class="toast-header">
-                                        <img style ="width:30px; height:30px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s" class="rounded me-2" alt="...">
-                                        <strong class="me-auto ">....</strong>
-                                        <small>11 mins ago</small>
-                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="toast-body text-success" >
-                                        Đã thêm vào giỏ hàng Thành công
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+            {{--            Toas message--}}
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true"
+                     style="width: max-content">
+                    <div class="toast-header" style="padding: 3px 10px; background-color: rgb(149,230,177)">
+                        <img style="width:20px; height:20px"
+                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s"
+                             class="rounded me-2" alt="...">
+                        <strong class="me-auto ">....</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close" style="font-size: 12px"></button>
+                    </div>
+                    <div class="toast-body text-success">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
     <script src="{{ url('client') }}/js/product.js"></script>
-    <script src="{{ url('client') }}/js/cart.js"></script>
+    <script type="module" src="{{ url('client') }}/js/cart.js"></script>
 @endsection
 
 @push('custom-script')
