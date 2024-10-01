@@ -72,4 +72,9 @@ class ViewController extends Controller
         $products=$this->service->getProductsByOrder($id);
         return view('client.pages.account.views.orderDetail',compact('products'));
     }
+    // 
+    // checking optimine query
+    public function checking(){
+        return $this->service->checking();
+    }
 }

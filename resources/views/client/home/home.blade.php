@@ -29,7 +29,7 @@
             </div>
             <div class="d-flex flex-column align-items-center list_content">
                 <div class="list_products">
-                    @foreach ($todays as $product )
+                    @foreach ($todays as $product ) 
                         <div class="col-lg-1-5">
                             <div data-id="{{$product['id']}}" class="card product-item">
                                 <a href="{{$product['detail_url']}}" class="detail_link">
@@ -54,16 +54,22 @@
                                         <p class="card-title product-item__name">{{ $product['product_name'] }}</p>
 
                                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
-                                         data-value="{{ $product['product_price'] }}">{{ $product['product_unit'] }}</span>
+                                         data-value="{{ number_format($product['product_price']) }}">{{ $product['product_unit'] }}</span>
                                         </p>
-                                        <p class="card-text text-danger fw-bold">{{ number_format($product['product_price']) }}
-                                            đ</p>
+                                        @php
+                                            // dd($product['product_price']);
+                                        @endphp
+                                        <p class="card-text text-danger fw-bold">{{number_format($product['product_price'])}}đ</p>
                                     </div>
                                 </a>
                                 
                                 <!-- Product action -->
                                 <div class="product-item__action">
                                     <a href="#" class="d-block btn__add-cart btn_add-cart"
+                                        data-product_id = "{{$product['id']}}"
+                                        data-available_stock = "1"
+                                        data-unit_name="{{ $product['product_unit'] }}"
+                                        data-product_price="{{$product['product_price']}}"
                                        data-url="{{ $product['add_url'] }}">
                                         <i class="fa-solid fa-cart-shopping"></i>
                                     </a>

@@ -222,7 +222,7 @@
                             <p class="card-text mb-1">ĐVT: {{$productRelate->unitValues->first()->unit->unit_name}}</p>
                             {{--                            @endforeach--}}
                             
-                            <p class="card-text text-danger fw-bold">30.000₫</p>
+                            <p class="card-text text-danger fw-bold">{{number_format($productRelate->product_price)}}₫</p>
                         </div>
                         <!-- Product action -->
                         <div class="product-item__action">

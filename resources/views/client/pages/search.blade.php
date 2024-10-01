@@ -81,6 +81,10 @@
                         <!-- Product action -->
                         <div class="product-item__action">
                             <a href="#" class="d-block btn__add-cart btn_add-cart"
+                                data-product_id = "{{$product['id']}}"
+                                data-available_stock = "1"
+                                data-unit_name="{{ $product['product_unit'] }}"
+                                data-product_price="{{$product['product_price']}}"
                                data-url="{{ $product['add_url'] }}">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>

@@ -258,7 +258,7 @@ function productItem(product){
                         <p class="card-title product-item__name">${product.product_name}</p>
 
                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
-                            data-value="${product.product_price}">${product.product_unit}</span>
+                            data-value="${Number(product.product_price).toLocaleString('en-US')}">${product.product_unit}</span>
                         </p>
                         <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
                             đ</p>
@@ -268,6 +268,10 @@ function productItem(product){
                 <!-- Product action -->
                 <div class="product-item__action">
                     <a href="#" class="d-block btn__add-cart btn_add-cart"
+                        data-product_id = "${product.id}"
+                        data-available_stock = "1"
+                        data-unit_name="${product.product_unit}"
+                        data-product_price="${product.product_price}"
                        data-url="${product.add_url}">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </a>
