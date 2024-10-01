@@ -288,6 +288,4 @@
 @endsection
 
 @push('custom-script')
-    <script>
-    </script>
 @endpush

@@ -3,6 +3,7 @@
 
 use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\CustomersRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\OrderRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
@@ -19,6 +20,8 @@ use Illuminate\Http\Request;
         private $productImageRepository;
         private $categoryRepository;
         // 
+        private $customerRepository;
+        // 
         private $orderRepository;
 
         public function __construct(
@@ -28,7 +31,8 @@ use Illuminate\Http\Request;
             ProductImageRepositoryInterface $productImageRepository,
             UnitValueRepositoryInterface $unitValueRepository,
             CategoryRepositoryInterface $categoryRepository,
-            OrderRepositoryInterface $orderRepository
+            OrderRepositoryInterface $orderRepository,
+            CustomersRepositoryInterface $customerRepository
         ) {
             $this->productRopository = $productRopository;
             $this->brandRepository = $brandRepository;
@@ -37,6 +41,7 @@ use Illuminate\Http\Request;
             $this->unitValueRepository = $unitValueRepository;
             $this->categoryRepository = $categoryRepository;
             $this->orderRepository = $orderRepository;
+            $this->customerRepository = $customerRepository;
         }
         //
         public function index(){
@@ -127,8 +132,7 @@ use Illuminate\Http\Request;
         }
         // 
         public function getOrders(){
-            $id=Auth::user()->id;
-            return $this->orderRepository->getOrdersByUserId($id);
+            return $this->customerRepository->getOrders();
         }
         // 
         public function getProductsByOrders(){
@@ -142,5 +146,10 @@ use Illuminate\Http\Request;
         public function getProductsByOrder($id){
             $products=$this->productRopository->getByOrderId($id);
             return $products;
+        }
+        // 
+        // /checking
+        public function checking(){
+            return $this->customerRepository->getProductsByOrderIdS();
         }
     }

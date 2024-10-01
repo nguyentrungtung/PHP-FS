@@ -134,5 +134,7 @@ Route::group(['prefix' => 'checkout'], function () {
     Route::post('/process', [HomeCheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/success', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
 });
-
+// 
+// testing optimine
+Route::get('/checking', [ViewController::class,'checking'])->name('web.category.fillter');
 

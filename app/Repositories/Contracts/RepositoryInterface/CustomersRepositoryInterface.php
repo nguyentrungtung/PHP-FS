@@ -4,4 +4,8 @@
     // 
     interface CustomersRepositoryInterface extends BaseRepositoryInterface{
         public function index($per);
+        // 
+        public function getOrders();
+        // 
+        public function getProductsByOrderIdS();
     }
