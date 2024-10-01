@@ -98,23 +98,24 @@ function productItem(product){
     return `
         <div class="col-lg-1-5">
             <div data-id="${product.id}" class="card product-item">
-                <a href="${product.detail_url}" class="detail_link">
                     ${product.sale!==0?
                         `<div class="product-item__discount-wrap">
                             <p class="product-item__discount-product">- ${product.sale}%</p>
                             <img src="" alt="" class="product-item__discount-ship d-none">
                         </div>`:''}
-                    <div class="product-item__img-wrap">
+                    <a href="${product.detail_url}" class="detail_link">
                         <div class="product-item__img-wrap">
-                            <img
-                                src="${product.product_image}"
-                                class="product-item__img card-img-top"
-                                alt="..."
-                            />
-                            <div class="product-item__frame d-none"></div>
+                            <div class="product-item__img-wrap">
+                                <img
+                                    src="${product.product_image}"
+                                    class="product-item__img card-img-top"
+                                    alt="..."
+                                />
+                                <div class="product-item__frame d-none"></div>
+                                <div class="product-item__frame d-none"></div>
+                            </div>
                         </div>
-                        <div class="product-item__frame d-none"></div>
-                    </div>
+                    </a>
                     <div class="card-body text-muted product-item__info">
                         <p class="card-title product-item__name">${product.product_name}</p>
 
@@ -124,7 +125,6 @@ function productItem(product){
                         <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
                             đ</p>
                     </div>
-                </a>
                 
                 <!-- Product action -->
                 <div class="product-item__action">

@@ -52,17 +52,19 @@
                                     <img src="" alt="" class="product-item__discount-ship d-none">
                                 </div>
                             @endif
-                            <div class="product-item__img-wrap">
+                            <a href="{{$product['detail_url']}}" class="detail_link">
                                 <div class="product-item__img-wrap">
-                                    <img
-                                        src="{{asset($product['product_image'])}}"
-                                        class="product-item__img card-img-top"
-                                        alt="..."
-                                    />
+                                    <div class="product-item__img-wrap">
+                                        <img
+                                            src="{{asset($product['product_image'])}}"
+                                            class="product-item__img card-img-top"
+                                            alt="..."
+                                        />
+                                        <div class="product-item__frame d-none"></div>
+                                    </div>
                                     <div class="product-item__frame d-none"></div>
                                 </div>
-                                <div class="product-item__frame d-none"></div>
-                            </div>
+                            </a>
                             <div class="card-body text-muted product-item__info">
                                 <p class="card-title product-item__name">{{ $product['product_name'] }}</p>
 
