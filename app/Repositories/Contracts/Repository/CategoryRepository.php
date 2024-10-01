@@ -26,4 +26,8 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         {
             return $this->model::paginate(10);
         }
+        // 
+        public function getChilds($parentID){
+            return $this->model->where('categories_parent_id', $parentID)->pluck('id');
+        }
     }

@@ -4,6 +4,7 @@
 use App\Repositories\Contracts\RepositoryInterface\BrandRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\CategoryRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\CustomersRepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface\OrderDetailRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\OrderRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductImageRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface\ProductRepositoryInterface;
@@ -23,7 +24,8 @@ use Illuminate\Http\Request;
         private $customerRepository;
         // 
         private $orderRepository;
-
+        //
+        private $orderDetailRepository;
         public function __construct(
             ProductRepositoryInterface $productRopository,
             BrandRepositoryInterface $brandRepository,
@@ -32,7 +34,8 @@ use Illuminate\Http\Request;
             UnitValueRepositoryInterface $unitValueRepository,
             CategoryRepositoryInterface $categoryRepository,
             OrderRepositoryInterface $orderRepository,
-            CustomersRepositoryInterface $customerRepository
+            CustomersRepositoryInterface $customerRepository,
+            OrderDetailRepositoryInterface $orderDetailRepository
         ) {
             $this->productRopository = $productRopository;
             $this->brandRepository = $brandRepository;
@@ -42,6 +45,7 @@ use Illuminate\Http\Request;
             $this->categoryRepository = $categoryRepository;
             $this->orderRepository = $orderRepository;
             $this->customerRepository = $customerRepository;
+            $this->orderDetailRepository = $orderDetailRepository;
         }
         //
         public function index(){
@@ -72,36 +76,42 @@ use Illuminate\Http\Request;
                     'product_old_price'=>$old,
                     'detail_url'=>route('product.show',['id' => $product->id]),
                     'add_url'=>route('cart.store',['id' => $product->id]),
-                    'product_unit'=>$this->getUnit($product->id),
-                    'product_image'=>$this->getMainImg($product->id)
+                    'product_unit'=>$product->brand->first()->brand_name,
+                    'product_image'=>asset($product->productImage->first()->image_url)
                 ];
             }
             return $response;
         }
-        // lay anh chinh cua san pham
-        public function getMainImg($productId){
-            $mainImage = $this->productImageRepository->getMainImg($productId);
-            return asset($mainImage?$mainImage->image_url:'img/product.png');
-        }
-        // lay unit cua san pham
-        public function getUnit($productId){
-            $unitValue=$this->unitValueRepository->getByProductID($productId);
-            $unit=$this->unitRepository->find($unitValue->unit_id);
-            return $unit->unit_name;
-        }
         //
         //
         public function getByCat(Request $request){
-            $data = $this->productRopository->fill($request);
-            // dd($data);
-            $products=$this->setData($data['products']);
+            $data = $this->fill($request)->getData(true);
+            // var_dump($data);
+            $products=$data['products'];
             $remain=$data['remain'];
             $brands= $this->brandRepository->getByProductIds($products);
             return compact('products','remain','brands');
         }
         //
         public function fill($request){
-            $data= $this->productRopository->fill($request);
+            $catId=$request->input('catId');
+            $brands=$request->input('brands');
+            $sort=$request->input('sort');
+            $start=$request->input('start');
+            $limit=$request->input('limit');
+            if($sort==='order'){
+                $sort=$this->orderDetailRepository->getProductIdsByTotalSold();
+            }
+            $catChildID=$this->categoryRepository->getChilds($catId);
+            $newRequest=[
+                'catId'=>$catId,
+                'brands'=>$brands,
+                'sort'=>$sort,
+                'start'=>$start,
+                'limit'=>$limit,
+                'catChildID'=>$catChildID
+            ];
+            $data= $this->productRopository->fill($newRequest);
             $products=$this->setData($data['products']);
             $remain=$data['remain'];
             // dd($data);
@@ -114,12 +124,12 @@ use Illuminate\Http\Request;
             $searchHistory = session()->get('search', []);
             // 
             if (!empty($value) && !in_array($value, $searchHistory)) {
-                // Thêm giá trị tìm kiếm vào mảng
-                $searchHistory[] = $value;
+                // them tu khoa vua tim kiem vao dau mang
+                array_unshift($searchHistory, $value);
         
                 // Nếu mảng có nhiều hơn 5 phần tử, loại bỏ phần tử đầu tiên
                 if (count($searchHistory) > 5) {
-                    array_shift($searchHistory); // Loại bỏ phần tử đầu tiên
+                    array_pop($searchHistory); // loai bo phan tu cu nhat
                 }
         
                 // Cập nhật session với mảng tìm kiếm mới

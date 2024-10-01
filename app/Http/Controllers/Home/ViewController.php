@@ -42,8 +42,9 @@ class ViewController extends Controller
     }
     // 
     public function search(Request $request){
+        $value= $request->input('search');
         $products=$this->service->search($request);
-        return view('client.pages.search',compact('products'));
+        return view('client.pages.search',compact('products','value'));
     }
     // 
     public function login(){
@@ -71,10 +72,5 @@ class ViewController extends Controller
     public function orderDetail($id){
         $products=$this->service->getProductsByOrder($id);
         return view('client.pages.account.views.orderDetail',compact('products'));
-    }
-    // 
-    // checking optimine query
-    public function checking(){
-        return $this->service->checking();
     }
 }

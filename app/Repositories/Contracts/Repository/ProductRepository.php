@@ -63,23 +63,23 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
     // lay cac san pham co brand tuong ung
     public function fill($request){
-        $brands=$request->input('brands');
-        $sort=$request->input('sort');
-        $start=$request->input('start');
-        $limit=$request->input('limit');
-        $catId=$request->input('catId');
+        $brands=$request['brands'];
+        $sort=$request['sort'];
+        $start=$request['start'];
+        $limit=$request['limit'];
+        $catId=$request['catId'];
+        $catChildID=$request['catChildID'];
         // // $brands=['1'];
         // $sort='sale';
         // $catId=3;
         // $start=0;
-        // $limit= 10;
+        // $limit= 1;
         // lay danh sach cac cat con cua cat hien tai
-        $categoryIds = Categories::where('categories_parent_id', $catId)->pluck('id');
         // dd($categoryIds);
         // Khởi tạo query với điều kiện category_id là $catId hoặc nằm trong danh sách category con
-        $query = $this->model->where(function($query) use ($catId, $categoryIds) {
+        $query = $this->model->where(function($query) use ($catId, $catChildID) {
             $query->where('category_id', $catId)
-                  ->orWhereIn('category_id', $categoryIds);
+                  ->orWhereIn('category_id', $catChildID);
         });
         // kiem tran brands co rong hay khong
         if ($brands!==null) {
@@ -90,26 +90,20 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         if($sort!==null){
             if($sort==='sale'){
                 $query= $query->orderBy(DB::raw('product_price_old / product_price'), 'desc');
-            }
-            if($sort=== 'order'){
-                $query->join('order_details', 'products.id', '=', 'order_details.product_id')
-                ->select(
-                    'products.id',
-                    'products.product_name',
-                    'products.product_price',
-                    'products.product_price_old',
-                    DB::raw('SUM(order_details.quantity) as total_sold')
-                )
-                ->groupBy(
-                    'products.id',
-                    'products.product_name',
-                    'products.product_price',
-                    'products.product_price_old',
-                )->orderBy('total_sold', 'desc');
-                // dd(count($query->get()));
+            }else{
+                $query->whereIn('id', $sort);
             }
         }
-
+        // lay them anh chinh cua san pham cung voi ten don vi cua sna pham
+        $query->with([
+            'productImage' => function ($query) {
+                $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
+            },
+            'brand' => function ($query) {
+                $query->select('id','brand_name'); // lay ten don vi cua san pham
+            }
+        ]);
+        // dd($query->get()[0]->brand->first()->brand_name);
         $count = count($query->get());
         $remain=$count - (int)($start+$limit);
         $products= $query->skip($start)->take($limit)->get();
@@ -124,12 +118,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     //
     public function getByOrderId($orderId){
         $userID = Auth::user()->id;
-        $products = $this->model
-        ->whereHas('orderDetails.order', function ($query) use ($userID, $orderId) {
-        // Lọc theo orderId và customer_id
-        $query->where('id', $orderId) // Lọc theo order_id
-              ->where('customer_id', $userID); // Kiểm tra customer_id có trùng với userID
-        })
+        $products=$this->model->whereHas('orderDetails.order',function($query) use ($userID, $orderId){
+            $query->where('customer_id', $userID)->where('id',$orderId);
+        } )
         ->with([
             'productImage' => function ($query) {
                 $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
@@ -145,9 +136,8 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     //
     public function getByOrderIds(){
         $userID=Auth::user()->id;
-        $products = $this->model
-        ->whereHas('orderDetails.order.customer', function ($query) use ($userID) {
-            $query->where('id', $userID); // Lấy các đơn hàng mà customer_id bằng userID
+        $products=$this->model->whereHas('orderDetails.order',function($query)use ($userID){
+            $query->where('customer_id', $userID);
         })
         ->with(['productImage' => function ($query) {
             $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
