@@ -163,6 +163,7 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: end;
+    width: 100%;
 }
 
 .product-item__promotion-info {
