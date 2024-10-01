@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded",()=>{
-    window.addEventListener('scroll', function() {
+document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener('scroll', function () {
         const header = document.querySelector('.header'); // Chọn phần tử header
         if (window.scrollY > 100) {
             header.classList.add('fix'); // Thêm class 'fix' nếu cuộn quá 100px
@@ -7,16 +7,16 @@ document.addEventListener("DOMContentLoaded",()=>{
             header.classList.remove('fix'); // Loại bỏ class 'fix' nếu cuộn dưới 100px
         }
     });
-    const menu=document.getElementById("menu");
-    menu.addEventListener("mouseenter",showMenu);
-    menu.addEventListener("mouseleave",hiddenMenu);
-    const host=document.getElementById("hostline");
-    host.addEventListener("mouseenter",showHostline);
-    host.addEventListener("mouseleave",hiddenHostline);
+    const menu = document.getElementById("menu");
+    menu.addEventListener("mouseenter", showMenu);
+    menu.addEventListener("mouseleave", hiddenMenu);
+    const host = document.getElementById("hostline");
+    host.addEventListener("mouseenter", showHostline);
+    host.addEventListener("mouseleave", hiddenHostline);
     //
-    const formSearch=document.getElementById("form_search");
-    const search=document.getElementById("search_input");
-    formSearch.addEventListener('click',()=>{
+    const formSearch = document.getElementById("form_search");
+    const search = document.getElementById("search_input");
+    formSearch.addEventListener('click', () => {
         search.focus();
     })
     // Bắt sự kiện click ra ngoài form
@@ -26,43 +26,43 @@ document.addEventListener("DOMContentLoaded",()=>{
             hiddenEx(); // Ẩn danh sách tìm kiếm (nếu có)
         }
     });
-    search.addEventListener("focus",showEx);
+    search.addEventListener("focus", showEx);
     // search.addEventListener("blur",hiddenEx);
     //
-    const cart=document.getElementById("cart");
-    cart.addEventListener("mouseenter",showCart);
-    cart.addEventListener("mouseleave",hiddenCart);
+    // const cart = document.getElementById("cart");
+    // cart.addEventListener("mouseenter", showCart);
+    // cart.addEventListener("mouseleave", hiddenCart);
     userMenu();
     selectShipping();
-    const items=document.querySelectorAll(".sub");
+    const items = document.querySelectorAll(".sub");
     hoverParentCat(items);
     searchValue();
 });
 
-function showCart(){
-    const cart=document.getElementById("cart_list");
-    console.log(cart);
-    if(cart.classList.contains("hidden")){
-        // $.ajax({
-        //     url: 'client/cart/show',
-        //     type: 'GET',
-        //     success: function(response) {
-        //         console.log('check');
-        //         let newArr=[];
-        //         Object.values(response).forEach(product => {
-        //             newArr.push(changeCartData(product));
-        //         });
-        //         const list=document.querySelector('.cart_list_items');
-        //         list.innerHTML=newArr.join('');
-        //     }
-        // });
-        cart.classList.remove("hidden");
-    }
-}
+// function showCart() {
+//     const cart = document.getElementById("cart_list");
+//     console.log(cart);
+//     if (cart.classList.contains("hidden")) {
+//         // $.ajax({
+//         //     url: 'client/cart/show',
+//         //     type: 'GET',
+//         //     success: function(response) {
+//         //         console.log('check');
+//         //         let newArr=[];
+//         //         Object.values(response).forEach(product => {
+//         //             newArr.push(changeCartData(product));
+//         //         });
+//         //         const list=document.querySelector('.cart_list_items');
+//         //         list.innerHTML=newArr.join('');
+//         //     }
+//         // });
+//         cart.classList.remove("hidden");
+//     }
+// }
 
-function changeCartData(product){
-    let price = product.product_price*product.product_quantity;
-    price= new Intl.NumberFormat('vi-VN', {
+function changeCartData(product) {
+    let price = product.product_price * product.product_quantity;
+    price = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND',
     }).format(price);
@@ -82,137 +82,145 @@ function changeCartData(product){
     </div>`;
 }
 
-function hiddenCart(){
-    const cart=document.getElementById("cart_list");
-    if(!cart.classList.contains("hidden")){
-        cart.classList.add("hidden");
-    }
-}
+// function hiddenCart() {
+//     const cart = document.getElementById("cart_list");
+//     if (!cart.classList.contains("hidden")) {
+//         cart.classList.add("hidden");
+//     }
+// }
 
-function showEx(){
-    const ex=document.getElementById("search_ex");
-    if(ex.classList.contains("hidden")){
+function showEx() {
+    const ex = document.getElementById("search_ex");
+    if (ex.classList.contains("hidden")) {
         ex.classList.remove("hidden");
     }
 }
+
 //
-function search(){
-    const values=document.querySelectorAll('.current_value');
-    values.forEach(value=>{
-        value.addEventListener('click',()=>{
+function search() {
+    const values = document.querySelectorAll('.current_value');
+    values.forEach(value => {
+        value.addEventListener('click', () => {
             $.ajax({
                 url: '/search',
                 type: 'GET',
-                data:{
-                    'search':value.innerHTML
+                data: {
+                    'search': value.innerHTML
                 },
-                success: function(response) {
+                success: function (response) {
                     $('.main-content').html(response); // Cập nhật nội dung trang bằng phản hồi
-                    window.history.pushState({ path: '/search' }, '', '/search');
+                    window.history.pushState({path: '/search'}, '', '/search');
                 }
             })
         })
     })
 }
+
 //
-function hiddenEx(){
-    const ex=document.getElementById("search_ex");
-    if(!ex.classList.contains("hidden")){
+function hiddenEx() {
+    const ex = document.getElementById("search_ex");
+    if (!ex.classList.contains("hidden")) {
         ex.classList.add("hidden");
     }
 }
 
-function showHostline(){
-    const hostline=document.getElementById("hostline_infor");
-    if(hostline.classList.contains("hidden")){
+function showHostline() {
+    const hostline = document.getElementById("hostline_infor");
+    if (hostline.classList.contains("hidden")) {
         hostline.classList.remove("hidden");
     }
 }
 
-function hiddenHostline(){
-    const hostline=document.getElementById("hostline_infor");
-    if(!hostline.classList.contains("hidden")){
+function hiddenHostline() {
+    const hostline = document.getElementById("hostline_infor");
+    if (!hostline.classList.contains("hidden")) {
         hostline.classList.add("hidden");
     }
 }
-function showMenu(){
-    const menu=document.getElementById("menu_list");
-    if(menu.classList.contains("hidden")){
+
+function showMenu() {
+    const menu = document.getElementById("menu_list");
+    if (menu.classList.contains("hidden")) {
         menu.classList.remove("hidden");
     }
 }
 
-function showSubMenu(){
-    const menu=document.getElementById("sub_list");
-    if(menu.classList.contains("hidden")){
+function showSubMenu() {
+    const menu = document.getElementById("sub_list");
+    if (menu.classList.contains("hidden")) {
         menu.classList.remove("hidden");
     }
 }
+
 //
-function hiddenMenu(){
-    const menu=document.getElementById("menu_list");
-    const sub_menu=document.getElementById("sub_list");
-    if(!menu.classList.contains("hidden")){
+function hiddenMenu() {
+    const menu = document.getElementById("menu_list");
+    const sub_menu = document.getElementById("sub_list");
+    if (!menu.classList.contains("hidden")) {
         menu.classList.add("hidden");
     }
-    if(!sub_menu.classList.contains("hidden")){
+    if (!sub_menu.classList.contains("hidden")) {
         sub_menu.classList.add("hidden");
     }
 
 }
-function hoverParentCat(list){
-    const menu=document.getElementById("sub_list");
-    const ul=document.getElementById('child_cat');
-    if(menu.classList.contains("hidden")){
+
+function hoverParentCat(list) {
+    const menu = document.getElementById("sub_list");
+    const ul = document.getElementById('child_cat');
+    if (menu.classList.contains("hidden")) {
         menu.classList.remove("hidden");
     }
     list.forEach(cat => {
-        cat.addEventListener('mouseenter',()=>{
+        cat.addEventListener('mouseenter', () => {
             menu.classList.remove("hidden");
-            const sublist =JSON.parse(cat.getAttribute('data-child'));
-            const newList=[];
-            sublist.forEach(item=>{
+            const sublist = JSON.parse(cat.getAttribute('data-child'));
+            const newList = [];
+            sublist.forEach(item => {
                 newList.push(`<a data-parent_id='${item['parent_id']}' href="${item['route']}"><li class="menu_list_ul_li text-capitalize">${item['name']}</li></a>`)
             })
-            html=newList.join('');
-            ul.innerHTML=html;
+            html = newList.join('');
+            ul.innerHTML = html;
         })
     });
 }
+
 //
-function userMenu(){
-    const user=document.getElementById('user_zone');
-    const menu=document.getElementById('user_menu');
-    user.addEventListener("mouseenter",()=>{
+function userMenu() {
+    const user = document.getElementById('user_zone');
+    const menu = document.getElementById('user_menu');
+    user.addEventListener("mouseenter", () => {
         menu.classList.remove('hidden');
     })
-    user.addEventListener("mouseleave",()=>{
+    user.addEventListener("mouseleave", () => {
         menu.classList.add('hidden');
     })
 }
+
 //
 function selectShipping() {
-    const close=document.getElementById('close_shipping');
-    const shipping=document.getElementById('shipping_select');
-    const btn=document.getElementById('ship_zone');
-    btn.addEventListener("click",()=>{
+    const close = document.getElementById('close_shipping');
+    const shipping = document.getElementById('shipping_select');
+    const btn = document.getElementById('ship_zone');
+    btn.addEventListener("click", () => {
         shipping.classList.remove('hidden');
     });
-    close.addEventListener("click",()=>{
+    close.addEventListener("click", () => {
         shipping.classList.add('hidden');
     });
 }
+
 // bat su kien an cac search value
-function searchValue(){
-    const values=document.querySelectorAll('.current_value');
-    const input=document.getElementById('search_input');
-    const form=document.getElementById('form_search');
+function searchValue() {
+    const values = document.querySelectorAll('.current_value');
+    const input = document.getElementById('search_input');
+    const form = document.getElementById('form_search');
     console.log(values);
-    values.forEach(item=>{
-        item.addEventListener('click',(e)=>{
+    values.forEach(item => {
+        item.addEventListener('click', (e) => {
             input.focus();
             console.log('check');
-            input.value=item.getAttribute('data-value');
+            input.value = item.getAttribute('data-value');
             form.submit();
         })
     })
@@ -220,56 +228,35 @@ function searchValue(){
 
 
 //Toas Message
-$(document).ready(function() {
-    const toastLiveExample = $('.liveToast');
+$(document).ready(function () {
+    function showToast(toastSelector, buttonSelector, message) {
+        $(buttonSelector).on('click', function () {
+            // alert(message);
 
-    $('.liveToastBtn').on('click', function() {
-        // Tùy chỉnh vị trí của toast
-        toastLiveExample.css({
-            'position': 'fixed',
-            'top': '130px',
-            'right': '20px'
-        });
-
-        // Tạo toast với thời gian delay tùy chỉnh
-        const toastBootstrap = new bootstrap.Toast(toastLiveExample[0], {
-            delay: 1000
-        });
-
-        toastBootstrap.show();
-    });
-});
-
-
-//Toast message
-    $(document).ready(function() {
-        function showToast(toastSelector, buttonSelector, message) {
-            $(buttonSelector).on('click', function() {
-                const toastElement = $(toastSelector);
-
-                // Tùy chỉnh vị trí của toast
-                toastElement.css({
-                    'position': 'fixed',
-                    'top': '130px',
-                    'right': '20px'
-                });
-
-                // Thay đổi nội dung thông báo
-                toastElement.find('.toast-body').text(message);
-
-                // Tạo toast với thời gian delay tùy chỉnh
-                const toastBootstrap = new bootstrap.Toast(toastElement[0], {
-                    delay: 1000
-                });
-
-                toastBootstrap.show();
+            const toastElement = $(toastSelector);
+            // Tùy chỉnh vị trí của toast
+            toastElement.css({
+                'position': 'fixed',
+                'top': '130px',
+                'right': '20px'
             });
-        }
 
-        // Gọi hàm showToast để hiển thị toast với thông báo
-        showToast('.liveToast', '.liveToastBtn',  'Đã thêm vào giỏ hàng thành công');
-        showToast('.live-toast--remove-cart', '.live-toast__btn--remove-cart',  'Xóa thành công');
-    });
+            // Thay đổi nội dung thông báo
+            toastElement.find('.toast-body').text(message);
+            console.log([toastElement.find('.toast-body').text(message)])
+            // Tạo toast với thời gian delay tùy chỉnh
+            const toastBootstrap = new bootstrap.Toast(toastElement[0], {
+                delay: 1000
+            });
+
+            toastBootstrap.show();
+        });
+    }
+
+    // Gọi hàm showToast để hiển thị toast với thông báo
+    showToast('.liveToast', '.liveToastBtn', 'Đã thêm vào giỏ hàng thành công');
+    showToast('.live-toast--remove-cart', '.live-toast__btn--remove-cart', 'Xóa thành công');
+});
 
 
 

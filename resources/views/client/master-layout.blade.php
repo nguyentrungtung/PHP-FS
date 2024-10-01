@@ -41,7 +41,7 @@
         <!-- own carousel  -->
         <script src="{{ url('libs') }}/owlcarousel/owl.carousel.min.js"></script>
         <!-- Các file JavaScript dùng chung -->
-        <script src="{{ url('client') }}/js/layout.js"></script>
+        <script type="module" src="{{ url('client') }}/js/layout.js"></script>
         <!-- Các file JavaScript dùng riêng -->
         @yield('scripts')
         {{--  Custom file js--}}

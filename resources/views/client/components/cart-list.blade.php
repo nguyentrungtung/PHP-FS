@@ -44,7 +44,7 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="toast-body text-success" >
-                            Xóa giỏ hàng thành công
+
                         </div>
                     </div>
                 </div>

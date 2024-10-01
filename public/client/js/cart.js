@@ -25,7 +25,7 @@ $(document).ready(function () {
 
         // Kiểm tra tồn kho trước khi thêm vào giỏ hàng
         if (quantity > availableStock) {
-            alert("Sản phẩm đã hết hàng hoặc số lượng vượt quá tồn kho hiện tại.");
+            // alert("Sản phẩm đã hết hàng hoặc số lượng vượt quá tồn kho hiện tại.");
             return;
         }
 
@@ -41,6 +41,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.status) {
+                    // showToast('.liveToast', '.liveToastBtn', response.message);
                     // alert(response.message);
                     $('#cart_count').text(response.data.count_number);
                     $('#count_cart--icon').html(response.data.cartListIcon);
