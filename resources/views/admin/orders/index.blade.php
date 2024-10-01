@@ -30,7 +30,33 @@
                         <td class="text-center">{{ $order->payment_method }}</td>
                         <td class="text-center">{{ $order->order_date }}</td>
                         <td class="text-center">{{ number_format($order->total) }}đ</td>
-                        <td class="text-center"><span class="badge bg-success">{{ $order->status }}</span></td>
+                        <td class="text-center"><span
+                                class="badge bg-success status-order-{{ $order->id }}">{{ $order->status }}</span>
+                            <div class="dropdown mt-2">
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    ...
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="order-status dropdown-item liveToastBtn" href="#"
+                                           data-url="{{ route('order.update-status',['id' => $order->id]) }}"
+                                           data-order_id="{{ $order->id }}"
+                                           data-value="pending">Pending</a></li>
+                                    <li><a class="order-status dropdown-item liveToastBtn" href="#"
+                                           data-url="{{ route('order.update-status',['id' => $order->id]) }}"
+                                           data-order_id="{{ $order->id }}"
+                                           data-value="processing">Processing</a></li>
+                                    <li><a class="order-status dropdown-item liveToastBtn" href="#"
+                                           data-url="{{ route('order.update-status',['id' => $order->id]) }}"
+                                           data-order_id="{{ $order->id }}"
+                                           data-value="completed">Completed</a></li>
+                                    <li><a class="order-status dropdown-item liveToastBtn" href="#"
+                                           data-url="{{ route('order.update-status',['id' => $order->id]) }}"
+                                           data-order_id="{{ $order->id }}"
+                                           data-value="cancelled">Cancel</a></li>
+                                </ul>
+                            </div>
+                        </td>
                         <td class="text-center">{{ $order->order_note }}</td>
                         <td class="text-center">
                             <a href="#" class="btn btn-info btn-sm btn__show-order--detail" data-bs-toggle="modal"
@@ -144,10 +170,31 @@
                         </td>
                     </tr>
                 @endforeach
+                {{--            Toas message--}}
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true"
+                         style="width: max-content">
+                        <div class="toast-header" style="padding: 3px 10px; background-color: rgb(149,230,177)">
+                            <img style="width:20px; height:20px"
+                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s"
+                                 class="rounded me-2" alt="...">
+                            <strong class="me-auto ">....</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close" style="font-size: 12px"></button>
+                        </div>
+                        <div class="toast-body text-success">
+
+                        </div>
+                    </div>
+                </div>
                 </tbody>
             </table>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ url('admin') }}/js/order.js"></script>
 @endsection
 
 @push('custom-script')
@@ -155,8 +202,6 @@
         $(document).ready(function () {
             $('#myOrderTable').DataTable();
         })
-
-
     </script>
 @endpush
 

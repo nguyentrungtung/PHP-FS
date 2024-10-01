@@ -15,5 +15,4 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $this->model = $model;
         parent::__construct($model);
     }
-    
 }

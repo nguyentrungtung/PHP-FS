@@ -39,7 +39,7 @@
                             @include('client.components.cart-icon')
                         </div>
                         <div class="d-flex align-items-center justify-content-between cart_list_total">
-                            <p class="total_text">Có tổng số: {{$totalCart}} sản phẩm</p>
+                            <p class="total_text">Có tổng số: <span class = "total_text total_cart--icon">{{$totalCart}}</span> sản phẩm</p>
                             <a href="{{route('cart.show')}}" class="btn total_detail">Xem chi tiết</a>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 @endif
-                
+
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center header_buttom" >
