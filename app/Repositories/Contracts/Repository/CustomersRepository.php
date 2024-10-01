@@ -21,6 +21,6 @@ use Illuminate\Support\Facades\Auth;
         // lay ra tat ca cac san pham da duoc nguoi dung mua
         public function getProductsByOrderIdS(){
             $id=Auth::user()->id;
-            return $this->model->find($id)->orders()->orderDetail()->product()->paginate(10);
+            $orders=$this->model->find( $id )->orders;
         }
     }

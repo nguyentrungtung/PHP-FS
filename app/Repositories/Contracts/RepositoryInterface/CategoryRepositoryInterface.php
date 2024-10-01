@@ -5,4 +5,6 @@
     interface CategoryRepositoryInterface extends BaseRepositoryInterface{
         public function getParents();
         public function index();
+        // 
+        public function getChilds($parentID);
     }

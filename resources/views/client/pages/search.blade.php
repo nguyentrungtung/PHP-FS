@@ -35,16 +35,12 @@
         <div class="d-flex flex-column  detail_ex_content">
             <h5 class="detail_ex_content_text">Từ khóa gợi ý</h5>
             <div class="d-flex flex-wrap detail_ex_content_value">
-                <div class="value_ex_search">Sữa bột</div>
-                <div class="value_ex_search">Sữa hộp</div>
-                <div class="value_ex_search">Sữa vỉ</div>
-                <div class="value_ex_search">Sữa bịch</div>
             </div>
         </div>
     </div>
     <div class="search_detail_list">
         <div class="category_content_products">
-            <div id="category_url" class="products_url">Trang chủ / Rau - Củ - Trái cây</div>
+            <div id="category_url" class="products_url">Sản phẩm cho từ khóa tìm kiếm: {{$value}}</div>
             <div class="products_list">
                 @foreach ($products as $product )
                 <div class="col-lg-1-5">
