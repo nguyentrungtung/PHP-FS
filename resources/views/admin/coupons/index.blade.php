@@ -7,7 +7,7 @@
             <a href="{{route('coupons.create')}}" class="btn btn-success mt-3 mb-0">Create New Coupon</a>
         </div>
 
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered" id ="myCouponTable">
             <thead class="">
             <tr>
                 <th scope="col">ID</th>
@@ -70,13 +70,16 @@
             @endforeach
             </tbody>
         </table>
-        <div class="footer">
-            {{ $coupons->links() }}
-        </div>
+{{--        <div class="footer">--}}
+{{--            {{ $coupons->links() }}--}}
+{{--        </div>--}}
     </div>
 @endsection
 
 @push('custom-script')
     <script>
+        $(document).ready(function () {
+            $('#myCouponTable').DataTable();
+        })
     </script>
 @endpush

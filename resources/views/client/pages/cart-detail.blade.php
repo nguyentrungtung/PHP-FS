@@ -175,47 +175,48 @@
                             </p>
                         </div>
                     </div>
-
                     @foreach($specialOffers as $specialOffer)
-                        <div class="col-md-6 product__item">
-                            <div class="card product-item">
-                                <div class="product-item__discount-wrap">
-                                    <p class="product-item__discount-product">-30%</p>
-                                    <img src="" alt="" class="product-item__discount-ship d-none">
-                                </div>
-                                <div class="product-item__img-wrap">
-                                    @foreach($specialOffer->productImage as $product_image)
-                                        @if($product_image->image_type == 'main')
-                                            <!-- Main Product Image -->
-                                            <img
-                                                id="mainImage"
-                                                src="{{ asset($product_image->image_url) }}"
-                                                class="product-info__image product-item__img card-img-top"
-                                                alt="Main Product Image"
-                                            />
-                                        @endif
-                                    @endforeach
-                                    <div class="d-none product-item__frame"></div>
+                        <div class="col-md-6">
+                            <a href="{{ route('product.show',['id' => $specialOffer->id]) }}">
+                                <div class="card product-item">
+                                    <div class="product-item__img-wrap">
+                                        @foreach($specialOffer->productImage as $product_image)
+                                            @if($product_image->image_type == 'main')
+                                                <!-- Main Product Image -->
+                                                <img
+                                                    id="mainImage"
+                                                    src="{{ asset($product_image->image_url) }}"
+                                                    class="product-info__image product-item__img card-img-top"
+                                                    alt="Main Product Image"
+                                                />
+                                            @endif
+                                        @endforeach
 
+                                        <div class="product-item__frame d-none"></div>
+                                    </div>
+                                    <div class="card-body text-muted product-item__info">
+                                        <p class="card-title product-item__name">{{$specialOffer->product_name}}</p>
+                                        <p class="card-text mb-1">
+                                            ĐVT: {{$specialOffer->unitValues->first()->unit->unit_name}}</p>
+                                        <p class="card-text text-danger fw-bold">{{number_format($specialOffer->product_price)}}
+                                            ₫</p>
+                                    </div>
+                                    <!-- Product action -->
+                                    <div class="product-item__action">
+                                        <a href="#" class="d-block btn__add-cart btn_add-cart"
+                                           data-product_id="{{$specialOffer->id}}"
+                                           data-available_stock="{{ $specialOffer->product_quantity }}"
+                                           data-unit_name="{{ $specialOffer->unitValues->first()->unit->unit_name }}"
+                                           data-url="{{ route('cart.store',['id' => $specialOffer->id]) }}"
+                                           data-product_price="{{$specialOffer->product_price}}">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </a>
+                                        <a href="#" class="d-block btn__add-cart btn_add-cart">
+                                            <i class="fa-regular fa-heart"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="card-body text-muted product-item__info">
-                                    <p class="card-title product-item__name">{{$specialOffer->product_name}}</p>
-                                    <p class="card-text mb-1">
-                                        ĐVT: {{$specialOffer->unitValues->first()->unit->unit_name}}</p>
-                                    <p class="card-text text-danger fw-bold">{{ number_format($specialOffer->product_price) }}
-                                        ₫</p>
-                                </div>
-                                <!-- Product action -->
-                                <div class="product-item__action">
-                                    <a href="#" class="d-block btn__add-cart btn_add-cart"
-                                       data-url="{{ route('cart.store',['id' => $specialOffer->id]) }}">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                    </a>
-                                    <a href="#" class="d-block btn__add-cart btn_add-cart">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>

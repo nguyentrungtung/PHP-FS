@@ -36,7 +36,7 @@
                         <label for="discount_value" class="col-form-label">Discount Value (Giá trị giảm)</label>
                         <div class="">
                             <input type="text" class="form-control" id="discount_value" name="discount_value"
-                                   value="{{ old('discount_value', $coupon->discount_type == 'percentage' ? number_format($coupon->discount_value).'%' : number_format($coupon->discount_value).'đ') }}">
+                                   value="{{ old('discount_value', $coupon->discount_type == 'percentage' ? number_format($coupon->discount_value) : number_format($coupon->discount_value)) }}">
                             <span id="discount_value-error" class="error-message text-danger"></span>
                         </div>
                     </div>

@@ -21,6 +21,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         parent::__construct($model);
     }
 
+    // tạo mã sku
     public function generateSKU($categoryId)
     {
         // Lấy ID danh mục và chuyển thành chuỗi
@@ -33,6 +34,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         return $categoryPart.$randomPart;
     }
 
+    //lấy sản phẩm liên quan page product detail
     public function productRelate($productId)
     {
         // Lấy thông tin của sản phẩm hiện tại
@@ -44,6 +46,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->get();
     }
 
+    // Lấy sản phẩm ưu đãi page cart-detail
     public function specialOffers(){
         return  $this->model->where('created_at', '>=', now()->subDays(30))->limit(4)->get();
     }
@@ -54,7 +57,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         ->take(10)
         ->get();
     }
-    // 
+    //
     public function getByCatId($catId){
         return $this->model->where('category_id', $catId)->get();
     }
@@ -91,16 +94,16 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             if($sort=== 'order'){
                 $query->join('order_details', 'products.id', '=', 'order_details.product_id')
                 ->select(
-                    'products.id', 
-                    'products.product_name', 
-                    'products.product_price', 
+                    'products.id',
+                    'products.product_name',
+                    'products.product_price',
                     'products.product_price_old',
                     DB::raw('SUM(order_details.quantity) as total_sold')
                 )
                 ->groupBy(
-                    'products.id', 
-                    'products.product_name', 
-                    'products.product_price', 
+                    'products.id',
+                    'products.product_name',
+                    'products.product_price',
                     'products.product_price_old',
                 )->orderBy('total_sold', 'desc');
                 // dd(count($query->get()));
@@ -112,13 +115,13 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         $products= $query->skip($start)->take($limit)->get();
         return compact('products','remain');
     }
-    // 
+    //
     // tim kiem san pham theo ten
     public function search($value){
         return  $this->model->whereRaw('LOWER(product_name) like ?', ['%' . strtolower($value) . '%'])
         ->get();
     }
-    // 
+    //
     public function getByOrderId($orderId){
         $userID = Auth::user()->id;
         $products = $this->model
@@ -139,7 +142,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         // dd($products);
         return $products;
     }
-    // 
+    //
     public function getByOrderIds(){
         $userID=Auth::user()->id;
         $products = $this->model

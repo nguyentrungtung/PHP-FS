@@ -23,7 +23,7 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupons = $this->couponService->getAllCouponsPaginate($this->limit);
+        $coupons = $this->couponService->getAllCoupons();
         return view('admin.coupons.index', ['coupons' => $coupons]);
     }
 

@@ -141,7 +141,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.status) {
-                    alert(response.message);
+                    // alert(response.message);
                     // Cập nhật lại giao diện giỏ hàng sau khi xóa
                     $('.cart__item-' + response.data.productId).remove();
                     $('#count_cart--icon').html(response.data.cartListIcon);
