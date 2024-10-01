@@ -32,13 +32,14 @@
                     @foreach ($todays as $product )
                         <div class="col-lg-1-5">
                             <div data-id="{{$product['id']}}" class="card product-item">
-                                <a href="{{$product['detail_url']}}" class="detail_link">
+                                
                                     @if ($product['sale']!==0)
                                         <div class="product-item__discount-wrap">
                                             <p class="product-item__discount-product">- {{$product['sale']}}%</p>
                                             <img src="" alt="" class="product-item__discount-ship d-none">
                                         </div>
                                     @endif
+                                    <a href="{{$product['detail_url']}}" class="detail_link">
                                     <div class="product-item__img-wrap">
                                         <div class="product-item__img-wrap">
                                             <img
@@ -50,6 +51,7 @@
                                         </div>
                                         <div class="product-item__frame d-none"></div>
                                     </div>
+                                    </a>
                                     <div class="card-body text-muted product-item__info">
                                         <p class="card-title product-item__name">{{ $product['product_name'] }}</p>
 
@@ -62,7 +64,6 @@
                                         <p class="card-text text-danger fw-bold">{{number_format($product['product_price'])}}
                                             đ</p>
                                     </div>
-                                </a>
 
                                 <!-- Product action -->
                                 <div class="product-item__action">
