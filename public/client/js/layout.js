@@ -226,7 +226,7 @@ function searchValue() {
 }
 
 
-//Toas Message
+//Toast Message
 $(document).ready(function () {
     function showToast(toastSelector, buttonSelector, message) {
         $(buttonSelector).on('click', function () {

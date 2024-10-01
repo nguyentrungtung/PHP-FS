@@ -73,6 +73,8 @@ Route::group(['prefix' => 'admin/products'], function () {
 Route::group(['prefix' => 'admin/order'], function () {
     Route::get('/', [OrderController::class, 'index'])->name('order.index');
     Route::get('/create', [OrderController::class, 'create'])->name('order.detail');
+    Route::post('/update-status/{id}', [OrderController::class, 'update'])->name('order.update-status');;
+
 });
 
 //
@@ -134,7 +136,7 @@ Route::group(['prefix' => 'checkout'], function () {
     Route::post('/process', [HomeCheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/success', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
 });
-// 
+//
 // testing optimine
 Route::get('/checking', [ViewController::class,'checking'])->name('web.category.fillter');
 

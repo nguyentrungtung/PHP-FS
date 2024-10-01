@@ -18,6 +18,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ url('dashboard') }}/assets/img/apple-icon.png">
     <link rel="icon"
           href="https://play-lh.googleusercontent.com/29JpANiXA74CO46WxNM3DWN1XU92NhRPe0ET1D_ogFbgO6YSQjQKpuA48-IicZOVdw"
@@ -188,7 +189,8 @@
 
 {{-- add tinymce như ckeditor --}}
 <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
-
+<script src="{{ url('admin') }}/js/global.js"></script>
+@yield('scripts')
 {{--  Custom file js--}}
 @stack('custom-script')
 </body>

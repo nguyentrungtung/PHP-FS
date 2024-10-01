@@ -45,6 +45,7 @@ $(document).ready(function () {
                     // alert(response.message);
                     $('#cart_count').text(response.data.count_number);
                     $('#count_cart--icon').html(response.data.cartListIcon);
+                    $('.total_cart--icon').html(response.data.count_number);
                     $('#cart-list').html(response.data.cartList);
                 } else {
                     alert(response.message);
