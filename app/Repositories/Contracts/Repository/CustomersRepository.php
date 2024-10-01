@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Auth;
         // lay tat cac sac order cua nguoi dung
         public function getOrders(){
             $id=Auth::user()->id;
-            return $this->model->find( $id )->orders()->paginate(10);
+            return $this->model->find( $id )->orders()->paginate(5);
         }
         // lay ra tat ca cac san pham da duoc nguoi dung mua
         public function getProductsByOrderIdS(){
             $id=Auth::user()->id;
-            $orders=$this->model->find( $id )->orders;
+            return $this->model->find( $id )->orders()->paginate(5);
         }
     }

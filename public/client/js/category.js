@@ -81,6 +81,7 @@ function ajax(element,add=false){
         },
         success: function(response) {
             const html=changeData(response);
+            console.log(html);
             if(add){
                 element.innerHTML+=html;
             }else{
@@ -197,7 +198,6 @@ function removeFill(current){
 // bat su kien thay doi khi chon loc theo cac brand
 function brandFillter(){
     const fill=document.querySelector('.content_fillter_brand');
-    const brand_fills=document.querySelectorAll('.brand_fill');
     const brand_logos=document.querySelectorAll('.brand_logo');
     brand_logos.forEach(element => {
         element.addEventListener('click',(e)=>{
@@ -242,11 +242,45 @@ function brandFillter(){
             const arr=list.map(item=>item.outerHTML);
             if(check) arr.push(html);
             brand_list.innerHTML=arr.join('');
+            brandItems()
             fetchData(ajax);
         })    
     });
 }
 // 
+function brandItems(){
+    const brand_fills=document.querySelectorAll('.brand_fill');
+    const brand_logos=document.querySelectorAll('.brand_logo');
+    const fill=document.querySelector('.content_fillter_brand');
+    const brand_list=document.getElementById("brand_list");
+    brand_fills.forEach(item=>{
+        item.addEventListener('click',()=>{
+            start=0;
+            item.setAttribute('data-click',true);
+            brand_logos.forEach(logo=>{
+                if(logo.getAttribute('data-id')===item.getAttribute('data-id')){
+                    logo.classList.remove('active');
+                }
+            })
+            let newArr=[];
+            brand_fills.forEach(value=>{
+                if(!value.hasAttribute('data-click')){
+                    newArr.push(value.outerHTML);
+                }
+            })
+            // console.log(newArr);
+            // return;
+            if(newArr.length===0){
+                brand_list.innerHTML='';
+                fill.innerHTML='';
+            }else{
+                brand_list.innerHTML=newArr.join('');
+            }
+            brandItems();
+            fetchData(ajax);
+        })
+    })
+}
 // loai bo toan bo brand duoc chon va load lai du lieu
 function deleteFillBrand(fill,logos){
     const d_bnt=document.getElementById("delete");

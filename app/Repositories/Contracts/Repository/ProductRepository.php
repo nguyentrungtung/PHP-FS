@@ -129,7 +129,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                 $query->select('product_id', 'quantity'); // Lấy product_id và quantity từ order_details
             }
         ])
-        ->paginate(10); // Phân trang 10 sản phẩm mỗi trang
+        ->paginate(5); // Phân trang 10 sản phẩm mỗi trang
         // dd($products);
         return $products;
     }
@@ -142,7 +142,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         ->with(['productImage' => function ($query) {
             $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
         }])
-        ->paginate(10); // Phân trang 10 sản phẩm mỗi trang
+        ->paginate(5); // Phân trang 10 sản phẩm mỗi trang
         return $products;
     }
 }

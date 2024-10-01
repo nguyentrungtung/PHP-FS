@@ -31,7 +31,7 @@
                 </a>
                 @endforeach
             @endif
-    </table>
+        </table>
         @if (isset($orders) && count($orders) > 0)
             <div class="d-flex align-items-center justify-content-center">
                 {{ $orders->links('pagination::bootstrap-4') }}
