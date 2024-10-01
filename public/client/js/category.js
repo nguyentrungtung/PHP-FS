@@ -86,6 +86,7 @@ function ajax(element,add=false){
             }else{
                 element.innerHTML=html;
             }
+            showToast('.liveToast', '.liveToastBtn', 'Đã thêm vào giỏ hàng thành công');
         },
         error: function(error) {
             console.error('Error:', error); // Bắt lỗi và in ra lỗi
@@ -95,15 +96,15 @@ function ajax(element,add=false){
 // 
 // 
 function productItem(product){
-    return `
-        <div class="col-lg-1-5">
-            <div data-id="${product.id}" class="card product-item">
-                    ${product.sale!==0?
-                        `<div class="product-item__discount-wrap">
-                            <p class="product-item__discount-product">- ${product.sale}%</p>
-                            <img src="" alt="" class="product-item__discount-ship d-none">
-                        </div>`:''}
-                    <a href="${product.detail_url}" class="detail_link">
+    return `<div class="col-lg-1-5">
+        <div data-id="${product.id}" class="card product-item">
+            
+            ${product.sale!==0?
+                `<div class="product-item__discount-wrap">
+                    <p class="product-item__discount-product">- ${product.sale}%</p>
+                    <img src="" alt="" class="product-item__discount-ship d-none">
+                </div>`:''}
+                <a href="${product.detail_url}" class="detail_link">
                         <div class="product-item__img-wrap">
                             <div class="product-item__img-wrap">
                                 <img
@@ -116,33 +117,32 @@ function productItem(product){
                             </div>
                         </div>
                     </a>
-                    <div class="card-body text-muted product-item__info">
-                        <p class="card-title product-item__name">${product.product_name}</p>
+                <div class="card-body text-muted product-item__info">
+                    <p class="card-title product-item__name">${product.product_name}</p>
 
                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
                             data-value="${Number(product.product_price).toLocaleString('en-US')}">${product.product_unit}</span>
                         </p>
-                        <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
+                    <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
                             đ</p>
-                    </div>
-                
-                <!-- Product action -->
-                <div class="product-item__action">
-                    <a href="#" class="d-block btn__add-cart btn_add-cart"
-                        data-product_id = "${product.id}"
+                </div>
+
+            <!-- Product action -->
+            <div class="product-item__action">
+                <a href="#" class="d-block btn__add-cart btn_add-cart liveToastBtn"
+                   data-product_id = "${product.id}"
                         data-available_stock = "1"
                         data-unit_name="${product.product_unit}"
                         data-product_price="${product.product_price}"
                        data-url="${product.add_url}">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                    <a href="#" class="d-block btn__add-cart btn_add-cart">
-                        <i class="fa-regular fa-heart"></i>
-                    </a>
-                </div>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <a href="#" class="d-block btn__add-cart btn_add-cart">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
             </div>
         </div>
-    `;
+    </div>`;
 }
 // 
 function count1(list){
@@ -304,4 +304,27 @@ function changeCat(){
 
         })
     })
+}
+function showToast(toastSelector, buttonSelector, message) {
+    $(buttonSelector).on('click', function () {
+        // alert(message);
+
+        const toastElement = $(toastSelector);
+        // Tùy chỉnh vị trí của toast
+        toastElement.css({
+            'position': 'fixed',
+            'top': '130px',
+            'right': '20px'
+        });
+
+        // Thay đổi nội dung thông báo
+        toastElement.find('.toast-body').text(message);
+        console.log([toastElement.find('.toast-body').text(message)])
+        // Tạo toast với thời gian delay tùy chỉnh
+        const toastBootstrap = new bootstrap.Toast(toastElement[0], {
+            delay: 1000
+        });
+
+        toastBootstrap.show();
+    });
 }

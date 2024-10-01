@@ -76,7 +76,7 @@ use Illuminate\Http\Request;
                     'product_old_price'=>$old,
                     'detail_url'=>route('product.show',['id' => $product->id]),
                     'add_url'=>route('cart.store',['id' => $product->id]),
-                    'product_unit'=>$product->brand->first()->brand_name,
+                    'product_unit'=>$product->unitValues->first()->unit->unit_name,
                     'product_image'=>asset($product->productImage->first()->image_url)
                 ];
             }

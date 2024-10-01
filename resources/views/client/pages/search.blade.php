@@ -45,7 +45,7 @@
                 @foreach ($products as $product )
                 <div class="col-lg-1-5">
                     <div data-id="{{$product['id']}}" class="card product-item">
-                        <a href="{{$product['detail_url']}}" class="detail_link">
+                        
                             @if ($product['sale']!==0)
                                 <div class="product-item__discount-wrap">
                                     <p class="product-item__discount-product">- {{$product['sale']}}%</p>
@@ -53,36 +53,38 @@
                                 </div>
                             @endif
                             <a href="{{$product['detail_url']}}" class="detail_link">
+                            <div class="product-item__img-wrap">
                                 <div class="product-item__img-wrap">
-                                    <div class="product-item__img-wrap">
-                                        <img
-                                            src="{{asset($product['product_image'])}}"
-                                            class="product-item__img card-img-top"
-                                            alt="..."
-                                        />
-                                        <div class="product-item__frame d-none"></div>
-                                    </div>
+                                    <img
+                                        src="{{asset($product['product_image'])}}"
+                                        class="product-item__img card-img-top"
+                                        alt="..."
+                                    />
                                     <div class="product-item__frame d-none"></div>
                                 </div>
+                                <div class="product-item__frame d-none"></div>
+                            </div>
                             </a>
                             <div class="card-body text-muted product-item__info">
                                 <p class="card-title product-item__name">{{ $product['product_name'] }}</p>
 
                                 <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
-                                                                     data-value="{{ $product['product_price'] }}">{{ $product['product_unit'] }}</span>
+                                                                     data-value="{{ number_format($product['product_price']) }}">{{ $product['product_unit'] }}</span>
                                 </p>
-                                <p class="card-text text-danger fw-bold">{{ number_format($product['product_price']) }}
+                                @php
+                                    // dd($product['product_price']);
+                                @endphp
+                                <p class="card-text text-danger fw-bold">{{number_format($product['product_price'])}}
                                     đ</p>
                             </div>
-                        </a>
-                        
+
                         <!-- Product action -->
                         <div class="product-item__action">
-                            <a href="#" class="d-block btn__add-cart btn_add-cart"
-                                data-product_id = "{{$product['id']}}"
-                                data-available_stock = "1"
-                                data-unit_name="{{ $product['product_unit'] }}"
-                                data-product_price="{{$product['product_price']}}"
+                            <a href="#" class="d-block btn__add-cart btn_add-cart liveToastBtn"
+                               data-product_id="{{$product['id']}}"
+                               data-available_stock="1"
+                               data-unit_name="{{ $product['product_unit'] }}"
+                               data-product_price="{{$product['product_price']}}"
                                data-url="{{ $product['add_url'] }}">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </a>
@@ -94,6 +96,21 @@
                 </div>
                 @endforeach
             </div>
+        </div>
+    </div>
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true" style ="width: max-content">
+        <div class="toast-header" style ="padding: 3px 10px; background-color: rgb(149,230,177)">
+            <img style="width:20px; height:20px"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s"
+                 class="rounded me-2" alt="...">
+            <strong class="me-auto ">....</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                    aria-label="Close" style ="font-size: 12px"></button>
+        </div>
+        <div class="toast-body text-success">
+
         </div>
     </div>
 </div>

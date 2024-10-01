@@ -99,11 +99,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             'productImage' => function ($query) {
                 $query->where('image_type', 'main'); // Lấy ảnh có type là 'main'
             },
-            'brand' => function ($query) {
-                $query->select('id','brand_name'); // lay ten don vi cua san pham
+            'unitValues' => function ($query) {
+                $query->with('unit:id,unit_name'); // Lấy tên unit từ bảng unit
             }
         ]);
-        // dd($query->get()[0]->brand->first()->brand_name);
+        // dd($query->get()[0]->unitValues->first()->unit->unit_name);
         $count = count($query->get());
         $remain=$count - (int)($start+$limit);
         $products= $query->skip($start)->take($limit)->get();

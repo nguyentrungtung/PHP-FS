@@ -82,21 +82,6 @@
                             </div>
                         </div>
                     @endforeach
-                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true" style ="width: max-content">
-                            <div class="toast-header" style ="padding: 3px 10px; background-color: rgb(149,230,177)">
-                                <img style="width:20px; height:20px"
-                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s"
-                                     class="rounded me-2" alt="...">
-                                <strong class="me-auto ">....</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                        aria-label="Close" style ="font-size: 12px"></button>
-                            </div>
-                            <div class="toast-body text-success">
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -152,6 +137,21 @@
                 </div>
             </div>
         @endfor
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true" style ="width: max-content">
+            <div class="toast-header" style ="padding: 3px 10px; background-color: rgb(149,230,177)">
+                <img style="width:20px; height:20px"
+                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s"
+                     class="rounded me-2" alt="...">
+                <strong class="me-auto ">....</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"
+                        aria-label="Close" style ="font-size: 12px"></button>
+            </div>
+            <div class="toast-body text-success">
+
+            </div>
+        </div>
     </div>
 @endsection
 @section('scripts')

@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     targets.forEach(target => {
         observer.observe(target); // Theo dõi từng phần tử
     });
-     detail();
     // detail();
     //
 })
@@ -197,6 +196,7 @@ function changeData(id,response){
 function addProducts(elements,response){
     const[id,list_products,content,name,element]=elements;
     list_products.innerHTML=changeData(id,response);
+    showToast('.liveToast', '.liveToastBtn', 'Đã thêm vào giỏ hàng thành công');
     if(countCats[id]['remain']>0){
         content.innerHTML+=`<div data-id="${id}" class="list_load_more">
             <p class="more_text">Xem Thêm <p class="more_text count">${countCats[id]['remain']}</p> sản phẩm </p>
@@ -215,6 +215,7 @@ function loadProducts(element,response){
     const [id,load,list_products,count]=element;
     const html=changeData(id,response);
     list_products.innerHTML+=html;
+    showToast('.liveToast', '.liveToastBtn', 'Đã thêm vào giỏ hàng thành công');
     //  detail();
     if(countCats[id]['remain']<=0){
         load.classList.add('hidden');
@@ -233,17 +234,15 @@ function LoadMore(load,id,element){
 }
 // tao html de render
 function productItem(product){
-    console.log(product);
-    return `
-        <div class="col-lg-1-5">
-            <div data-id="${product.id}" class="card product-item">
-                
-                    ${product.sale!==0?
-                        `<div class="product-item__discount-wrap">
-                            <p class="product-item__discount-product">- ${product.sale}%</p>
-                            <img src="" alt="" class="product-item__discount-ship d-none">
-                        </div>`:''}
-                    <a href="${product.detail_url}" class="detail_link">
+    return `<div class="col-lg-1-5">
+        <div data-id="${product.id}" class="card product-item">
+            
+            ${product.sale!==0?
+                `<div class="product-item__discount-wrap">
+                    <p class="product-item__discount-product">- ${product.sale}%</p>
+                    <img src="" alt="" class="product-item__discount-ship d-none">
+                </div>`:''}
+                <a href="${product.detail_url}" class="detail_link">
                         <div class="product-item__img-wrap">
                             <div class="product-item__img-wrap">
                                 <img
@@ -256,34 +255,32 @@ function productItem(product){
                             </div>
                         </div>
                     </a>
-                    <div class="card-body text-muted product-item__info">
-                        <p class="card-title product-item__name">${product.product_name}</p>
+                <div class="card-body text-muted product-item__info">
+                    <p class="card-title product-item__name">${product.product_name}</p>
 
                         <p class="card-text mb-1">ĐVT: <span class="product-details__unit-item"
                             data-value="${Number(product.product_price).toLocaleString('en-US')}">${product.product_unit}</span>
                         </p>
-                        <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
+                    <p class="card-text text-danger fw-bold">${Number(product.product_price).toLocaleString('en-US')}
                             đ</p>
-                    </div>
-                
-                
-                <!-- Product action -->
-                <div class="product-item__action">
-                    <a href="#" class="d-block btn__add-cart btn_add-cart"
-                        data-product_id = "${product.id}"
+                </div>
+
+            <!-- Product action -->
+            <div class="product-item__action">
+                <a href="#" class="d-block btn__add-cart btn_add-cart liveToastBtn"
+                   data-product_id = "${product.id}"
                         data-available_stock = "1"
                         data-unit_name="${product.product_unit}"
                         data-product_price="${product.product_price}"
                        data-url="${product.add_url}">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                    <a href="#" class="d-block btn__add-cart btn_add-cart">
-                        <i class="fa-regular fa-heart"></i>
-                    </a>
-                </div>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <a href="#" class="d-block btn__add-cart btn_add-cart">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
             </div>
         </div>
-    `;
+    </div>`;
 }
 // Tạo IntersectionObserver để theo dõi nhiều phần tử với class home_cat_list
 const observer = new IntersectionObserver((entries, observer) => {
@@ -297,3 +294,27 @@ const observer = new IntersectionObserver((entries, observer) => {
     });
 }, { threshold: 0.3 });
 
+// 
+function showToast(toastSelector, buttonSelector, message) {
+    $(buttonSelector).on('click', function () {
+        // alert(message);
+
+        const toastElement = $(toastSelector);
+        // Tùy chỉnh vị trí của toast
+        toastElement.css({
+            'position': 'fixed',
+            'top': '130px',
+            'right': '20px'
+        });
+
+        // Thay đổi nội dung thông báo
+        toastElement.find('.toast-body').text(message);
+        console.log([toastElement.find('.toast-body').text(message)])
+        // Tạo toast với thời gian delay tùy chỉnh
+        const toastBootstrap = new bootstrap.Toast(toastElement[0], {
+            delay: 1000
+        });
+
+        toastBootstrap.show();
+    });
+}
