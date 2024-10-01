@@ -34,7 +34,20 @@
                     data-url_update_cart="{{route('cart.update')}}"
                     data-available-quantity="{{ $cart['available_quantity'] }}"
                 />
-                <button style ="background-color:white; border:none; padding:4px" class="text-danger btn-sm mt-3 cart__item-remove translate--y" data-url="{{ route('cart.remove', $product_id) }}"><i class="fa-regular fa-trash-can"></i></button>
+                <button style ="background-color:white; border:none; padding:4px" class="text-danger btn-sm mt-3 cart__item-remove translate--y live-toast__btn--remove-cart" data-url="{{ route('cart.remove', $product_id) }}"><i class="fa-regular fa-trash-can"></i></button>
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div  class="toast live-toast--remove-cart" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img style ="width:30px; height:30px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s" class="rounded me-2" alt="...">
+                            <strong class="me-auto ">....</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body text-success" >
+                            Xóa giỏ hàng thành công
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

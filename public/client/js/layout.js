@@ -95,7 +95,7 @@ function showEx(){
         ex.classList.remove("hidden");
     }
 }
-// 
+//
 function search(){
     const values=document.querySelectorAll('.current_value');
     values.forEach(value=>{
@@ -108,13 +108,13 @@ function search(){
                 },
                 success: function(response) {
                     $('.main-content').html(response); // Cập nhật nội dung trang bằng phản hồi
-                    window.history.pushState({ path: '/search' }, '', '/search'); 
+                    window.history.pushState({ path: '/search' }, '', '/search');
                 }
             })
         })
     })
 }
-// 
+//
 function hiddenEx(){
     const ex=document.getElementById("search_ex");
     if(!ex.classList.contains("hidden")){
@@ -217,3 +217,59 @@ function searchValue(){
         })
     })
 }
+
+
+//Toas Message
+$(document).ready(function() {
+    const toastLiveExample = $('.liveToast');
+
+    $('.liveToastBtn').on('click', function() {
+        // Tùy chỉnh vị trí của toast
+        toastLiveExample.css({
+            'position': 'fixed',
+            'top': '130px',
+            'right': '20px'
+        });
+
+        // Tạo toast với thời gian delay tùy chỉnh
+        const toastBootstrap = new bootstrap.Toast(toastLiveExample[0], {
+            delay: 1000
+        });
+
+        toastBootstrap.show();
+    });
+});
+
+
+//Toast message
+    $(document).ready(function() {
+        function showToast(toastSelector, buttonSelector, message) {
+            $(buttonSelector).on('click', function() {
+                const toastElement = $(toastSelector);
+
+                // Tùy chỉnh vị trí của toast
+                toastElement.css({
+                    'position': 'fixed',
+                    'top': '130px',
+                    'right': '20px'
+                });
+
+                // Thay đổi nội dung thông báo
+                toastElement.find('.toast-body').text(message);
+
+                // Tạo toast với thời gian delay tùy chỉnh
+                const toastBootstrap = new bootstrap.Toast(toastElement[0], {
+                    delay: 1000
+                });
+
+                toastBootstrap.show();
+            });
+        }
+
+        // Gọi hàm showToast để hiển thị toast với thông báo
+        showToast('.liveToast', '.liveToastBtn',  'Đã thêm vào giỏ hàng thành công');
+        showToast('.live-toast--remove-cart', '.live-toast__btn--remove-cart',  'Xóa thành công');
+    });
+
+
+

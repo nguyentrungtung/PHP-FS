@@ -231,6 +231,11 @@ class CartService
             return response()->json(['success' => false, 'message' => 'Mã giảm giá không hợp lệ.']);
         }
 
+        // Kiểm tra nếu mã giảm giá chưa phát hành
+        if ($coupon->start_date > now()) {
+            return response()->json(['success' => false, 'message' => 'Mã giảm giá chưa được phát hành.']);
+        }
+
         // Kiểm tra các điều kiện áp dụng mã giảm giá
         $totalAmount = $this->getCartSummary($carts)['totalPrice'];
         if ($totalAmount < $coupon->min_order_value) {

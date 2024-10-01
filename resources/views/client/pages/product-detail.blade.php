@@ -95,6 +95,10 @@
                 <p class="product-details__product-price">
                     <span class="product-details__title inline-block">Giá : </span>
                     <span class="text-danger fs-5 fw-bold" id="product_price--detail">{{ number_format($product->product_price) }}₫</span>
+                    @if(isset($product->product_price_old))
+                        <span id="product_price--old"
+                              style="display:inline-block; color:#817c7c; text-decoration: line-through; margin-left: 10px; transform: translateY(-2px)">{{ number_format($product->product_price_old) }}₫</span>
+                    @endif
                 </p>
                 <p class="product-details__text-ship">
                     <span class="product-details__title inline-block">Vận chuyển : </span>
@@ -142,11 +146,25 @@
                     </div>
                 </div>
                 @if($product->product_quantity > 0)
-                <button class="btn btn-danger translate--y btn-lg product-quantity__selector--add btn_add-cart"
-                        data-url="{{ route('cart.store',['id' => $product->id]) }}"
-                        data-product_price="{{ $product->product_price }}"
-                        data-unit_name="{{ $product->unitValues->first()->unit->unit_name }}">Thêm vào giỏ hàng
-                </button>
+                    <button type="button" id="liveToastBtn" class="liveToastBtn btn btn-danger translate--y btn-lg product-quantity__selector--add btn_add-cart"
+                            data-url="{{ route('cart.store',['id' => $product->id]) }}"
+                            data-product_price="{{ $product->product_price }}"
+                            data-unit_name="{{ $product->unitValues->first()->unit->unit_name }}">Thêm vào giỏ hàng
+                    </button>
+
+                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                        <div id="liveToast" class="liveToast toast" role="alert" aria-live="assertive" aria-atomic="true" style ="width: 270px">
+                            <div class="toast-header" style ="padding: 4px 10px">
+                                <img style ="width:20px; height:20px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s" class="rounded me-2" alt="...">
+                                <strong class="me-auto ">...</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                        aria-label="Close" style ="font-size: 12px"></button>
+                            </div>
+                            <div class="toast-body text-success" >
+                                Đã thêm vào giỏ hàng Thành công
+                            </div>
+                        </div>
+                    </div>
                 @endif
         </div>
     </div>
@@ -201,34 +219,38 @@
             @foreach($productRelates as $productRelate)
                 <div class="col-lg-1-5">
                     <div class="card product-item">
-                        <div class="product-item__img-wrap">
-                            @foreach($productRelate->productImage as $product_image)
-                                @if($product_image->image_type == 'main')
-                                    <!-- Main Product Image -->
-                                    <img
-                                        id="mainImage"
-                                        src="{{ asset($product_image->image_url) }}"
-                                        class="product-info__image product-item__img card-img-top"
-                                        alt="Main Product Image"
-                                    />
-                                @endif
-                            @endforeach
+                        <a href="{{ route('product.show',['id' => $productRelate->id]) }}">
+                            <div class="product-item__img-wrap">
+                                @foreach($productRelate->productImage as $product_image)
+                                    @if($product_image->image_type == 'main')
+                                        <!-- Main Product Image -->
+                                        <img
+                                            id="mainImage"
+                                            src="{{ asset($product_image->image_url) }}"
+                                            class="product-info__image product-item__img card-img-top"
+                                            alt="Main Product Image"
+                                        />
+                                    @endif
+                                @endforeach
 
-                            <div class="product-item__frame d-none"></div>
-                        </div>
+                                <div class="product-item__frame d-none"></div>
+                            </div>
+                        </a>
                         <div class="card-body text-muted product-item__info">
                             <p class="card-title product-item__name">{{$productRelate->product_name}}</p>
-                            {{--                            @foreach($productRelate->unitValues as $unitValue)--}}
-                            <p class="card-text mb-1">ĐVT: {{$productRelate->unitValues->first()->unit->unit_name}}</p>
-                            {{--                            @endforeach--}}
-                            
-                            <p class="card-text text-danger fw-bold">30.000₫</p>
+                            <p class="card-text mb-1">
+                                ĐVT: {{$productRelate->unitValues->first()->unit->unit_name}}</p>
+                            <p class="card-text text-danger fw-bold">{{number_format($productRelate->product_price)}}
+                                ₫
+                                <span class="text-decoration-line-through"
+                                      style="color:#7e7070; font-size: 14px; margin-left: 10px; font-weight: 500">{{ number_format($productRelate->product_price_old) }}</span>
+                            </p>
                         </div>
                         <!-- Product action -->
                         <div class="product-item__action">
-                            <a href="#" class="d-block btn__add-cart btn_add-cart"
-                               data-product_id = "{{$productRelate->id}}"
-                               data-available_stock = "{{ $productRelate->product_quantity }}"
+                            <a href="#" class="liveToastBtn d-block btn__add-cart btn_add-cart"
+                               data-product_id="{{$productRelate->id}}"
+                               data-available_stock="{{ $productRelate->product_quantity }}"
                                data-unit_name="{{ $productRelate->unitValues->first()->unit->unit_name }}"
                                data-url="{{ route('cart.store',['id' => $productRelate->id]) }}"
                                data-product_price="{{$productRelate->product_price}}">
@@ -237,6 +259,21 @@
                             <a href="#" class="d-block btn__add-cart btn_add-cart">
                                 <i class="fa-regular fa-heart"></i>
                             </a>
+
+                            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                                <div class="toast liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast-header">
+                                        <img style ="width:30px; height:30px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxWVUh-5Tpawx11aP2YqFYmRMN_kBoAUic6g&s" class="rounded me-2" alt="...">
+                                        <strong class="me-auto ">....</strong>
+                                        <small>11 mins ago</small>
+                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="toast-body text-success" >
+                                        Đã thêm vào giỏ hàng Thành công
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -251,4 +288,6 @@
 @endsection
 
 @push('custom-script')
+    <script>
+    </script>
 @endpush
