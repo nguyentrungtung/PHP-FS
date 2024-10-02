@@ -112,8 +112,7 @@
                                                             <div class="coupon-list__content ">
                                                                 @if($coupon->discount_type == 'percentage')
                                                                     <h5 class="coupon-list__title">Giảm
-                                                                        giá {{number_format($coupon->discount_value)}}
-                                                                        %</h5>
+                                                                        giá {{number_format($coupon->discount_value)}}%</h5>
                                                                 @endif
                                                                 <p class="coupon-list__description">Áp dụng cho đơn hàng
                                                                     từ

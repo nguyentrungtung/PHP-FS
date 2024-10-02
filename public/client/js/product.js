@@ -104,7 +104,5 @@ function setEqualHeightForItems() {
 // Gọi hàm khi trang được tải
 window.onload = setEqualHeightForItems;
 
-// Gọi hàm khi trang được tải
-window.onload = setEqualHeightForItems;
 
 

@@ -134,7 +134,7 @@ Route::group(['prefix' => 'cart'], function () {
 Route::group(['prefix' => 'checkout'], function () {
     Route::get('/', [HomeCheckoutController::class, 'index'])->name('checkout');
     Route::post('/process', [HomeCheckoutController::class, 'store'])->name('checkout.store');
-    Route::get('/success', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
+    Route::get('/success/{id}', [HomeCheckoutController::class, 'checkoutSuccess'])->name('checkout.success');
 });
 //
 // testing optimine

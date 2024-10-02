@@ -74,7 +74,7 @@ class CheckoutService
         session()->forget('cartSummary');
 
         // Trả về phản hồi hoặc chuyển hướng
-        return redirect()->route('checkout.success')->with('success', 'Đặt hàng thành công!');
+        return redirect()->route('checkout.success',['id' => $orderId->id]);
     }
 
 

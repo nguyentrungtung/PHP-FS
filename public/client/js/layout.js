@@ -245,7 +245,7 @@ $(document).ready(function () {
             console.log([toastElement.find('.toast-body').text(message)])
             // Tạo toast với thời gian delay tùy chỉnh
             const toastBootstrap = new bootstrap.Toast(toastElement[0], {
-                delay: 1000
+                delay: 500
             });
 
             toastBootstrap.show();
@@ -256,6 +256,28 @@ $(document).ready(function () {
     showToast('.liveToast', '.liveToastBtn', 'Đã thêm vào giỏ hàng thành công');
     showToast('.live-toast--remove-cart', '.live-toast__btn--remove-cart', 'Xóa thành công');
 });
+
+// xét chiều cao cho các item bằng nhau
+function setEqualHeightForItems() {
+    let productItems = document.querySelectorAll('.product-item');
+    let maxHeight = 0;
+
+    // Tìm chiều cao lớn nhất của các item
+    productItems.forEach(function (item) {
+        let itemHeight = item.offsetHeight;
+        if (itemHeight > maxHeight) {
+            maxHeight = itemHeight;
+        }
+    });
+
+    // Đặt chiều cao của tất cả các item theo chiều cao lớn nhất
+    productItems.forEach(function (item) {
+        item.style.height = maxHeight + 'px';
+    });
+}
+
+// Gọi hàm khi trang được tải
+window.onload = setEqualHeightForItems;
 
 
 

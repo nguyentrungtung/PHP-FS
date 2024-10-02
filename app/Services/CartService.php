@@ -224,6 +224,7 @@ class CartService
     public function applyCoupon($request)
     {
         $couponId = $request->coupon_id;
+        $originalPrice = $request->totalPrice;
         $carts = session()->get('carts', []);
         $coupon = $this->couponRepositoryInterface->find($couponId);
 
@@ -241,6 +242,10 @@ class CartService
         if ($totalAmount < $coupon->min_order_value) {
             return response()->json(['success' => false, 'message' => 'Đơn hàng không đủ điều kiện áp dụng mã giảm giá.']);
         }
+
+//        $discount = isset($coupon->max_discount) ? $coupon->max_discount : $coupon->discount_value;
+        $discount = isset($coupon->max_discount) ? round(($coupon->max_discount / $originalPrice) * 100, 2) : $coupon->discount_value;
+//        dd($coupon->discount_value);
 
         // Cập nhật thông tin mã giảm giá vào session hoặc database
         session()->put('applied_coupon', $couponId);

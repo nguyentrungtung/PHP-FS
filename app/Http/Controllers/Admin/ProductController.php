@@ -89,6 +89,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
+
         $this->productService->deleteProduct($id);
         return redirect()->back()->with('success', 'Product  deleted successfully!');
     }

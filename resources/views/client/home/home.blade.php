@@ -32,7 +32,7 @@
                     @foreach ($todays as $product )
                         <div class="col-lg-1-5">
                             <div data-id="{{$product['id']}}" class="card product-item">
-                                
+
                                     @if ($product['sale']!==0)
                                         <div class="product-item__discount-wrap">
                                             <p class="product-item__discount-product">- {{$product['sale']}}%</p>
@@ -148,6 +148,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast"
                         aria-label="Close" style ="font-size: 12px"></button>
             </div>
+            {{--Toast message--}}
             <div class="toast-body text-success">
 
             </div>

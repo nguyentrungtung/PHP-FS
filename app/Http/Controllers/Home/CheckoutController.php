@@ -49,10 +49,9 @@ class CheckoutController extends Controller
     /**
      * Display the specified resource.
      */
-    public function checkoutSuccess()
+    public function checkoutSuccess($id)
     {
-//        return view('client.pages.cart-detail');
-        return redirect()->route('web.home');
+        return view('client.pages.checkout-success', compact('id'));
     }
 
 }

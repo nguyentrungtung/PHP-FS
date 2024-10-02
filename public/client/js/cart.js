@@ -203,13 +203,15 @@ $(document).ready(function () {
         event.preventDefault();
         var couponId = $(this).data('coupon-id');
         var url = $(this).data('url_coupon');
-
+        var totalPrice = $('#cart__summary-totalprice').text().replace(/[^\d]/g, '');
+        // alert(totalPrice);
         $.ajax({
             url: url,
             method: 'POST',
             data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 coupon_id: couponId,
+                totalPrice: totalPrice
             },
             success: function (response) {
                 if (response.status) {

@@ -33,7 +33,6 @@
                         <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                     </svg>
                     <p class="header_top_right_cart_count" >Giỏ hàng (<p id="cart_count" class=" cart_count">{{$totalCart}}</p>)</p>
-                    @if(count($carts))
                     <div id="cart_list" class="cart_list">
                         <div class=" d-flex flex-column cart_list_items" id = "count_cart--icon">
                             @include('client.components.cart-icon')
@@ -43,7 +42,6 @@
                             <a href="{{route('cart.show')}}" class="btn total_detail">Xem chi tiết</a>
                         </div>
                     </div>
-                    @endif
                 </div>
                 @if (!Auth::check())
                 <a href="{{route('login')}}">

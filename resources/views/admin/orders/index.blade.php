@@ -6,7 +6,7 @@
             <h2 class="text-center mb-4">Danh sách đơn hàng</h2>
 
             <table class="table table-bordered table-hover" id="myOrderTable">
-                <thead>
+                <thead class ="table-dark">
                 <tr>
                     <th class="text-center">#</th>
                     <th class="text-center">Tên khách hàng</th>
