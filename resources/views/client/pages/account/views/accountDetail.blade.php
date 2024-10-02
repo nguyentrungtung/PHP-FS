@@ -68,9 +68,9 @@ $user=Auth::user();
                 <div class="col-sm-10">
                     <select name='city' class="form-select content_input" aria-label="Default select example">
                         <option {{$user->city===''?'selected':''}}></option>
-                        <option {{$user->city==='1'?'selected':''}} value="1">One</option>
-                        <option {{$user->city==='2'?'selected':''}} value="2">Two</option>
-                        <option {{$user->city==='3'?'selected':''}} value="3">Three</option>
+                        <option {{$user->city==='Hà Nội'?'selected':''}} value="Hà Nội">Hà Nội</option>
+                        <option {{$user->city==='Bắc Ninh'?'selected':''}} value="Bắc Ninh">Bắc Ninh</option>
+                        <option {{$user->city==='Thái Bình'?'selected':''}} value="3">Thái Bình</option>
                       </select>
                 </div>
             </div>
